@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/aop
+    	http://www.springframework.org/schema/aop/spring-aop-3.2.3.xsd
+        http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<http use-expressions="true" >
+		<form-login login-processing-url="/static/j_spring_security_check" 
+			login-page="/login"
+			default-target-url="/loadLoginInfo"
+			authentication-failure-url="/login?login_error=t" />
+		
+		<!-- The intercept rules are interpreted top to bottom. So they should go most specific to least specific. -->
+		<intercept-url pattern="/" access="permitAll"/>
+		<intercept-url pattern="/login" access="permitAll"/>
+		<intercept-url pattern="/logout" access="permitAll"/>
+		<intercept-url pattern="/home" access="permitAll"/>
+		<intercept-url pattern="/install/**" access="permitAll"/>
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/developing/**" access="hasRole('ROLE_DEV')" />
+		<intercept-url pattern="/authoring/**" access="hasRole('ROLE_AUTHOR')" />
+		<intercept-url pattern="/facilitating/**" access="hasRole('ROLE_FACILITATOR')" />
+		<intercept-url pattern="/playing/**" access="hasRole('ROLE_PLAYER')" />
+		<!-- End of intercept rules -->
+		
+		<logout 
+			logout-url="/static/j_spring_security_logout" 
+			logout-success-url="/logout"
+			/>
+		<access-denied-handler error-page="/accessDenied" />
+
+	</http>
+
+	<!-- http> <intercept-url pattern="/login.do" filters="none" /> <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" 
+		/> <form-login login-page="/login.do" authentication-failure-url="/login.do?error=failed" login-processing-url="/login-please.do" 
+		/> <logout logout-url="/logoff-please.do" logout-success-url="/logoff.html" /> </http -->
+
+	<beans:bean id="userDetailsService" class="com.seachangesimulations.platform.service.UserDetailsServiceImpl">
+	</beans:bean>
+
+	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="userDetailsService" />
+	</beans:bean>
+
+	<beans:bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<beans:property name="providers">
+			<beans:list>
+				<beans:ref local="daoAuthenticationProvider" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder hash="md5" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<global-method-security secured-annotations="enabled" />
+
+</beans:beans>
