@@ -3,7 +3,7 @@
 	import="com.seachangesimulations.platform.service.*, java.util.*"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
-<table>
+<table width="100%">
 	<tr>
 		<td align="left"><img
 			src="/SeaChangePlatform/resources/images/sea_change_small_logo.png"></td>
@@ -21,7 +21,7 @@
 						} else if (location.startsWith("/SeaChangePlatform/facilitating")) {
 					%>Facilitator<%
 						} else {
-					%><%=request.getRequestURI()%>
+					%>
 					<%
 						}
 					%>
