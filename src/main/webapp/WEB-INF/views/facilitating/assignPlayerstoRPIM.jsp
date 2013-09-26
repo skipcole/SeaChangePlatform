@@ -10,6 +10,18 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="/SeaChangePlatform/resources/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="/SeaChangePlatform/resources/js/html5shiv.js"></script>
+      <script src="/SeaChangePlatform/resources/js/respond.min.js"></script>
+    <![endif]-->
+    <!-- /Bootstrap -->
+    
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Assign Players</title>
 <!-- InstanceEndEditable -->
@@ -24,6 +36,13 @@
 	src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
 <script
 	src="/SeaChangePlatform/javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+    
+<!-- Bootstrap -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- script src="//code.jquery.com/jquery.js"></script  -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/SeaChangePlatform/resources/js/bootstrap.min.js"></script>
+<!-- Bootstrap -->
 
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
