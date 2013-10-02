@@ -15,6 +15,12 @@ import com.seachangesimulations.platform.domain.Roleplay;
 @XmlAccessorType (XmlAccessType.NONE)   // This means that if you want a field mapped, it has to be annotated.
 public class SessionInfoBean {
 
+	public static final String ADMIN_ZONE = "admin";
+	public static final String DEVELOPER_ZONE = "developer";
+	public static final String AUTHOR_ZONE = "author";
+	public static final String FACILITATOR_ZONE = "facilitator";
+	public static final String PLAYER_ZONE = "player";
+	
 	public SessionInfoBean() {
 		
 	}
@@ -22,6 +28,8 @@ public class SessionInfoBean {
 	/** Id of user login object - if it is null, the user is not logged in. */
 	@XmlAttribute
 	private Long platformLoginId;
+	
+	private String platformZone;
 
 	/** Organization of the section where the user has entered. */
 	private Long organizationId;
@@ -246,5 +254,15 @@ public class SessionInfoBean {
 		}
 
 	}
+
+	public String getPlatformZone() {
+		return platformZone;
+	}
+
+	public void setPlatformZone(String platformZone) {
+		this.platformZone = platformZone;
+	}
+	
+	
 
 }

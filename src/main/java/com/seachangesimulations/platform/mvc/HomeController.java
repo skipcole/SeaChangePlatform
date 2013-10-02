@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.seachangesimulations.platform.domain.Person;
 import com.seachangesimulations.platform.domain.Plugin;
+import com.seachangesimulations.platform.service.SessionInfoBean;
 
 @Controller
 public class HomeController extends BaseController {
@@ -31,7 +32,12 @@ public class HomeController extends BaseController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String showHomePage(Map<String, Object> model) {
 		LOGGER.debug("In the / Request Mapping");
-		return "login.jsp";
+		return "redirect:/welcome";
+	}
+	
+	@RequestMapping(value = { "/welcome" }, method = RequestMethod.GET)
+	public String showWelcomePage(Map<String, Object> model) {
+		return "welcome.jsp";
 	}
 	
 	/**
@@ -70,9 +76,17 @@ public class HomeController extends BaseController {
 
 	@RequestMapping(value = { "/admin/index" }, method = RequestMethod.GET)
 	public String showAdminPage(Map<String, Object> model) {
-
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.ADMIN_ZONE);
 		return "admin/index.jsp";
 	}
+	
+	@RequestMapping(value = { "/admin/index/setZone" }, method = RequestMethod.GET)
+	public String setAdminZone(Map<String, Object> model) {
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.ADMIN_ZONE);
+		return "redirect:/admin/index";
+	}
+	
+	
 	
 	
 	/**

@@ -36,6 +36,7 @@ import com.seachangesimulations.platform.mvc.formbeans.author.AuthorCreateRolepl
 import com.seachangesimulations.platform.mvc.formbeans.author.AuthorPublishRoleplayFormBean;
 import com.seachangesimulations.platform.mvc.formbeans.developer.DevDefinePluginFormBean;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
+import com.seachangesimulations.platform.service.SessionInfoBean;
 import com.seachangesimulations.platform.utilities.Util;
 
 @Controller
@@ -48,10 +49,18 @@ public class AuthorController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "", "index" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"index" }, method = RequestMethod.GET)
 	public String showAuthoringPage(Map<String, Object> model) {
 
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.AUTHOR_ZONE);
 		return "authoring/index.jsp";
+	}
+	
+	@RequestMapping(value = {"index/setZone" }, method = RequestMethod.GET)
+	public String setAuthorZone(Map<String, Object> model) {
+
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.AUTHOR_ZONE);
+		return "redirect:/authoring/index";
 	}
 
 	/*

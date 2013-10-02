@@ -25,14 +25,23 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
 @RequestMapping("/playing")
 public class PlayerController extends BaseController {
 
-	@RequestMapping(value = { "", "index" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"index" }, method = RequestMethod.GET)
 	public String showPlayerEntryPage(Principal principal, Model model) {
 
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.PLAYER_ZONE);
+		
 		Person person = new Person().getByUsername(principal.getName());
 		model.addAttribute("personRoleplayAssignments", 
 				new PersonRoleplayAssignment().getAllRoleplaysForPerson(person.getId()));
 		
 		return "playing/index.jsp";
+	}
+	
+	@RequestMapping(value = { "index/setZone" }, method = RequestMethod.GET)
+	public String setPlayerZone(Model model) {
+
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.PLAYER_ZONE);
+		return "redirect:/playing/index";
 	}
 	
 	@RequestMapping(value = { "pra/{praId}" }, method = RequestMethod.GET)

@@ -13,6 +13,9 @@
 		<pattern>/scripts/*</pattern>
 		<pattern>/images/*</pattern>
 		<pattern>/index.html</pattern>
+		<pattern>/index.htm</pattern>
+		<pattern>/login</pattern>
+		<pattern>/welcome</pattern>
 		<pattern>/META-INF/*</pattern>
 	</excludes>
 

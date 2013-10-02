@@ -2,6 +2,7 @@ package com.seachangesimulations.platform.mvc;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,6 +22,7 @@ import com.seachangesimulations.platform.mvc.formbeans.developer.DevModifyPlugin
 import com.seachangesimulations.platform.mvc.formbeans.developer.DevUploadPluginFilesFormBean;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
+import com.seachangesimulations.platform.service.SessionInfoBean;
 import com.seachangesimulations.platform.utilities.PlatformProperties;
 import com.seachangesimulations.platform.utilities.Util;
 
@@ -39,15 +41,24 @@ public class DeveloperController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "", "index" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"index" }, method = RequestMethod.GET)
 	public String showDevelopingPage(Model model) {
 
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.DEVELOPER_ZONE);
+		
 		List plugins = new Plugin().getAllUncustomized();
 		model.addAttribute("plugins", plugins);
 
 		model.addAttribute("pluginSelectionId", "0");
 		model.addAttribute("pluginAction", "1");
 		return "developing/index.jsp";
+	}
+	
+	@RequestMapping(value = {"index/setZone" }, method = RequestMethod.GET)
+	public String setDeveloperZone(Map<String, Object> model) {
+
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.DEVELOPER_ZONE);
+		return "redirect:/developing/index";
 	}
 
 	/*

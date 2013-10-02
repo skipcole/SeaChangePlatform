@@ -22,14 +22,17 @@ import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignm
 import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacAssignPlayersFormBean;
 import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacCreateRPIMFormBean;
 import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacLaunchRoleplayFormBean;
+import com.seachangesimulations.platform.service.SessionInfoBean;
 
 @Controller
 @RequestMapping("/facilitating")
 public class FacilitatorController extends BaseController {
 
-	@RequestMapping(value = { "", "index" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "index" }, method = RequestMethod.GET)
 	public String showFacilitatorHome(Model model) {
 
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.FACILITATOR_ZONE);
+		
 		// Will move this elsewhere later, but for now
 
 		List <Roleplay> roleplays = new Roleplay().getAll();
@@ -37,6 +40,14 @@ public class FacilitatorController extends BaseController {
 
 		return "/facilitating/index.jsp";
 	}
+	
+	@RequestMapping(value = { "index/setZone" }, method = RequestMethod.GET)
+	public String setFacilitatorZone(Model model) {
+
+		getSessionInfoBean().setPlatformZone(SessionInfoBean.FACILITATOR_ZONE);
+		return "redirect:/facilitating/index";
+	}
+	
 
 	@RequestMapping(value = { "createRPIM/{rId}/{rpimId}" }, method = RequestMethod.GET)
 	public String createRPIMGet(@PathVariable Long rId, @PathVariable Long rpimId, Model model) {

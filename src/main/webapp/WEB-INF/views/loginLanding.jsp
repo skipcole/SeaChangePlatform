@@ -16,30 +16,30 @@
 
 			<tr>
 				<security:authorize url="/admin/**">
-					<td><a href="${pageContext.request.contextPath}/admin/index" >
+					<td><a href="${pageContext.request.contextPath}/admin/index/setZone" >
 							<input type="image" name="adminImage" id="adminImage" border ="0"
 								src="${pageContext.request.contextPath}/resources/images/admins.png" /></a>
 							</td>
 				</security:authorize>
 				<security:authorize url="/developing/**">
-					<td><a href="${pageContext.request.contextPath}/developing/index" >
+					<td><a href="${pageContext.request.contextPath}/developing/index/setZone" >
 							<input type="image" name="devImage" id="devImage" border ="0"
 								src="${pageContext.request.contextPath}/resources/images/dev.png" /></a>
 							</td>
 				</security:authorize>
 				<security:authorize url="/authoring/**">
-					<td><a href="${pageContext.request.contextPath}/authoring/index" ><input
+					<td><a href="${pageContext.request.contextPath}/authoring/index/setZone" ><input
 								type="image" name="authoringImage" id="authoringImage" border ="0"
 								src="${pageContext.request.contextPath}/resources/images/authors.png" /></a>
 						</td>
 				</security:authorize>
 				<security:authorize url="/facilitating/**">
-					<td><a href="${pageContext.request.contextPath}/facilitating/index" >
+					<td><a href="${pageContext.request.contextPath}/facilitating/index/setZone" >
 							<input type="image" name="facilitateImage" id="facilitateImage" border ="0"
 								src="${pageContext.request.contextPath}/resources/images/facilitate.png" /></a></td>
 				</security:authorize>
 				<security:authorize url="/playing/**">
-					<td><a href="${pageContext.request.contextPath}/playing/index" >
+					<td><a href="${pageContext.request.contextPath}/playing/index/setZone" >
 							<input type="image" name="playImage" id="playImage" border ="0"
 								src="${pageContext.request.contextPath}/resources/images/players.png" /></a></td>
 				</security:authorize>
