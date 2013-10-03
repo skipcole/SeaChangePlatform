@@ -16,6 +16,7 @@
 		<pattern>/index.htm</pattern>
 		<pattern>/login</pattern>
 		<pattern>/welcome</pattern>
+		<pattern>/playing/showPlugin/**</pattern>
 		<pattern>/META-INF/*</pattern>
 	</excludes>
 

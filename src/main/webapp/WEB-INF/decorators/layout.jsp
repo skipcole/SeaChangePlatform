@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap -->
-    <link href="/SeaChangePlatform/resources/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/SeaChangePlatform/resources/css/bootstrap.min.css" rel="stylesheet" media="screen">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -22,6 +22,20 @@
       <script src="/SeaChangePlatform/resources/js/respond.min.js"></script>
     <![endif]-->
     <!-- /Bootstrap -->
+    
+<style type="text/css">
+
+      /* Sticky footer styles
+      -------------------------------------------------- */
+
+      #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+</style>
     
 	<decorator:head />
 </head>
@@ -36,10 +50,10 @@
 		<tr>
 			<td id="content-container"><decorator:body /></td>
 		</tr>
-		<tr>
-			<td id="page-footer"><%@ include
-					file="/WEB-INF/includes/footer.jsp"%></td>
-		</tr>
 	</table>
+<div class="footer">
+	<%@ include file="/WEB-INF/includes/footer.jsp"%>
+</div>
+
 </body>
 </html>

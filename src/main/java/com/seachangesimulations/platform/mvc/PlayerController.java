@@ -78,6 +78,7 @@ public class PlayerController extends BaseController {
 		
 		System.out.println(plugin.generatePluginDirectory() + "/1.htm");
 		
+		//return (" will send contents from redirect:/resources/plugins/" + plugin.generatePluginDirectory() + "/1.htm");
 		return ("redirect:/resources/plugins/" + plugin.generatePluginDirectory() + "/1.htm");
 	}
 	
