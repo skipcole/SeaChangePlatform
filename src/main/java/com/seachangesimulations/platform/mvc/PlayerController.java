@@ -78,8 +78,12 @@ public class PlayerController extends BaseController {
 		
 		System.out.println(plugin.generatePluginDirectory() + "/1.htm");
 		
+		model.addAttribute("pageText", pluginProvider.processPlugin(plugin, getSessionInfoBean()));
+		
+		return "playing/showPlugin.jsp";
+		
 		//return (" will send contents from redirect:/resources/plugins/" + plugin.generatePluginDirectory() + "/1.htm");
-		return ("redirect:/resources/plugins/" + plugin.generatePluginDirectory() + "/1.htm");
+		//return ("redirect:/resources/plugins/" + plugin.generatePluginDirectory() + "/1.htm");
 	}
 	
 	

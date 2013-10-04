@@ -47,9 +47,8 @@
 		<div class="tab-content">
 
 			<c:forEach var="pluginPointer" items="${pluginPointers}">
-				<div class="tab-pane" id="pane_${pluginPointer.id}"  >
-              		<p>Placeholder <c:out value="${pluginPointer.id}" /></p>
-              		<iframe src="${pageContext.request.contextPath}/playing/showPlugin/${pluginPointer.id}">
+				<div class="tab-pane" id="pane_${pluginPointer.id}" style="border:0;" >
+              		<iframe src="${pageContext.request.contextPath}/playing/showPlugin/${pluginPointer.id}" width="100%" seamless="seamless">
               		</iframe>
             	</div>
 			</c:forEach>

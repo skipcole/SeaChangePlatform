@@ -220,33 +220,7 @@ public class DeveloperController extends BaseController {
 		model.addAttribute("pluginFiles", new PluginFile().getAllForPlugin(id));
 		model.addAttribute("devUploadPluginFilesFormBean", devUploadPluginFilesFormBean);
 
-		boolean fileSaved = false;
-
-		if (!pluginFile.isEmpty()) {
-			System.out.println(pluginFile.getOriginalFilename());
-
-			pluginFileObject.setFileDescription(pluginFile.getOriginalFilename());
-			pluginFileObject.setPluginId(id);
-			pluginFileObject.save();
-
-			System.out.println(PlatformProperties.getValue("pluginFileDirectory"));
-
-			Plugin plugin = new Plugin().getById(id);
-
-			try {
-				String fullFilePath = PlatformProperties.getValue("pluginFileDirectory") + File.separator
-						+ plugin.generatePluginDirectory() + File.separator + pluginFile.getOriginalFilename();
-
-				System.out.println("             ");
-				System.out.println(fullFilePath);
-				System.out.println("             ");
-
-				fileSaved = Util.saveFileContent(fullFilePath, pluginFile.getBytes());
-			} catch (Exception e) {
-				System.out.println("problem with saving plugin file: " + e.getMessage());
-			}
-
-		}
+		boolean fileSaved = pluginProvider.savePluginToFile(pluginFile, pluginFileObject);
 
 		if (fileSaved) {
 			return "redirect:/developing/uploadPluginFiles/" + id;

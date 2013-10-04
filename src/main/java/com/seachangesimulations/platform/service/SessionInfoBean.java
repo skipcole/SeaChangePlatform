@@ -1,5 +1,7 @@
 package com.seachangesimulations.platform.service;
 
+import java.util.Hashtable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -7,6 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Scope;
 
+import com.seachangesimulations.platform.domain.Actor;
 import com.seachangesimulations.platform.domain.Person;
 import com.seachangesimulations.platform.domain.Roleplay;
 
@@ -261,6 +264,22 @@ public class SessionInfoBean {
 
 	public void setPlatformZone(String platformZone) {
 		this.platformZone = platformZone;
+	}
+	
+	static Hashtable actorsNames = new Hashtable();
+	
+	public String getActorName(){
+		
+		String actorName = (String) actorsNames.get(this.actorId);
+		
+		if (actorName == null) {
+			Actor actor = new Actor().getById(this.actorId);
+			actorName = actor.getActorName();
+			actorsNames.put(actorId, actorName);
+		}
+		
+		return actorName;
+		
 	}
 	
 	
