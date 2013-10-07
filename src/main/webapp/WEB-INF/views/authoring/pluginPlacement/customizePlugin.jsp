@@ -69,6 +69,9 @@ On this page we allow the author to set objects used by this plugin.
 	</sf:form>
 	</c:forEach>
 <hr />
+<p>
+<a href="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/" id="authorPlacePlugins">Back </a>
+</p>
 
 	<p>&nbsp;</p>
 <!-- InstanceEndEditable -->

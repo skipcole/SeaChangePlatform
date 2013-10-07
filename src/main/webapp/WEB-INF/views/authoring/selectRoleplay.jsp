@@ -37,21 +37,12 @@
 </head>
 <body>
 	<!-- InstanceBeginEditable name="BodyRegion" -->
-<p>select Role Play</p>
+<p>Select Role Play</p>
 <p>&nbsp;</p>
-
-org id
-			<s:property
-				value="%{#session.SeachangePlatformSessionObject.organizationId}" />
                 
-     
-<p>and names</p>
-	<s:iterator value="allForOrganization">
-		<h1>
-			<s:property
-				value="name" />
-		</h1>
-     </s:iterator>
+	<c:forEach var="roleplay" items="${allRoleplays}">
+		<a href="${pageContext.request.contextPath}/authoring/changeRoleplay/${roleplay.id}" id="roleplay_${roleplay.id}"><c:out value="${roleplay.roleplayName}" /></a>
+	</c:forEach>
 
 <p>&nbsp;</p>
 

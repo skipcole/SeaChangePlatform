@@ -46,6 +46,23 @@ public class PluginPointer extends BaseSCPlatformObject implements Comparable{
 		
 		this.save();
 	}
+	
+	public PluginPointer(Long rpId, Long phId, String pHeading, Long rawPluginId, boolean addedAsUniversal) {
+
+		this.rolePlayId = rpId;
+		this.actorId = new Long(0);
+		this.phaseId = phId;
+		this.pluginHeading = pHeading;
+		this.pluginId = rawPluginId;
+		this.addedAsUniversal = true;
+		
+		// Need to get the list and add this entry at the end.
+		List theCurrentSet = this.getCurrentSet(rpId, this.actorId, phId);
+		
+		this.pluginIndex = new Integer(theCurrentSet.size() + 1);
+		
+		this.save();
+	}
 
 	public List getCurrentSet(Long rpId, Long aId, Long phId) {
 		PluginPointerDao dao = (PluginPointerDao) getApplicationContext().getBean("pluginPointerDao", PluginPointerDao.class);

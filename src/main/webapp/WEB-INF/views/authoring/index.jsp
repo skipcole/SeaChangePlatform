@@ -41,7 +41,7 @@
 <p>Working on Roleplay <c:out value="${sessionScope.sessionInfoBean.roleplayName}" /></p>
 <h2>Authoring Steps</h2>
 <ol>
-  <li><a href="${pageContext.request.contextPath}/authoring/createRoleplay/${sessionScope.sessionInfoBean.roleplayId}" id="authorCreateRoleplay" >Edit Roleplay Basic Data </a>(?)</li>
+  <li><a href="${pageContext.request.contextPath}/authoring/roleplay/create/${sessionScope.sessionInfoBean.roleplayId}" id="authorCreateRoleplay" >Edit Roleplay Basic Data </a>(?)</li>
   <li><a href="${pageContext.request.contextPath}/authoring/rolePlay/enterObjectives/${sessionScope.sessionInfoBean.roleplayId}" id="authorEnterRoleplayObjectives">Enter Learning Objectives </a>(?)</li>
   <li><a href="${pageContext.request.contextPath}/authoring/rolePlay/enterAudience/${sessionScope.sessionInfoBean.roleplayId}"id="authorEnterRoleplayAudience">Enter Your Audience </a>(?)</li>
   <li><a href="${pageContext.request.contextPath}/authoring/enterRoleplayPlannedPlayIdeas" id="authorEnterPlannedPlayIdeas">Enter Planned Play Ideas </a>(?)</li>

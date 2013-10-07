@@ -63,10 +63,6 @@ public class AuthorController extends BaseController {
 		return "redirect:/authoring/index";
 	}
 
-	/*
-	 * ********************************* Create
-	 * *********************************
-	 */
 	/**
 	 * Gets the create page.
 	 * 
@@ -120,6 +116,25 @@ public class AuthorController extends BaseController {
 
 		return "redirect:/authoring/roleplay/create/" + roleplay.getId();
 
+	}
+	
+	@RequestMapping(value = { "selectRoleplay" }, method = RequestMethod.GET)
+	public String selectRoleplay(Model model) {
+
+		model.addAttribute("allRoleplays", new Roleplay().getAll());
+		return "authoring/selectRoleplay.jsp";
+	}
+	
+	@RequestMapping(value = { "changeRoleplay/{id}" }, method = RequestMethod.GET)
+	public String changeRoleplay(@PathVariable Long id, Model model) {
+
+		this.getSessionInfoBean().setRoleplayId(id);
+		this.getSessionInfoBean().setActorId(null);
+		this.getSessionInfoBean().setPhaseId(new Phase().getFirstForRoleplay(id));
+		
+		model.addAttribute("allRoleplays", new Roleplay().getAll());
+		return "authoring/selectRoleplay.jsp";
+		
 	}
 
 	/**
@@ -188,18 +203,6 @@ public class AuthorController extends BaseController {
 
 		return "redirect:/authoring/roleplay/publish/" + roleplay.getId();
 
-	}
-
-	/* ********************************* Read ********************************* */
-
-	public String selectRoleplay() {
-
-		// SessionObject so = SessionObject.getSo(request.getSession());
-
-		// allForOrganization = new
-		// Roleplay().getallForOrganization(so.getOrganizationId());
-
-		return "selectRoleplay.jsp";
 	}
 
 	/*
@@ -283,9 +286,13 @@ public class AuthorController extends BaseController {
 
 		model.addAttribute("actor", actor);
 		model.addAttribute("authorCreateActorFormBean", new AuthorCreateActorFormBean(actor));
-		model.addAttribute("actorsForThisRoleplay", new Actor().getAllForRoleplay(rpId));
+		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(rpId));
 
 		return "authoring/actor/createActor.jsp";
+	}
+	
+	public List getActorsForRolePlay(Long rpId){
+		return  new Actor().getAllForRoleplay(rpId);
 	}
 
 	/**
@@ -332,7 +339,7 @@ public class AuthorController extends BaseController {
 
 		}
 
-		model.addAttribute("actorsForThisRoleplay", new Actor().getAllForRoleplay(rpId));
+		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(rpId));
 
 		return "redirect:/authoring/rpId/" + rpId + "/actor/create/" + actor.getId();
 
@@ -452,7 +459,7 @@ public class AuthorController extends BaseController {
 
 		System.out.println("id was " + rpId);
 
-		addModelObjectsOnPlacePluginsPage(model, rpId);
+		//addModelObjectsOnPlacePluginsPage(model, rpId);
 
 		return "redirect:/authoring/rpId/" + rpId + "/a/0/ph/0/pluginPlacement";
 	}
@@ -465,17 +472,16 @@ public class AuthorController extends BaseController {
 
 		List<Plugin> thePlugins = new Plugin().getAllUncustomized();
 
-		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxx  " + thePlugins.size());
-
 		// Setting id to 0 to indicate that this is for all actors, likewise for
 		// phase
 		Actor actor = new Actor().getModelObject(Actor.class, aId);
 		Phase phase = new Phase().getModelObject(Phase.class, phId);
 
 		model.addAttribute("actor", actor);
+		model.addAttribute("actorId", actor.getId());
 		model.addAttribute("phase", phase);
 		model.addAttribute("plugins", thePlugins);
-		addModelObjectsOnPlacePluginsPage(model, rpId);
+		addModelObjectsOnPlacePluginsPage(model);
 
 		return "authoring/pluginPlacement/placePlugin.jsp";
 	}
@@ -500,6 +506,10 @@ public class AuthorController extends BaseController {
 				pp.save();
 				
 			}
+			
+			// Create a pointer to indicate this was added as universal
+			PluginPointer pp = new PluginPointer(rpId, phId, authorAddPluginFormBean.getPluginHeading(),
+					plugin.getId(), true);
 		} else {
 			// Create pluginPointer for the specifc actor on hand.
 			PluginPointer pp = new PluginPointer(rpId, aId, phId, authorAddPluginFormBean.getPluginHeading(),
@@ -518,13 +528,15 @@ public class AuthorController extends BaseController {
 	 * @param model
 	 * @param rpId
 	 */
-	public void addModelObjectsOnPlacePluginsPage(Model model, Long rpId) {
+	public void addModelObjectsOnPlacePluginsPage(Model model) {
 
+		Long rpId = getSessionInfoBean().getRoleplayId();
 		Long aId = getSessionInfoBean().getActorId();
 		Long phId = getSessionInfoBean().getPhaseId();
 
 		model.addAttribute("pluginPointers", new PluginPointer().getCurrentSet(rpId, aId, phId));
-		model.addAttribute("actorsForThisRoleplay", new Actor().getAllForRoleplay(rpId));
+		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(rpId));
+		
 		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(rpId));
 		model.addAttribute("authorAddPluginFormBean", new AuthorAddPluginFormBean());
 	}
@@ -536,23 +548,15 @@ public class AuthorController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = { "pluginPlacement/changeActor" }, method = RequestMethod.POST)
-	public String placePluginChangeActor(HttpServletRequest request, Model model) {
+	public String placePluginChangeActor(HttpServletRequest request, Model model,
+			@ModelAttribute("actor") Actor actor ) {
 
-		Long aId = new Long(0);
-		try {
-			aId = new Long(request.getParameter("selectActor"));
-			getSessionInfoBean().setActorId(aId);
-		} catch (Error e) {
-			e.printStackTrace();
-		}
+		getSessionInfoBean().setActorId(actor.getId());
+		
+		addModelObjectsOnPlacePluginsPage(model);
 
-		Long phId = getSessionInfoBean().getPhaseId();
-		Long rpId = getSessionInfoBean().getRoleplayId();
-
-		model.addAttribute("actorsForThisRoleplay", new Actor().getAllForRoleplay(rpId));
-		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(rpId));
-
-		return "redirect:/authoring/rpId/" + rpId + "/a/" + aId + "/ph/" + phId + "/pluginPlacement";
+		return "redirect:/authoring/rpId/" + getSessionInfoBean().getRoleplayId() + "/a/" + 
+			actor.getId() + "/ph/" + getSessionInfoBean().getPhaseId() + "/pluginPlacement";
 	}
 
 	/**
@@ -562,23 +566,14 @@ public class AuthorController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = { "pluginPlacement/changePhase" }, method = RequestMethod.POST)
-	public String placePluginChangePhase(HttpServletRequest request, Model model) {
+	public String placePluginChangePhase(HttpServletRequest request, Model model,
+			@ModelAttribute("phase") Phase phase) {
 
-		Long phId = new Long(0);
-		try {
-			phId = new Long(request.getParameter("selectPhase"));
-			getSessionInfoBean().setPhaseId(phId);
-		} catch (Error e) {
-			e.printStackTrace();
-		}
+		getSessionInfoBean().setPhaseId(phase.getId());
 
-		Long aId = getSessionInfoBean().getActorId();
-		Long rpId = getSessionInfoBean().getRoleplayId();
+		addModelObjectsOnPlacePluginsPage(model);
 
-		model.addAttribute("actorsForThisRoleplay", new Actor().getAllForRoleplay(rpId));
-		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(rpId));
-
-		return "redirect:/authoring/rpId/" + rpId + "/a/" + aId + "/ph/" + phId + "/pluginPlacement";
+		return "redirect:/authoring/rpId/" + getSessionInfoBean().getRoleplayId() + "/a/" + getSessionInfoBean().getActorId() + "/ph/" + phase.getId() + "/pluginPlacement";
 	}
 
 	@RequestMapping(value = { "pluginPlacement/customizePlugin/plugin/{pId}" }, method = RequestMethod.GET)
