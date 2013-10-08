@@ -470,7 +470,7 @@ public class AuthorController extends BaseController {
 
 		System.out.println("id was " + rpId);
 
-		List<Plugin> thePlugins = new Plugin().getAllUncustomized();
+		
 
 		// Setting id to 0 to indicate that this is for all actors, likewise for
 		// phase
@@ -480,7 +480,7 @@ public class AuthorController extends BaseController {
 		model.addAttribute("actor", actor);
 		model.addAttribute("actorId", actor.getId());
 		model.addAttribute("phase", phase);
-		model.addAttribute("plugins", thePlugins);
+		
 		addModelObjectsOnPlacePluginsPage(model);
 
 		return "authoring/pluginPlacement/placePlugin.jsp";
@@ -539,6 +539,9 @@ public class AuthorController extends BaseController {
 		
 		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(rpId));
 		model.addAttribute("authorAddPluginFormBean", new AuthorAddPluginFormBean());
+		
+		List<Plugin> thePlugins = new Plugin().getAllUncustomized();
+		model.addAttribute("plugins", thePlugins);
 	}
 
 	/**

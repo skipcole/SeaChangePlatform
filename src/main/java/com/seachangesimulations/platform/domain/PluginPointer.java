@@ -26,6 +26,8 @@ public class PluginPointer extends BaseSCPlatformObject implements Comparable{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static final String SYSTEM_CONTROL = "CONTROL";
+
 
 	public PluginPointer(){
 		
@@ -68,6 +70,11 @@ public class PluginPointer extends BaseSCPlatformObject implements Comparable{
 		PluginPointerDao dao = (PluginPointerDao) getApplicationContext().getBean("pluginPointerDao", PluginPointerDao.class);
 		return dao.getCurrentSet(rpId, aId, phId);
 	}
+	
+	public PluginPointer getControlPluginByHandle(String handle){
+		PluginPointerDao dao = (PluginPointerDao) getApplicationContext().getBean("pluginPointerDao", PluginPointerDao.class);
+		return dao.getControlPluginByHandle(handle);
+	}
 
 	/** Id of the role play that this object is associated with. */
 	private Long rolePlayId;
@@ -88,6 +95,10 @@ public class PluginPointer extends BaseSCPlatformObject implements Comparable{
 	
 	/** True if this was added as a universal section. */
 	private boolean addedAsUniversal = false;
+	
+	private boolean isSystemPluginPointer = false;
+	
+	private String systemPluginHandle;
 	
 	public void save(){
 		PluginPointerDao dao = (PluginPointerDao) getApplicationContext().getBean("pluginPointerDao", PluginPointerDao.class);
@@ -163,6 +174,22 @@ public class PluginPointer extends BaseSCPlatformObject implements Comparable{
 
 	public void setPluginHeading(String pluginHeading) {
 		this.pluginHeading = pluginHeading;
+	}
+
+	public boolean isSystemPluginPointer() {
+		return isSystemPluginPointer;
+	}
+
+	public void setSystemPluginPointer(boolean isSystemPluginPointer) {
+		this.isSystemPluginPointer = isSystemPluginPointer;
+	}
+
+	public String getSystemPluginHandle() {
+		return systemPluginHandle;
+	}
+
+	public void setSystemPluginHandle(String systemPluginHandle) {
+		this.systemPluginHandle = systemPluginHandle;
 	}
 
 	public PluginPointer getByPlayerValues(Long roleplayId2, Long actorId2, Long phaseId2, Long pluginIndex2) {

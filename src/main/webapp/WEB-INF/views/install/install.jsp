@@ -11,7 +11,8 @@
 	<div>
 		<h2>Install Platform</h2>
 
-		<sf:form method="POST" modelAttribute="adminInstallationFormBean">
+		<sf:form method="POST" action="${pageContext.request.contextPath}/install/installForm"
+			modelAttribute="adminInstallationFormBean">
 			<fieldset>
 				<table cellspacing="0">
 					<tr>

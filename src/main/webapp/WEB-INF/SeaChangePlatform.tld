@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib> 
+<tlibversion>1.0</tlibversion>
+<jspversion>2.0</jspversion>
+<shortname>scp</shortname>
+<info>Sea Change Tab Library</info>
+<uri>http://seachangesimulations.com</uri>
+
+<tag>
+    <name>actorname</name>
+    <tagclass>com.seachangesimulations.platform.customtaglib.ActorNameTag</tagclass>
+    <info>Actor Name.</info>
+</tag>
+<tag>
+    <name>documenttext</name>
+    <tagclass>com.seachangesimulations.platform.customtaglib.DocumentTextTag</tagclass>
+    <info>Document Text</info>
+</tag>
+
+</taglib> 

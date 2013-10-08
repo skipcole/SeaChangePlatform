@@ -1,6 +1,7 @@
 package com.seachangesimulations.platform.mvc;
 
 import java.security.Principal;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,8 +64,14 @@ public class PlayerController extends BaseController {
 		getSessionInfoBean().setPluginIndex(new Long(0));
 		
 		model.addAttribute("personRoleplayAssignments", pra);
-		model.addAttribute("pluginPointers", 
-				new PluginPointer().getCurrentSet(pra.getRolePlayId(), pra.getActorId(), phase.getId()));
+		
+		List playersTabs = new PluginPointer().getCurrentSet(pra.getRolePlayId(), pra.getActorId(), phase.getId());
+		
+		if (true) {
+			playersTabs.add(new PluginPointer().getControlPluginByHandle(PluginPointer.SYSTEM_CONTROL));
+		}
+		
+		model.addAttribute("pluginPointers", playersTabs);
 		
 		return "playing/theRoleplay.jsp";
 	}
@@ -76,14 +83,14 @@ public class PlayerController extends BaseController {
 		
 		Plugin plugin = new Plugin().getById(pluginPointer.getPluginId());
 		
-		System.out.println(plugin.generatePluginDirectory() + "/1.htm");
+		if (plugin.isSystemPlugin()){
+			return plugin.getPluginDirectory();
+		}
 		
 		model.addAttribute("pageText", pluginProvider.processPlugin(plugin, getSessionInfoBean()));
 		
 		return "playing/showPlugin.jsp";
 		
-		//return (" will send contents from redirect:/resources/plugins/" + plugin.generatePluginDirectory() + "/1.htm");
-		//return ("redirect:/resources/plugins/" + plugin.generatePluginDirectory() + "/1.htm");
 	}
 	
 	

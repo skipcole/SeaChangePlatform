@@ -77,7 +77,15 @@ public class PluginObjectDocument extends BasePluginObject {
 		
 		ArrayList returnList = new ArrayList();
 		for (PluginObjectAssociation poa : poas){
-			returnList.add(new PluginObjectDocument().getById(poa.getPluginId()));
+			System.out.println(poa.getObjectType());
+			
+			// Since we only have docs now
+			PluginObjectDocument pod = new PluginObjectDocument().getById(poa.getObjectId());
+			if (pod == null) {
+				System.out.println("XXXXXXX        XXXXXXXX XXXXXXXXXXXXX     pod null");
+			} else {
+				returnList.add(pod);
+			}
 		}
 		
 		return returnList;

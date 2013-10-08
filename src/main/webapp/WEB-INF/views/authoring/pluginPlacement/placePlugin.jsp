@@ -85,12 +85,12 @@
 		modelAttribute="authorAddPluginFormBean" method="POST"
 	>
 
-		<sf:select name="rawPluginId" id="rawPluginId" path="rawPluginId">
+		<sf:select id="rawPluginId" path="rawPluginId">
 			<c:forEach var="plugin" items="${plugins}">
 				<option value="${plugin.id}"><c:out value="${plugin.pluginName}" /></option>
 			</c:forEach>
 		</sf:select>
-		<sf:input type="text" name="pluginHeading" id="pluginHeading" path="pluginHeading" />
+		<sf:input type="text" id="pluginHeading" path="pluginHeading" />
 		<input type="submit" name="addPluginButton" id="addPluginButton" value="Add">
 	</sf:form>
 	<p>&nbsp;</p>

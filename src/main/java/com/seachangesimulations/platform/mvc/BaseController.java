@@ -17,6 +17,7 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
 @Controller
 public class BaseController implements ApplicationContextAware {
 
+	@Autowired
 	protected ApplicationContext thisApplicationContext;
 
 	@Override

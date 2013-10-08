@@ -25,6 +25,8 @@ public class AuthorCreateActorFormBean {
 	
 	private String publicDescription;
 	
+	private boolean controlCharacter = false;
+	
 
 	public Long getRoleplayId() {
 		return roleplayId;
@@ -51,15 +53,14 @@ public class AuthorCreateActorFormBean {
 		this.publicDescription = publicDescription;
 	}
 
-	public Actor load() {
-
-		Actor actor = new Actor();
-		
-		actor.setActorName(actorName);
-		actor.setRoleplayId(roleplayId);
-		
-		return actor;
+	public boolean isControlCharacter() {
+		return controlCharacter;
 	}
+
+	public void setControlCharacter(boolean controlCharacter) {
+		this.controlCharacter = controlCharacter;
+	}
+	
 	
 	
 }

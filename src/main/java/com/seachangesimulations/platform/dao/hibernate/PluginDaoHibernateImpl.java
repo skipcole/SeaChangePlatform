@@ -25,7 +25,7 @@ public class PluginDaoHibernateImpl extends BaseDaoHibernateImpl<Plugin> impleme
 		Session session = getSessionFactory().openSession();
 		session.beginTransaction();
 
-		Query query = session.createQuery("from Plugin where customized is false ");
+		Query query = session.createQuery("from Plugin where customized is false and isSystemPlugin is false ");
 		returnList = query.list();
 		session.close();
 		

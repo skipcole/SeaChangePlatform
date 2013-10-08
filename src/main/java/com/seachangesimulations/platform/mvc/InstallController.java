@@ -9,8 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.seachangesimulations.platform.domain.Organization;
 import com.seachangesimulations.platform.domain.Person;
+import com.seachangesimulations.platform.domain.Plugin;
+import com.seachangesimulations.platform.domain.PluginPointer;
 import com.seachangesimulations.platform.domain.assignment.PersonOrganizationAssignment;
 import com.seachangesimulations.platform.mvc.formbeans.admin.AdminInstallationFormBean;
 
@@ -58,7 +61,18 @@ public class InstallController extends BaseController{
 			p.setInitialOrgId(orgId);
 
 			p.save();
-
+			
+			Plugin controlPlugin = new Plugin();
+			controlPlugin.setSystemPlugin(true);
+			controlPlugin.setPluginDirectory("playing/controlTab.jsp");
+			controlPlugin.save();
+			
+			PluginPointer controlPointer = new PluginPointer();
+			controlPointer.setSystemPluginPointer(true);
+			controlPointer.setSystemPluginHandle(PluginPointer.SYSTEM_CONTROL);
+			controlPointer.setPluginHeading("Control");
+			controlPointer.setPluginId(controlPlugin.getId());
+			controlPointer.save();
 
 		} catch (Exception e) {
 			e.printStackTrace();

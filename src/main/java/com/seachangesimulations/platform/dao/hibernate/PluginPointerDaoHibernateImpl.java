@@ -39,6 +39,24 @@ public class PluginPointerDaoHibernateImpl extends BaseDaoHibernateImpl<PluginPo
 		
 		return returnList;
 	}
+	
+	@Override
+	public PluginPointer getControlPluginByHandle(String handle) {
+		
+		PluginPointer returnPluginPointer = new PluginPointer();
+		
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
+
+		Query query = session.createQuery("from PluginPointer where systemPluginHandle = :handle")
+				.setString("handle", handle);
+		
+		returnPluginPointer = (PluginPointer) query.uniqueResult();
+
+		session.close();
+		
+		return returnPluginPointer;
+	}
 
 	@Override
 	public PluginPointer getByPlayerValues(Long roleplayId2, Long actorId2, Long phaseId2, Long pluginIndex) {
@@ -55,4 +73,6 @@ public class PluginPointerDaoHibernateImpl extends BaseDaoHibernateImpl<PluginPo
 		
 		return pp;
 	}
+
+
 }

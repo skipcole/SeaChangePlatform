@@ -34,6 +34,8 @@ public class Actor extends BaseSCPlatformObject {
 	/** Name of the image associated with the Actor */
 	private String actorImageName;
 	
+	private boolean controlCharacter = false;
+	
 	
 	public void save(){
 		ActorDao dao = (ActorDao) getApplicationContext().getBean("actorDao", ActorDao.class);
@@ -96,6 +98,14 @@ public class Actor extends BaseSCPlatformObject {
 
 	public void setActorImageName(String actorImageName) {
 		this.actorImageName = actorImageName;
+	}
+
+	public boolean isControlCharacter() {
+		return controlCharacter;
+	}
+
+	public void setControlCharacter(boolean controlCharacter) {
+		this.controlCharacter = controlCharacter;
 	}
 	
 	

@@ -58,6 +58,13 @@
 						id="publicDescription" path="publicDescription" /></td>
 			</tr>
 			<tr>
+				<td>Control Character</td>
+				<td>
+					<sf:radiobutton path="controlCharacter" value="false" label="False" /> &nbsp;
+					<sf:radiobutton path="controlCharacter" value="true" label="True" />
+				</td>
+			</tr>
+			<tr>
 				<td>Actor Image</td>
 				<td><input type="file" name="actorImage" id="actorImage"
 					path="actorImage" /></td>

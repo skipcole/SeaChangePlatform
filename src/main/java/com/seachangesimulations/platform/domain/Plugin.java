@@ -1,4 +1,3 @@
-
 package com.seachangesimulations.platform.domain;
 
 import java.util.List;
@@ -26,12 +25,12 @@ public class Plugin extends BaseSCPlatformObject {
 	public Plugin() {
 
 	}
-	
-	public Plugin getById(Long id){
+
+	public Plugin getById(Long id) {
 		PluginDao dao = (PluginDao) getApplicationContext().getBean("pluginDao", PluginDao.class);
 		return dao.get(id);
 	}
-	
+
 	public List<Plugin> getAllUncustomized() {
 		PluginDao dao = (PluginDao) getApplicationContext().getBean("pluginDao", PluginDao.class);
 
@@ -39,59 +38,61 @@ public class Plugin extends BaseSCPlatformObject {
 	}
 
 	private boolean customized;
-	
+
 	private String author;
-	
+
 	private String authorURI;
-	
+
 	private String description;
-	
+
 	private String language;
-	
+
 	private String license;
-	
+
 	private String pluginName;
-	
+
 	private String pluginURI;
-	
+
 	private String pluginReleaseMajorNumber;
-	
+
 	private String pluginReleaseMinorNumber;
-	
+
 	private String pluginReleaseMicroNumber;
-	
+
 	private String pluginReleaseLetters;
-	
+
 	private String shortFormOrgName;
-	
+
 	private String shortFormPluginName;
-	
+
 	private String pluginDirectory;
-	
+
+	private boolean isSystemPlugin;
+
 	/**
-	 * Constructs the directory to hold the plugin files based on the 
-	 * plugins name, who constructed it (to disambiguate plugins of the same name by 
+	 * Constructs the directory to hold the plugin files based on the plugins
+	 * name, who constructed it (to disambiguate plugins of the same name by
 	 * different creators) and release.
 	 * 
 	 * @return
 	 */
-	public String generatePluginDirectory(){
+	public String generatePluginDirectory() {
 		String pd = shortFormPluginName + "_" + shortFormOrgName;
-		
-		if (StringUtils.hasText(pluginReleaseMajorNumber)){
+
+		if (StringUtils.hasText(pluginReleaseMajorNumber)) {
 			pd += "_" + pluginReleaseMajorNumber;
 		}
-		if (StringUtils.hasText(pluginReleaseMinorNumber)){
+		if (StringUtils.hasText(pluginReleaseMinorNumber)) {
 			pd += "_" + pluginReleaseMinorNumber;
 		}
-		if (StringUtils.hasText(pluginReleaseMicroNumber)){
+		if (StringUtils.hasText(pluginReleaseMicroNumber)) {
 			pd += "_" + pluginReleaseMicroNumber;
 		}
-		if (StringUtils.hasText(pluginReleaseLetters)){
+		if (StringUtils.hasText(pluginReleaseLetters)) {
 			pd += "_" + pluginReleaseLetters;
 		}
 		return pd;
-		
+
 	}
 
 	public boolean isCustomized() {
@@ -157,7 +158,6 @@ public class Plugin extends BaseSCPlatformObject {
 	public void setPluginURI(String pluginURI) {
 		this.pluginURI = pluginURI;
 	}
-	
 
 	public String getPluginReleaseMajorNumber() {
 		return pluginReleaseMajorNumber;
@@ -215,16 +215,27 @@ public class Plugin extends BaseSCPlatformObject {
 		this.pluginDirectory = pluginDirectory;
 	}
 
-	public void save(){
-		
-		pluginDirectory = this.generatePluginDirectory();
-		
+	public boolean isSystemPlugin() {
+		return isSystemPlugin;
+	}
+
+	public void setSystemPlugin(boolean isSystemPlugin) {
+		this.isSystemPlugin = isSystemPlugin;
+	}
+
+	public void save() {
+
+		if (!this.isSystemPlugin){
+			pluginDirectory = this.generatePluginDirectory();
+		}
+
 		PluginDao dao = (PluginDao) getApplicationContext().getBean("pluginDao", PluginDao.class);
 		dao.save(this);
 	}
 
 	/**
-	 * Returns a copy of the plugin passed in, and all objects associated with it.
+	 * Returns a copy of the plugin passed in, and all objects associated with
+	 * it.
 	 * 
 	 * @param rawPluginId
 	 * @return
@@ -232,35 +243,53 @@ public class Plugin extends BaseSCPlatformObject {
 	public static Plugin getPluginClone(Long originalPluginId) {
 
 		Plugin originalPlugin = new Plugin().getById(originalPluginId);
-		
+
 		Plugin newPlugin = new Plugin();
-		
+
 		BeanUtils.copyProperties(originalPlugin, newPlugin);
-		
+
 		newPlugin.setId(null);
 		newPlugin.setVersion(null);
 		newPlugin.save();
-		
-		List <PluginObjectDocument> pluginObjectDocuments = new PluginObjectDocument().getAllForPlugin(originalPlugin.getId());
-		
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		
-		for (PluginObjectDocument pod : pluginObjectDocuments){
+		System.out.println("id is " + originalPlugin.getId());
+
+		List<PluginObjectDocument> pluginObjectDocuments = new PluginObjectDocument().getAllForPlugin(originalPlugin
+				.getId());
+
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		System.out.println("size is " + pluginObjectDocuments.size());
+
+		for (PluginObjectDocument pod : pluginObjectDocuments) {
 			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
-			PluginObjectDocument newPod = new PluginObjectDocument();
-			BeanUtils.copyProperties(pod, newPod);
-			newPod.setId(null);
-			newPod.setVersion(null);
-			newPod.save();
-			
-			PluginObjectAssociation poa = new PluginObjectAssociation();
-			poa.setObjectId(newPod.getId());
-			poa.setPluginId(newPlugin.getId());
-			poa.setObjectType(PluginObjectDocument.class.getCanonicalName());
-			poa.save();
+			if (pod == null) {
+				System.out.println("pod is null");
+			} else {
+				System.out.println(pod.getDocumentName());
+				System.out.println(pod.getDocumentDescription());
+				System.out.println(pod.getDocumentText());
+
+				PluginObjectDocument newPod = new PluginObjectDocument();
+				try {
+					BeanUtils.copyProperties(pod, newPod);
+				} catch (Exception e) {
+					e.printStackTrace();
+					newPod.setDocumentName("bad");
+					newPod.setDocumentText("bad");
+				}
+				newPod.setId(null);
+				newPod.setVersion(null);
+				newPod.save();
+
+				PluginObjectAssociation poa = new PluginObjectAssociation();
+				poa.setObjectId(newPod.getId());
+				poa.setPluginId(newPlugin.getId());
+				poa.setObjectType(PluginObjectDocument.class.getCanonicalName());
+				poa.save();
+			}
 		}
-		
+
 		return newPlugin;
 	}
 
