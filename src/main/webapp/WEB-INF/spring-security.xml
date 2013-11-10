@@ -31,6 +31,7 @@
 		<intercept-url pattern="/authoring/**" access="hasRole('ROLE_AUTHOR')" />
 		<intercept-url pattern="/facilitating/**" access="hasRole('ROLE_FACILITATOR')" />
 		<intercept-url pattern="/playing/**" access="hasRole('ROLE_PLAYER')" />
+		<intercept-url pattern="/plugins/**" access="hasRole('ROLE_PLAYER')" />
 		<!-- End of intercept rules -->
 		
 		<logout 

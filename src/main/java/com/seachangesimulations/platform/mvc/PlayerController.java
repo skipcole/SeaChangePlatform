@@ -1,5 +1,6 @@
 package com.seachangesimulations.platform.mvc;
 
+import java.io.File;
 import java.security.Principal;
 import java.util.*;
 
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import com.seachangesimulations.platform.domain.PluginPointer;
 import com.seachangesimulations.platform.domain.Roleplay;
 import com.seachangesimulations.platform.domain.RoleplayInMotion;
 import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
+import com.seachangesimulations.platform.mvc.formbeans.author.AuthorCreatePhaseFormBean;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 
@@ -69,6 +72,7 @@ public class PlayerController extends BaseController {
 		
 		if (true) {
 			playersTabs.add(new PluginPointer().getControlPluginByHandle(PluginPointer.SYSTEM_CONTROL));
+			model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
 		}
 		
 		model.addAttribute("pluginPointers", playersTabs);
@@ -83,13 +87,29 @@ public class PlayerController extends BaseController {
 		
 		Plugin plugin = new Plugin().getById(pluginPointer.getPluginId());
 		
+		getSessionInfoBean().setPluginId(plugin.getId());
+		
+		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
+		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
+		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
+		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
+		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
+		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
+
+		
 		if (plugin.isSystemPlugin()){
+			Phase phase = new Phase().getById(this.getSessionInfoBean().getPhaseId());
+			model.addAttribute("phase", phase);
+			model.addAttribute("phasesForThisRoleplay", 
+					new Phase().getAllForRoleplay(this.getSessionInfoBean().getRoleplayId()));
 			return plugin.getPluginDirectory();
+		} else {
+			return "redirect:" + plugin.generatePluginPath() + "1.jsp";
 		}
 		
-		model.addAttribute("pageText", pluginProvider.processPlugin(plugin, getSessionInfoBean()));
+		//model.addAttribute("pageText", pluginProvider.processPlugin(plugin, getSessionInfoBean()));
 		
-		return "playing/showPlugin.jsp";
+		//return "playing/showPlugin.jsp";
 		
 	}
 	
@@ -116,6 +136,19 @@ public class PlayerController extends BaseController {
 		pod.setDocumentName("documentName");
 		pod.setDocumentText("doc text");
 		return pod;
+	}
+	
+	@RequestMapping(value = { "changePhase" }, method = RequestMethod.POST)
+	public String changeChase(Model model, @ModelAttribute("phase") Phase phase) {
+
+		System.out.println("changing phase");
+		// SKIPTODO - make it reals
+		this.getSessionInfoBean().setPhaseId(new Long(1));
+		
+		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
+		
+		return "authoring/selectRoleplay.jsp";
+		
 	}
 	
 		

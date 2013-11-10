@@ -13,6 +13,11 @@ import com.seachangesimulations.platform.pluginobjects.dao.PluginObjectAssociati
 
 /**
  * This object represents the many to many link between a plugin and its objects.
+ * It is a very important class, and I'm thinking about splitting it into three classes.
+ * An object can be associated with a plugin at the 'developer' level. If this is the case,
+ * the role play and roleplay in motion (rpim) ids are null. An object can be associated with a plugin at the
+ * author (or roleplay) level, in which case the rpim is null. And an object can be 
+ * associated with a roleplay in motion.
  * 
  * @author Skip
  *
@@ -23,6 +28,11 @@ import com.seachangesimulations.platform.pluginobjects.dao.PluginObjectAssociati
 @XmlRootElement
 public class PluginObjectAssociation extends BaseSCPlatformObject implements Comparable{
 
+	public static final String BASE_PLUGIN_ASSOCIATION = "BASE_PLUGIN_ASSOCIATION";
+	
+	public static final String RP_PLUGIN_ASSOCIATION = "RP_PLUGIN_ASSOCIATION";
+	
+	public static final String RPIM_PLUGIN_ASSOCIATION = "RPIM_PLUGIN_ASSOCIATION";
 	
 	/**
 	 * 
@@ -31,6 +41,9 @@ public class PluginObjectAssociation extends BaseSCPlatformObject implements Com
 
 	private Long pluginId;
 	
+	/** Indicates if this object is associated with a plugin at the level of a plugin, or roleplay, or rpim. */
+	private String associationType;
+	
 	private Long objectId;
 	
 	private String objectName;
@@ -38,6 +51,12 @@ public class PluginObjectAssociation extends BaseSCPlatformObject implements Com
 	private String objectType;
 	
 	private int objectIndex;
+	
+	/** Id of the Roleplay that this object is associated with. */
+	private Long rpId;
+	
+	/** Id of the Roleplay in Motion that this object is associated with. */
+	private Long rpimId;
 
 	public Long getPluginId() {
 		return pluginId;
@@ -119,5 +138,37 @@ public class PluginObjectAssociation extends BaseSCPlatformObject implements Com
 		
 		return currentPlugins.size() + 1;
 	}
+
+	
+	public Long getRpId() {
+		return rpId;
+	}
+
+	public void setRpId(Long rpId) {
+		this.rpId = rpId;
+	}
+
+	public Long getRpimId() {
+		return rpimId;
+	}
+
+	public void setRpimId(Long rpimId) {
+		this.rpimId = rpimId;
+	}
+	
+	public String getAssociationType() {
+		return associationType;
+	}
+
+	public void setAssociationType(String associationType) {
+		this.associationType = associationType;
+	}
+
+	public List<PluginObjectAssociation> getAllForPlugin(Long id, Long rpId2, Long rpimId2) {
+		PluginObjectAssociationDao dao = (PluginObjectAssociationDao) getApplicationContext().getBean("pluginObjectAssociationDao", PluginObjectAssociationDao.class);
+		return dao.getAllForPlugin(id, rpId2, rpimId2);
+	}
+	
+	
 
 }

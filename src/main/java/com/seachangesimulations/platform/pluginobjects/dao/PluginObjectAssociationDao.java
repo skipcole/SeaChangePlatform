@@ -13,4 +13,6 @@ public interface PluginObjectAssociationDao extends BaseDao<PluginObjectAssociat
 	public List<PluginObjectAssociation> getAllForPlugin(Long pluginId, String objectTypeName);
 	
 	public List<BasePluginObject> getAllObjectsForPlugin(Long pluginId);
+
+	public List<PluginObjectAssociation> getAllForPlugin(Long id, Long rpId2, Long rpimId2);
 }

@@ -69,6 +69,10 @@ public class Plugin extends BaseSCPlatformObject {
 
 	private boolean isSystemPlugin;
 
+	public String generatePluginPath() {
+		return "/plugins/" + shortFormPluginName + "_" + shortFormOrgName + "/";
+	}
+
 	/**
 	 * Constructs the directory to hold the plugin files based on the plugins
 	 * name, who constructed it (to disambiguate plugins of the same name by
@@ -225,7 +229,7 @@ public class Plugin extends BaseSCPlatformObject {
 
 	public void save() {
 
-		if (!this.isSystemPlugin){
+		if (!this.isSystemPlugin) {
 			pluginDirectory = this.generatePluginDirectory();
 		}
 
@@ -240,7 +244,7 @@ public class Plugin extends BaseSCPlatformObject {
 	 * @param rawPluginId
 	 * @return
 	 */
-	public static Plugin getPluginClone(Long originalPluginId) {
+	public static Plugin getPluginClone(Long rpId, Long rpimId, Long originalPluginId) {
 
 		Plugin originalPlugin = new Plugin().getById(originalPluginId);
 
@@ -251,21 +255,25 @@ public class Plugin extends BaseSCPlatformObject {
 		newPlugin.setId(null);
 		newPlugin.setVersion(null);
 		newPlugin.save();
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		System.out.println("id is " + originalPlugin.getId());
 
-		List<PluginObjectDocument> pluginObjectDocuments = new PluginObjectDocument().getAllForPlugin(originalPlugin
-				.getId());
+		// Need to get the PluginObjectAssociations here, instead of documents
+		List<PluginObjectAssociation> poas = new PluginObjectAssociation().getAllForPlugin(originalPlugin.getId(),
+				rpId, rpimId);
 
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		System.out.println("size is " + pluginObjectDocuments.size());
+		for (PluginObjectAssociation poa : poas) {
+			System.out.println(poa.getObjectType());
 
-		for (PluginObjectDocument pod : pluginObjectDocuments) {
-			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+			Long newObjectId = null;
+			String newObjectType = null;
+			int newObjectIndex = 0;
 
-			if (pod == null) {
-				System.out.println("pod is null");
-			} else {
+			if (PluginObjectDocument.class.getCanonicalName().equalsIgnoreCase(poa.getObjectType())) {
+
+				newObjectType = PluginObjectDocument.class.getCanonicalName();
+
+				PluginObjectDocument pod = new PluginObjectDocument().getById(poa.getObjectId());
+
 				System.out.println(pod.getDocumentName());
 				System.out.println(pod.getDocumentDescription());
 				System.out.println(pod.getDocumentText());
@@ -275,22 +283,28 @@ public class Plugin extends BaseSCPlatformObject {
 					BeanUtils.copyProperties(pod, newPod);
 				} catch (Exception e) {
 					e.printStackTrace();
-					newPod.setDocumentName("bad");
-					newPod.setDocumentText("bad");
 				}
 				newPod.setId(null);
 				newPod.setVersion(null);
 				newPod.save();
+				newObjectId = newPod.getId();
 
-				PluginObjectAssociation poa = new PluginObjectAssociation();
-				poa.setObjectId(newPod.getId());
-				poa.setPluginId(newPlugin.getId());
-				poa.setObjectType(PluginObjectDocument.class.getCanonicalName());
-				poa.save();
 			}
+
+			/* Create and save the new association */
+			PluginObjectAssociation newPoa = new PluginObjectAssociation();
+			newPoa.setPluginId(newPlugin.getId());
+			newPoa.setRpId(rpId);
+			newPoa.setRpimId(rpimId);
+			newPoa.setObjectIndex(poa.getObjectIndex());
+			
+			newPoa.setObjectId(newObjectId);
+			newPoa.setObjectType(newObjectType);
+			
+			newPoa.save();
 		}
 
 		return newPlugin;
-	}
 
+	}
 }

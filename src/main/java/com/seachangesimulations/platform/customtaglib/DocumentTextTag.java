@@ -9,17 +9,21 @@ import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 
 public class DocumentTextTag extends BaseTag {
 
+	private int docIndex;
+	
     @Override
     public int doStartTag() throws JspException {
          
         try {
             //Get the writer object for output.
             JspWriter out = pageContext.getOut();
- 
-            // Baby steps ...
-            PluginObjectDocument pod = new PluginObjectDocument().getById(new Long(2));
             
-            //Perform substr operation on string.
+            // Using plugin id and doc index to locate the document
+            System.out.println("plugin id is " + getSessionInfoBean().getPluginId());
+            PluginObjectDocument pod = 
+            		new PluginObjectDocument().getByRPimIdPluginIdAndIndex(getSessionInfoBean().getRolePlayInMotionId(), getSessionInfoBean().getPluginId(), docIndex);
+            
+            //Print out document
             out.println(pod.getDocumentText());
  
         } catch (IOException e) {
@@ -27,4 +31,14 @@ public class DocumentTextTag extends BaseTag {
         }
         return SKIP_BODY;
     }
+
+	public int getDocIndex() {
+		return docIndex;
+	}
+
+	public void setDocIndex(int docIndex) {
+		this.docIndex = docIndex;
+	}
+    
+    
 }

@@ -1,5 +1,7 @@
 package com.seachangesimulations.platform.customtaglib;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.springframework.beans.BeansException;
@@ -18,8 +20,13 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
 public class BaseTag  extends TagSupport{
 	
 	public SessionInfoBean getSessionInfoBean(){
-		WebApplicationContext wc = WebApplicationContextUtils.getWebApplicationContext( pageContext.getServletContext());
-		SessionInfoBean sib = (SessionInfoBean) wc.getBean("sessionInfoBean");
+		
+		HttpSession session = pageContext.getSession();
+		String uname = (String) session.getAttribute("uname");
+		SessionInfoBean sib = SessionInfoBean.getMySessionInfo(uname);
+		
+		//WebApplicationContext wc = WebApplicationContextUtils.getWebApplicationContext( pageContext.getServletContext());
+		//SessionInfoBean sib = (SessionInfoBean) wc.getBean("sessionInfoBean");
 		
 		return sib;
 	}

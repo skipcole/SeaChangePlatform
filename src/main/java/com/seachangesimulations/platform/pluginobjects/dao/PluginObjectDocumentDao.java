@@ -9,4 +9,6 @@ public interface PluginObjectDocumentDao extends BaseDao<PluginObjectDocument>{
 
 	List<PluginObjectDocument> getAllForPlugin(Long pluginId);
 
+	PluginObjectDocument getByRPimIdPluginIdAndIndex(Long rpimId, Long pluginId, int docIndex);
+
 }

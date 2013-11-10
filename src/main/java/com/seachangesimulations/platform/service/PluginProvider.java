@@ -80,19 +80,4 @@ public class PluginProvider {
 		return pluginText;
 	}
 
-	public String processPlugin(Plugin plugin, SessionInfoBean sessionInfoBean) {
-		
-		String baseFile = getPluginFile(plugin);
-		baseFile = baseFile.replaceAll("ACTORNAME", sessionInfoBean.getActorName());
-		
-		List <PluginObjectDocument> pluginDocs = new PluginObjectDocument().getAllForPlugin(plugin.getId());
-		
-		//Need to make this based on index.
-		for (PluginObjectDocument pod: pluginDocs ) {
-			baseFile = baseFile.replaceAll("PLUGINDOC", pod.getDocumentText());
-		}
-		
-		return baseFile.toString();
-	}
-
 }

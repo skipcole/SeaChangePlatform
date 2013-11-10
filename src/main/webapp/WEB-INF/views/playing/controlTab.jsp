@@ -51,7 +51,22 @@
 
 </div>
 <p>from the tag lib: <scp:actorname /></p>
-<p>from the tag lib: <scp:documenttext /></p>
+
+	<sf:form name="formChangePhase"  modelAttribute="phase"  method="post"
+		action="${pageContext.request.contextPath}/playing/changePhase"
+	>
+		<p>
+			Phase:
+			<c:if test="${sessionScope.sessionInfoBean.phaseId != 0}">${sessionScope.sessionInfoBean.phaseId}</c:if>
+		</p>
+		
+		<sf:select path="id" id="selectPhaseList" >
+			<sf:options items="${phasesForThisRoleplay}"  itemValue="id" itemLabel="phaseName" ></sf:options>
+		</sf:select>
+		
+		
+		<input type="submit" name="selectPhaseButton" id="selectPhaseButton" value="Submit">
+	</sf:form>
 
 <!-- InstanceEndEditable -->
 </body>

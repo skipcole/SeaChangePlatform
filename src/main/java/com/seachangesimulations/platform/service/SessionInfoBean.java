@@ -14,7 +14,7 @@ import com.seachangesimulations.platform.domain.Person;
 import com.seachangesimulations.platform.domain.Roleplay;
 
 @Service("sessionInfoBean")
-@Scope("session")
+@Scope("globalSession")
 @XmlAccessorType (XmlAccessType.NONE)   // This means that if you want a field mapped, it has to be annotated.
 public class SessionInfoBean {
 
@@ -23,6 +23,12 @@ public class SessionInfoBean {
 	public static final String AUTHOR_ZONE = "author";
 	public static final String FACILITATOR_ZONE = "facilitator";
 	public static final String PLAYER_ZONE = "player";
+	
+	private static Hashtable allSessions = new Hashtable();
+	
+	public static SessionInfoBean getMySessionInfo(String uname) {
+		return (SessionInfoBean) allSessions.get(uname);
+	}
 	
 	public SessionInfoBean() {
 		
@@ -86,6 +92,10 @@ public class SessionInfoBean {
 	/** Index of what plugin (tab) they are currently on. */
 	@XmlAttribute
 	private Long pluginIndex = new Long(0);
+	
+	/** Id of the plugin (tab) they are currently on. */
+	@XmlAttribute
+	private Long pluginId;
 
 	/** ID of the Role Play in Motion being conducted or worked on. */
 	@XmlAttribute
@@ -255,6 +265,8 @@ public class SessionInfoBean {
 			this.setRoleplayName(roleplay.getRoleplayName());
 
 		}
+		
+		allSessions.put(username, this);
 
 	}
 
@@ -281,6 +293,15 @@ public class SessionInfoBean {
 		return actorName;
 		
 	}
+
+	public Long getPluginId() {
+		return pluginId;
+	}
+
+	public void setPluginId(Long pluginId) {
+		this.pluginId = pluginId;
+	}
+
 	
 	
 

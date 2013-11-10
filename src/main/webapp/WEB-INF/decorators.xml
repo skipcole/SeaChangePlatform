@@ -18,6 +18,7 @@
 		<pattern>/welcome</pattern>
 		<pattern>/playing/showPlugin/**</pattern>
 		<pattern>/META-INF/*</pattern>
+		<pattern>/plugins/**</pattern>
 	</excludes>
 
 	<decorator name="layout" page="layout.jsp">

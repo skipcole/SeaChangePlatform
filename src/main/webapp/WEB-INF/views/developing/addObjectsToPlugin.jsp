@@ -5,6 +5,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE HTML >
 <html><!-- InstanceBegin template="/Templates/SeaChangePlatform.dwt.jsp" codeOutsideHTMLIsLocked="false" -->
 <head>
@@ -38,18 +39,33 @@
 <body>
 	<!-- InstanceBeginEditable name="BodyRegion" -->
 	<p>Add Objects to Plugin: ${plugin.getPluginName()}</p>
-	<p>On this page you will</p>
+	<p>On this page you will associate objects (documents, media, injects, etc.) with your plugin that the roleplay
+	author can then modify.</p>
 	<table border="1">
 		<tr>
-			<td><h2>Current Objects</h2></td>
+			<td colspan="3"><h2>Current Objects</h2></td>
 		</tr>
-		<c:forEach var="pluginFileAssociation" items="${pluginFileAssociations}">
-			<!-- TODO put in test to see if is document type object -->
+		<c:choose>
+			<c:when test="${fn:length(pluginObjectAssociations) gt 0}">
 			<tr>
-				<td><a href="${pageContext.request.contextPath}/developing/modifyPluginObject/plugin/${pluginFileAssociation.pluginId}/document/${pluginFileAssociation.objectId}/"><c:out value="${pluginFileAssociation.objectName}" /></a></td>
+				<td>Index</td>
+				<td>Object (click on the link to edit it)</td>
+				<td>Remove</td>
 			</tr>
-			<!--  End of test if it is document object -->
-		</c:forEach>
+			<c:forEach var="pluginObjectAssociation" items="${pluginObjectAssociations}">
+				<!-- TODO put in test to see if is document type object -->
+				<tr>
+					<td><c:out value="${pluginObjectAssociation.objectIndex}" /></td>
+					<td><a href="${pageContext.request.contextPath}/developing/modifyPluginObject/plugin/${pluginObjectAssociation.pluginId}/document/${pluginObjectAssociation.objectId}/"><c:out value="${pluginObjectAssociation.objectName}" /></a></td>
+					<td align="right"><a href="${pageContext.request.contextPath}/developing/removePluginObjectAssociation/plugin/${pluginObjectAssociation.objectId}/"><i>remove</i></a></td>
+				</tr>
+				<!--  End of test if it is document object -->
+			</c:forEach>
+			</c:when>
+			<c:when test="${fn:length(pluginObjectAssociations) le 0}">
+				<td colspan="3">None</td>
+			</c:when>
+		</c:choose>
 	</table>
 	<p>&nbsp;</p>
 	<sf:form name="form1" method="POST" 

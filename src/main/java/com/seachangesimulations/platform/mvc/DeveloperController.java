@@ -1,6 +1,5 @@
 package com.seachangesimulations.platform.mvc;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +22,7 @@ import com.seachangesimulations.platform.mvc.formbeans.developer.DevUploadPlugin
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.service.SessionInfoBean;
-import com.seachangesimulations.platform.utilities.PlatformProperties;
-import com.seachangesimulations.platform.utilities.Util;
+
 
 /**
  * This controller handles developer operations.
@@ -251,12 +249,20 @@ public class DeveloperController extends BaseController {
 
 		model.addAttribute("plugin", plugin);
 		model.addAttribute("devAddObjectsToPluginFormBean", devAddObjectsToPluginFormBean);
-		model.addAttribute("pluginFileAssociations", new PluginObjectAssociation().getAllForPlugin(id));
+		model.addAttribute("pluginObjectAssociations", new PluginObjectAssociation().getAllForPlugin(id));
 
 		return "/developing/addObjectsToPlugin.jsp";
 
 	}
 
+	/**
+	 * This method will add an object to a plugin.
+	 * 
+	 * @param id
+	 * @param devAddObjectsToPluginFormBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "addObjectsToPlugin/{id}" }, method = RequestMethod.POST)
 	public String addObjectsToPluginPost(
 			@PathVariable Long id,
@@ -277,11 +283,11 @@ public class DeveloperController extends BaseController {
 			pluginObjectAssociation.setObjectType(PluginObjectDocument.class.getCanonicalName());
 			
 			pluginObjectAssociation.setObjectIndex(pluginObjectAssociation.getNextObjectIndex(plugin.getId()));
-			System.out.println("cann name: " + PluginObjectDocument.class.getCanonicalName());
-			System.out.println(" get name: " + PluginObjectDocument.class.getName());
+
 		}
 		
 		pluginObjectAssociation.setPluginId(plugin.getId());
+		pluginObjectAssociation.setAssociationType(PluginObjectAssociation.BASE_PLUGIN_ASSOCIATION);
 		
 		pluginObjectAssociation.save();
 
@@ -290,7 +296,7 @@ public class DeveloperController extends BaseController {
 		// Clear the values stored in this form.
 		model.addAttribute("devAddObjectsToPluginFormBean", new DevAddObjectsToPluginFormBean());
 		
-		model.addAttribute("pluginFileAssociations", new PluginObjectAssociation().getAllForPlugin(id));
+		model.addAttribute("pluginObjectAssociations", new PluginObjectAssociation().getAllForPlugin(id));
 
 		return "/developing/addObjectsToPlugin.jsp";
 

@@ -493,7 +493,7 @@ public class AuthorController extends BaseController {
 		Long aId = getSessionInfoBean().getActorId();
 		Long phId = getSessionInfoBean().getPhaseId();
 		
-		Plugin plugin = Plugin.getPluginClone(authorAddPluginFormBean.getRawPluginId());
+		Plugin plugin = Plugin.getPluginClone(rpId, null, authorAddPluginFormBean.getRawPluginId());
 
 		// If Actor Id was 0, we want this applied to all actors
 		if ((new Long(0).compareTo(aId)) == 0) {

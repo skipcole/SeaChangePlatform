@@ -1,4 +1,6 @@
-<!DOCTYPE HTML >
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%><!DOCTYPE HTML >
+<%@taglib prefix="scp" uri="/WEB-INF/SeaChangePlatform.tld"%>
 <html><!-- InstanceBegin template="/Templates/SeaChangePlatformPlugin.dwt" codeOutsideHTMLIsLocked="false" -->
 <head>
 
@@ -10,7 +12,7 @@
 <meta http-equiv="pragma" content="no-cache" />
 
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Authoring Section - Sea Change Simulations, LLC</title>
+<title>Basic Text Page Plugin</title>
 <!-- InstanceEndEditable -->
 
 <link href="/SeaChangePlatform/resources/css/SeaChangePlatform.css"
@@ -35,8 +37,8 @@ $(document).ready(function() {
 <body>
 	<!-- InstanceBeginEditable name="BodyRegion" -->
 	<div id="doc_1">Loading ...</div>
-	<div> Hello: ACTORNAME</div>
-	<div> PLUGINDOC</div>
+	<div> Hello: <scp:actorname /></div>
+	<div> <scp:documenttext docIndex="1"  /></div>
 	<!-- InstanceEndEditable -->
 </body>
 <!-- InstanceEnd --></html>

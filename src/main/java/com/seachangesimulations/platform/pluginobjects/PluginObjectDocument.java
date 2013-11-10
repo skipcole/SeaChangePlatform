@@ -90,4 +90,9 @@ public class PluginObjectDocument extends BasePluginObject {
 		
 		return returnList;
 	}
+
+	public PluginObjectDocument getByRPimIdPluginIdAndIndex(Long rpimId, Long pluginId, int docIndex) {
+		PluginObjectDocumentDao dao = (PluginObjectDocumentDao) getApplicationContext().getBean("pluginObjectDocumentDao", PluginObjectDocumentDao.class);
+		return dao.getByRPimIdPluginIdAndIndex(rpimId, pluginId, docIndex);
+	}
 }

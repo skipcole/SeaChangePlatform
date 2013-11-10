@@ -15,6 +15,10 @@
     <name>documenttext</name>
     <tagclass>com.seachangesimulations.platform.customtaglib.DocumentTextTag</tagclass>
     <info>Document Text</info>
+    <attribute>
+      <name>docIndex</name>
+      <required>true</required>
+  </attribute>
 </tag>
 
 </taglib> 

@@ -6,6 +6,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,11 +55,13 @@ public class HomeController extends BaseController {
 	
 	/** Loads info from the user (such as the last role play they edited) to the session info. */
 	@RequestMapping(value = { "/loadLoginInfo" }, method = RequestMethod.GET)
-	public String loadLoginInfo(Map<String, Object> model, Principal principal) {
+	public String loadLoginInfo(Map<String, Object> model, Principal principal, HttpSession session) {
 		LOGGER.debug("In the /loadLoginInfo Request Mapping");
 		getSessionInfoBean().loadLoginInfo(principal.getName());
 		Person person = new Person().getByUsername(principal.getName());
 		getSessionInfoBean().setPersonId(person.getId());
+		
+		session.setAttribute("uname", principal.getName());
 		
 		return "redirect:/loginLanding";
 	}

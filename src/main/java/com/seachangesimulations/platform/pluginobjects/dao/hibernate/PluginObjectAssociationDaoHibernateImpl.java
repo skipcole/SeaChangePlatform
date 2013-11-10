@@ -79,4 +79,10 @@ public class PluginObjectAssociationDaoHibernateImpl extends
 		return returnList;
 	}
 
+	@Override
+	public List<PluginObjectAssociation> getAllForPlugin(Long id, Long rpId2, Long rpimId2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

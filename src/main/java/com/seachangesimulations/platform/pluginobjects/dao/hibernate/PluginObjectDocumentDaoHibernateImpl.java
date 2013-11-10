@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.seachangesimulations.platform.dao.hibernate.BaseDaoHibernateImpl;
+import com.seachangesimulations.platform.domain.Organization;
+import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.pluginobjects.dao.PluginObjectDocumentDao;
 
@@ -36,5 +38,27 @@ public class PluginObjectDocumentDaoHibernateImpl extends
 
 		return returnList;
 	}
+
+	@Override
+	public PluginObjectDocument getByRPimIdPluginIdAndIndex(Long rpimId, Long pluginId, int docIndex) {
+		List<PluginObjectAssociation> returnList;
+
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
+
+		Query query = session.createQuery(
+				"from PluginObjectAssociation where rpimId = :rpimId and pluginId = :pluginId and objectIndex = :docIndex")
+				.setLong("rpimId", rpimId).setLong("pluginId", pluginId).setInteger("docIndex", docIndex);
+
+		PluginObjectAssociation poa = (PluginObjectAssociation) query.uniqueResult();
+		
+		session.close();
+		PluginObjectDocument pod = new PluginObjectDocument().getById(poa.getObjectId());
+
+		return pod;
+	}
+
+	
+
 
 }
