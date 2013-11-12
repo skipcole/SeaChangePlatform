@@ -95,4 +95,24 @@ public class PluginObjectDocument extends BasePluginObject {
 		PluginObjectDocumentDao dao = (PluginObjectDocumentDao) getApplicationContext().getBean("pluginObjectDocumentDao", PluginObjectDocumentDao.class);
 		return dao.getByRPimIdPluginIdAndIndex(rpimId, pluginId, docIndex);
 	}
+
+	/**
+	 * Returns all documents associated with the current roleplay.
+	 * 
+	 * @param roleplayId
+	 * @return
+	 */
+	public Object getAllForRoleplay(Long roleplayId) {
+		PluginObjectAssociationDao dao = (PluginObjectAssociationDao) getApplicationContext().getBean("pluginObjectAssociationDao", PluginObjectAssociationDao.class);
+		
+		List <PluginObjectAssociation> poas  = dao.getAllForRoleplay(roleplayId, PluginObjectDocument.class.getCanonicalName());
+
+		ArrayList returnList = new ArrayList();
+		// Convert to documents
+		for (PluginObjectAssociation poa : poas) {
+			returnList.add( new PluginObjectDocument().getById(poa.getObjectId()));
+			
+		}
+		return returnList;
+	}
 }

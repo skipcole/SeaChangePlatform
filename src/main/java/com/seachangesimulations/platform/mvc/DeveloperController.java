@@ -254,7 +254,29 @@ public class DeveloperController extends BaseController {
 		return "/developing/addObjectsToPlugin.jsp";
 
 	}
+	
+	
+	@RequestMapping(value = { "plugin/{pId}/removePluginObjectAssociation/{id}" }, method = RequestMethod.GET)
+	public String removePluginObjectAssociation(@PathVariable Long pId, @PathVariable Long id, Model model) {
 
+		PluginObjectAssociation poa = new PluginObjectAssociation().getById(id);
+		
+		// SKIP TODO - delete all object associated with this poa also, so they don't just hang around cluttering up the place.
+
+		poa.delete();
+		
+		Plugin plugin = new Plugin().getModelObject(Plugin.class, pId);
+
+		// Create new form bean with default values.
+		DevAddObjectsToPluginFormBean devAddObjectsToPluginFormBean = new DevAddObjectsToPluginFormBean(plugin);
+
+		model.addAttribute("plugin", plugin);
+		model.addAttribute("devAddObjectsToPluginFormBean", devAddObjectsToPluginFormBean);
+		model.addAttribute("pluginObjectAssociations", new PluginObjectAssociation().getAllForPlugin(pId));
+
+		return "/developing/addObjectsToPlugin.jsp";
+
+	}
 	/**
 	 * This method will add an object to a plugin.
 	 * 

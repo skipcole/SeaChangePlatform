@@ -56,6 +56,7 @@ public class PluginObjectAssociationDaoHibernateImpl extends
 
 	@Override
 	public List<PluginObjectAssociation> getAllForPlugin(Long pluginId, String objectType) {
+		
 		List<PluginObjectAssociation> returnList;
 
 		Session session = getSessionFactory().openSession();
@@ -80,9 +81,60 @@ public class PluginObjectAssociationDaoHibernateImpl extends
 	}
 
 	@Override
-	public List<PluginObjectAssociation> getAllForPlugin(Long id, Long rpId2, Long rpimId2) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PluginObjectAssociation> getAllForPlugin(Long pluginId, Long rpId, Long rpimId) {
+
+		List<PluginObjectAssociation> returnList;
+		
+		String queryHQL = "from PluginObjectAssociation where pluginId = :pluginId ";
+		
+		if (rpId != null) {
+			queryHQL += " and rpId = " + rpId.intValue() + " ";
+		} else {
+			queryHQL += " and rpId is null and rpimId is null ";
+		}
+
+		if (rpimId != null) {
+			queryHQL += " and rpimId = " + rpimId.intValue() + " ";
+		} else {
+			queryHQL += " and rpId is null ";
+		}
+				
+		queryHQL += " order by objectIndex";
+		
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
+
+		Query query = session.createQuery(queryHQL)
+				.setLong("pluginId", pluginId);
+
+		returnList = query.list();
+
+		session.close();
+
+		return returnList;
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<PluginObjectAssociation> getAllForRoleplay(Long rpId, String canonicalName) {
+		List<PluginObjectAssociation> returnList;
+
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
+
+		Query query = session.createQuery(
+				"from PluginObjectAssociation where rpId = :roleplayId and objectType = :objectType order by objectIndex")
+				.setLong("roleplayId", rpId)
+				.setString("objectType", canonicalName);
+
+		returnList = query.list();
+
+		session.close();
+
+		return returnList;
 	}
 
 }

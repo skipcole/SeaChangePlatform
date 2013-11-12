@@ -63,6 +63,8 @@
 		</table>
 	</sf:form>
 	<p>&nbsp;</p>
+	<a href="${pageContext.request.contextPath}/developing/addObjectsToPlugin/${plugin.getId()}">Back to Add ObjectsToPlugin Page</a>
+	<p> </p>
 	<!-- InstanceEndEditable -->
 </body>
 <!-- InstanceEnd --></html>

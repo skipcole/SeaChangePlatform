@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import com.seachangesimulations.platform.dao.ActorDao;
 import com.seachangesimulations.platform.dao.PluginDao;
+import com.seachangesimulations.platform.pluginobjects.BasePluginObject;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 
@@ -244,7 +245,7 @@ public class Plugin extends BaseSCPlatformObject {
 	 * @param rawPluginId
 	 * @return
 	 */
-	public static Plugin getPluginClone(Long rpId, Long rpimId, Long originalPluginId) {
+	public static Plugin getPluginCopyForRoleplay(Long rpId, Long originalPluginId) {
 
 		Plugin originalPlugin = new Plugin().getById(originalPluginId);
 
@@ -257,37 +258,20 @@ public class Plugin extends BaseSCPlatformObject {
 		newPlugin.save();
 		System.out.println("id is " + originalPlugin.getId());
 
-		// Need to get the PluginObjectAssociations here, instead of documents
+		// Get base list of objects associated with this plugin.
 		List<PluginObjectAssociation> poas = new PluginObjectAssociation().getAllForPlugin(originalPlugin.getId(),
-				rpId, rpimId);
+				null, null);
 
 		for (PluginObjectAssociation poa : poas) {
 			System.out.println(poa.getObjectType());
 
-			Long newObjectId = null;
+			BasePluginObject bpo = null;
 			String newObjectType = null;
-			int newObjectIndex = 0;
 
 			if (PluginObjectDocument.class.getCanonicalName().equalsIgnoreCase(poa.getObjectType())) {
 
+				bpo = getDocumentCopy(poa.getObjectId(), rpId);
 				newObjectType = PluginObjectDocument.class.getCanonicalName();
-
-				PluginObjectDocument pod = new PluginObjectDocument().getById(poa.getObjectId());
-
-				System.out.println(pod.getDocumentName());
-				System.out.println(pod.getDocumentDescription());
-				System.out.println(pod.getDocumentText());
-
-				PluginObjectDocument newPod = new PluginObjectDocument();
-				try {
-					BeanUtils.copyProperties(pod, newPod);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				newPod.setId(null);
-				newPod.setVersion(null);
-				newPod.save();
-				newObjectId = newPod.getId();
 
 			}
 
@@ -295,10 +279,9 @@ public class Plugin extends BaseSCPlatformObject {
 			PluginObjectAssociation newPoa = new PluginObjectAssociation();
 			newPoa.setPluginId(newPlugin.getId());
 			newPoa.setRpId(rpId);
-			newPoa.setRpimId(rpimId);
 			newPoa.setObjectIndex(poa.getObjectIndex());
-			
-			newPoa.setObjectId(newObjectId);
+			newPoa.setObjectName(poa.getObjectName());
+			newPoa.setObjectId(bpo.getId());
 			newPoa.setObjectType(newObjectType);
 			
 			newPoa.save();
@@ -306,5 +289,25 @@ public class Plugin extends BaseSCPlatformObject {
 
 		return newPlugin;
 
+	}
+	
+	private static BasePluginObject getDocumentCopy(Long podId, Long rpId){
+
+		PluginObjectDocument pod = new PluginObjectDocument().getById(podId);
+
+		PluginObjectDocument newPod = new PluginObjectDocument();
+		
+		
+		try {
+			BeanUtils.copyProperties(pod, newPod);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		newPod.setRoleplayId(rpId);
+		newPod.setId(null);
+		newPod.setVersion(null);
+		newPod.save();
+		
+		return newPod;
 	}
 }

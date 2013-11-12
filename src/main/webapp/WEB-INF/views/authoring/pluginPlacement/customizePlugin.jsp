@@ -42,29 +42,41 @@
 <p>
 On this page we allow the author to set objects used by this plugin.
 </p>
-<hr />
-<p>Loop Over Documents</p>
 	<p>&nbsp;</p>
 	<c:forEach var="pluginObjectDocument" items="${pluginObjectDocuments}">
 	<sf:form name="form_pod_${pluginObjectDocument.getId()}" method="POST"
 		action="${pageContext.request.contextPath}/authoring/plugin/${plugin.getId()}/customizePluginDocument/${pluginObjectDocument.getId()}"
 		modelAttribute="acpdfb_${pluginObjectDocument.getId()}">
 		<table border="1">
-			<tr>
-				<td><label for="documentName">Document Name</label></td>
-				<td><sf:input type="text" name="documentName" id="documentName_${pluginObjectDocument.getId()}"
-						path="documentName" /></td>
-			</tr>
-<tr>
-				<td>Document Text</td>
-			<td><sf:textarea type="text" name="documentText" id="documentText_${pluginObjectDocument.getId()}"
-						path="documentText" rows="5" cols="30" /></td>
-			</tr>
-			<tr>
-				<td>Update</td>
-			<td><input type="submit" name="addObject" id="addObject"
-				value="Submit"></td>
-			</tr>
+		<tr>
+		<td>
+		<table>
+				<tr>
+					<td><label for="documentName">Document Name</label></td>
+					<td><sf:input type="text" name="documentName" id="documentName_${pluginObjectDocument.getId()}"
+							path="documentName" /></td>
+				</tr>
+				<tr>
+					<td>Document Text</td>
+				<td><sf:textarea type="text" name="documentText" id="documentText_${pluginObjectDocument.getId()}"
+							path="documentText" rows="5" cols="30" /></td>
+				</tr>
+				<tr>
+					<td>Update</td>
+				<td><input type="submit" name="addObject" id="addObject"
+					value="Submit"></td>
+				</tr>
+		</table>
+		</td>
+		<td valign="top">
+		<h3>Other Documents in this Roleplay</h3>
+		<c:forEach var="otherDocument" items="${allDocumentsForThisRoleplay}">
+			<c:if test="${otherDocument.getId().intValue() != pluginObjectDocument.getId().intValue()}" >
+			<c:out value="${otherDocument.getDocumentName()}" /><br />
+			</c:if>
+		</c:forEach>
+		</td>
+		</tr>
 		</table>
 	</sf:form>
 	</c:forEach>

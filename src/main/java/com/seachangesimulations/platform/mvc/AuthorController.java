@@ -486,6 +486,13 @@ public class AuthorController extends BaseController {
 		return "authoring/pluginPlacement/placePlugin.jsp";
 	}
 
+	/**
+	 * Adds a plugin at/to the phase and actor that the author was looking at.
+	 * 
+	 * @param authorAddPluginFormBean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "pluginPlacement/addPlugin" }, method = RequestMethod.POST)
 	public String addPlugin(AuthorAddPluginFormBean authorAddPluginFormBean, Model model) {
 
@@ -493,7 +500,7 @@ public class AuthorController extends BaseController {
 		Long aId = getSessionInfoBean().getActorId();
 		Long phId = getSessionInfoBean().getPhaseId();
 		
-		Plugin plugin = Plugin.getPluginClone(rpId, null, authorAddPluginFormBean.getRawPluginId());
+		Plugin plugin = Plugin.getPluginCopyForRoleplay(rpId, authorAddPluginFormBean.getRawPluginId());
 
 		// If Actor Id was 0, we want this applied to all actors
 		if ((new Long(0).compareTo(aId)) == 0) {
@@ -598,6 +605,8 @@ public class AuthorController extends BaseController {
 			AuthCustomizePluginDocumentFormBean acpdfb = new AuthCustomizePluginDocumentFormBean(pod);
 			model.addAttribute("acpdfb_" + pod.getId(), pod);
 		}
+		
+		model.addAttribute("allDocumentsForThisRoleplay", new PluginObjectDocument().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
 		
 		return "/authoring/pluginPlacement/customizePlugin.jsp";
 	}

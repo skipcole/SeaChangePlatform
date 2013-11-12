@@ -57,7 +57,7 @@
 				<tr>
 					<td><c:out value="${pluginObjectAssociation.objectIndex}" /></td>
 					<td><a href="${pageContext.request.contextPath}/developing/modifyPluginObject/plugin/${pluginObjectAssociation.pluginId}/document/${pluginObjectAssociation.objectId}/"><c:out value="${pluginObjectAssociation.objectName}" /></a></td>
-					<td align="right"><a href="${pageContext.request.contextPath}/developing/removePluginObjectAssociation/plugin/${pluginObjectAssociation.objectId}/"><i>remove</i></a></td>
+					<td align="right"><a href="${pageContext.request.contextPath}/developing/plugin/${pluginObjectAssociation.pluginId}/removePluginObjectAssociation/${pluginObjectAssociation.objectId}/"><i>remove</i></a></td>
 				</tr>
 				<!--  End of test if it is document object -->
 			</c:forEach>
@@ -107,6 +107,8 @@
 		</table>
 	</sf:form>
 	<p>&nbsp;</p>
+	<p><a href="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/" id="authorPlacePlugins">Back to Place Plugins </a></p>
+  
 	<!-- InstanceEndEditable -->
 </body>
 <!-- InstanceEnd --></html>
