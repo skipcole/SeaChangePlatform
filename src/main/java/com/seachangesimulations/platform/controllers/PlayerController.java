@@ -1,10 +1,8 @@
-package com.seachangesimulations.platform.mvc;
+package com.seachangesimulations.platform.controllers;
 
-import java.io.File;
 import java.security.Principal;
 import java.util.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

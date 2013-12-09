@@ -75,7 +75,7 @@ public class PluginObjectDocument extends BasePluginObject {
 		
 		List <PluginObjectAssociation> poas  = dao.getAllForPlugin(pluginId, PluginObjectDocument.class.getCanonicalName());
 		
-		ArrayList returnList = new ArrayList();
+		ArrayList <PluginObjectDocument>returnList = new ArrayList<PluginObjectDocument>();
 		for (PluginObjectAssociation poa : poas){
 			System.out.println(poa.getObjectType());
 			

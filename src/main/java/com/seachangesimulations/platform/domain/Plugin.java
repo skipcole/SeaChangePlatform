@@ -3,16 +3,13 @@ package com.seachangesimulations.platform.domain;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Version;
+
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.seachangesimulations.platform.dao.ActorDao;
 import com.seachangesimulations.platform.dao.PluginDao;
 import com.seachangesimulations.platform.pluginobjects.BasePluginObject;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
@@ -22,6 +19,11 @@ import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 @Component
 @Scope("prototype")
 public class Plugin extends BaseSCPlatformObject {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public Plugin() {
 

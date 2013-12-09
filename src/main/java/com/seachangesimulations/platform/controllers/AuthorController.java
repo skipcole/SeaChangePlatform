@@ -1,4 +1,4 @@
-package com.seachangesimulations.platform.mvc;
+package com.seachangesimulations.platform.controllers;
 
 import java.security.Principal;
 import java.util.Date;
@@ -291,7 +291,7 @@ public class AuthorController extends BaseController {
 		return "authoring/actor/createActor.jsp";
 	}
 	
-	public List getActorsForRolePlay(Long rpId){
+	public List<Actor> getActorsForRolePlay(Long rpId){
 		return  new Actor().getAllForRoleplay(rpId);
 	}
 

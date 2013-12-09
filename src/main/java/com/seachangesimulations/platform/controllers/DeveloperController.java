@@ -1,4 +1,4 @@
-package com.seachangesimulations.platform.mvc;
+package com.seachangesimulations.platform.controllers;
 
 import java.util.List;
 import java.util.Map;

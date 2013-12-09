@@ -5,10 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.Version;
+
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

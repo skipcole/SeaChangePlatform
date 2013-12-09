@@ -13,13 +13,18 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.ActorDao;
-import com.seachangesimulations.platform.dao.RolePlayDao;
 
 @Entity
 @Component
 @Scope("prototype")
 @XmlRootElement
 public class Actor extends BaseSCPlatformObject {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	public Actor() {
 

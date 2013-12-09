@@ -1,4 +1,4 @@
-package com.seachangesimulations.platform.mvc;
+package com.seachangesimulations.platform.controllers;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
 
 /**
  * 
- * @author Skip
  *
  */
 @Controller

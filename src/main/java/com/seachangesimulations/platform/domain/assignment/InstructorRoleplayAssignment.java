@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.InstructorRoleplayAssignmentDao;
-import com.seachangesimulations.platform.dao.PluginDao;
+
 
 @Entity
 @Component
