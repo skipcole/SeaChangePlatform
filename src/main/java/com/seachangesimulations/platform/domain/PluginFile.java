@@ -1,15 +1,12 @@
 package com.seachangesimulations.platform.domain;
 
-import java.io.File;
 import java.util.List;
 
 import javax.persistence.Entity;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.seachangesimulations.platform.dao.PluginDao;
 import com.seachangesimulations.platform.dao.PluginFileDao;
 
 @Entity

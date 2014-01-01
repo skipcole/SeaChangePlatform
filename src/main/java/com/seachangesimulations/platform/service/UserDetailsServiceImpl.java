@@ -1,17 +1,16 @@
 
 package com.seachangesimulations.platform.service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.seachangesimulations.platform.domain.Person;
 import com.seachangesimulations.platform.domain.assignment.PersonOrganizationAssignment;

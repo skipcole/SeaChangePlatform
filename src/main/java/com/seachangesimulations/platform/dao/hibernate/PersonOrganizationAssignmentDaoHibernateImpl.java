@@ -1,7 +1,6 @@
 
 package com.seachangesimulations.platform.dao.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -9,7 +8,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.seachangesimulations.platform.dao.PersonOrganizationAssignmentDao;
-import com.seachangesimulations.platform.domain.Person;
 import com.seachangesimulations.platform.domain.assignment.PersonOrganizationAssignment;
 
 @Repository("personOrganizationAssignmentDao")

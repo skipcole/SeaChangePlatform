@@ -1,8 +1,7 @@
 package com.seachangesimulations.platform.controllers;
 
 import java.security.Principal;
-import java.util.*;
-
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ import com.seachangesimulations.platform.domain.PluginPointer;
 import com.seachangesimulations.platform.domain.Roleplay;
 import com.seachangesimulations.platform.domain.RoleplayInMotion;
 import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
-import com.seachangesimulations.platform.mvc.formbeans.author.AuthorCreatePhaseFormBean;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 

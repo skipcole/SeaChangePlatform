@@ -5,12 +5,9 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.seachangesimulations.platform.dao.RolePlayDao;
-import com.seachangesimulations.platform.domain.Person;
 import com.seachangesimulations.platform.domain.Roleplay;
 
 @Repository("rolePlayDao")

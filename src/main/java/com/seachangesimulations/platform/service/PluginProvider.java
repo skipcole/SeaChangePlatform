@@ -2,7 +2,6 @@ package com.seachangesimulations.platform.service;
 
 import java.io.File;
 import java.util.Hashtable;
-import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.seachangesimulations.platform.domain.Plugin;
 import com.seachangesimulations.platform.domain.PluginFile;
-import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.utilities.PlatformProperties;
 import com.seachangesimulations.platform.utilities.Util;
 

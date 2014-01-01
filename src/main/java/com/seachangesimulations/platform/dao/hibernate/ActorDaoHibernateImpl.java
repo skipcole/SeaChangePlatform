@@ -6,7 +6,6 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.seachangesimulations.platform.dao.ActorDao;
 import com.seachangesimulations.platform.domain.Actor;

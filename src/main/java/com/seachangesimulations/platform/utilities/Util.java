@@ -1,12 +1,8 @@
 package com.seachangesimulations.platform.utilities;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.StringWriter;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;

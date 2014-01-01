@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.seachangesimulations.platform.dao.hibernate.BaseDaoHibernateImpl;
-import com.seachangesimulations.platform.domain.Organization;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.pluginobjects.dao.PluginObjectDocumentDao;

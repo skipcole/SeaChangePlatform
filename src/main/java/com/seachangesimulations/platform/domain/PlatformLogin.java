@@ -1,19 +1,12 @@
 
 package com.seachangesimulations.platform.domain;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import javax.persistence.Version;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.PlatformLoginDao;
-import com.seachangesimulations.platform.service.TimeStamped;
 
 @Entity
 @Component

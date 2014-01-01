@@ -1,11 +1,9 @@
 package com.seachangesimulations.platform.service;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
-import org.springframework.stereotype.Component;
-import java.lang.Exception;
-
-import com.seachangesimulations.platform.domain.BaseSCPlatformObject;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 
 
 /**

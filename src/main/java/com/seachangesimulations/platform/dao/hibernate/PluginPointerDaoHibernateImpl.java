@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.seachangesimulations.platform.dao.PluginPointerDao;
-import com.seachangesimulations.platform.domain.Actor;
 import com.seachangesimulations.platform.domain.PluginPointer;
 
 @Repository("pluginPointerDao")

@@ -10,13 +10,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.seachangesimulations.platform.domain.Actor;
 import com.seachangesimulations.platform.domain.Person;
 import com.seachangesimulations.platform.domain.Phase;
-import com.seachangesimulations.platform.domain.RoleplayInMotion;
 import com.seachangesimulations.platform.domain.Roleplay;
+import com.seachangesimulations.platform.domain.RoleplayInMotion;
 import com.seachangesimulations.platform.domain.assignment.InstructorRoleplayAssignment;
 import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
 import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacAssignPlayersFormBean;

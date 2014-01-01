@@ -3,9 +3,8 @@ package com.seachangesimulations.platform.domain;
 
 import java.util.List;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 

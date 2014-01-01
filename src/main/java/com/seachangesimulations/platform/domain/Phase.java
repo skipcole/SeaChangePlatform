@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

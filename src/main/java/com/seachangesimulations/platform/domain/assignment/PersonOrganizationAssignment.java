@@ -4,8 +4,10 @@ package com.seachangesimulations.platform.domain.assignment;
 import java.util.List;
 
 import javax.persistence.Entity;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
 import com.seachangesimulations.platform.dao.PersonOrganizationAssignmentDao;
 
 

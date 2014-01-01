@@ -19,6 +19,10 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
 @Scope("prototype")
 public class Roleplay extends BaseSCPlatformObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final int EDIT_PERMISSION_SPECIFIC_USERS = 0;
 	public static final int EDIT_PERMISSION_ALL_AUTHORS = 1;
 

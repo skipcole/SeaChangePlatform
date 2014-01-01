@@ -1,7 +1,6 @@
 
 package com.seachangesimulations.platform.utilities;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;

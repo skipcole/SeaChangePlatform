@@ -34,7 +34,6 @@ import com.seachangesimulations.platform.mvc.formbeans.author.AuthorCreateActorF
 import com.seachangesimulations.platform.mvc.formbeans.author.AuthorCreatePhaseFormBean;
 import com.seachangesimulations.platform.mvc.formbeans.author.AuthorCreateRoleplayFormBean;
 import com.seachangesimulations.platform.mvc.formbeans.author.AuthorPublishRoleplayFormBean;
-import com.seachangesimulations.platform.mvc.formbeans.developer.DevDefinePluginFormBean;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 import com.seachangesimulations.platform.utilities.Util;

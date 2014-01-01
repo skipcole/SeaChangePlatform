@@ -1,11 +1,8 @@
 package com.seachangesimulations.platform.domain;
 
-import java.io.*;
+import java.io.File;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Version;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.context.annotation.Scope;

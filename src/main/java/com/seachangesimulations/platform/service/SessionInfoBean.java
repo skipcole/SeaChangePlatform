@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import com.seachangesimulations.platform.domain.Actor;
 import com.seachangesimulations.platform.domain.Person;
@@ -24,7 +24,7 @@ public class SessionInfoBean {
 	public static final String FACILITATOR_ZONE = "facilitator";
 	public static final String PLAYER_ZONE = "player";
 	
-	private static Hashtable allSessions = new Hashtable();
+	private static Hashtable<String, SessionInfoBean> allSessions = new Hashtable();
 	
 	public static SessionInfoBean getMySessionInfo(String uname) {
 		return (SessionInfoBean) allSessions.get(uname);

@@ -1,10 +1,11 @@
 
 package com.seachangesimulations.platform.domain;
 
-import java.security.MessageDigest;
 import java.util.Collection;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +14,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
 import com.seachangesimulations.platform.dao.PersonDao;
 import com.seachangesimulations.platform.domain.assignment.PersonOrganizationAssignment;
 
@@ -116,10 +118,10 @@ public class Person extends BaseSCPlatformObject implements UserDetails{
 	private String password;
 	private Integer roleLevel;
 	
-    boolean enabled = true;
-    boolean accountNonExpired = true;
-    boolean credentialsNonExpired = true;
-    boolean accountNonLocked = true;
+    private boolean enabled = true;
+    private boolean accountNonExpired = true;
+    private boolean credentialsNonExpired = true;
+    private boolean accountNonLocked = true;
     
 
     private int initialAuthLevel;

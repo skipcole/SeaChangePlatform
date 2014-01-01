@@ -1,7 +1,5 @@
 package com.seachangesimulations.platform.mvc.formbeans.admin;
 
-import com.seachangesimulations.platform.domain.Organization;
-import com.seachangesimulations.platform.domain.Person;
 
 /**
  * A utility object to hold all the various pieces of data used when installing

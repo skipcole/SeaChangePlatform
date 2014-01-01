@@ -6,12 +6,9 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.seachangesimulations.platform.dao.ActorDao;
 import com.seachangesimulations.platform.dao.OrganizationDao;
 
 @Entity
