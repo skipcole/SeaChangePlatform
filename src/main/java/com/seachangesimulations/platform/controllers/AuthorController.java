@@ -471,8 +471,7 @@ public class AuthorController extends BaseController {
 
 		
 
-		// Setting id to 0 to indicate that this is for all actors, likewise for
-		// phase
+		// Setting id to 0 to indicate that this is for all actors, likewise for phase
 		Actor actor = new Actor().getModelObject(Actor.class, aId);
 		Phase phase = new Phase().getModelObject(Phase.class, phId);
 

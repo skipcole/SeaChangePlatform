@@ -79,8 +79,7 @@
 		</c:forEach>
 	</ol>
 	<hr />
-	<p>Index:</p>
-	<p>Plugins</p>
+	<p>Raw Plugins</p>
 	<sf:form name="addPlugin" action="${pageContext.request.contextPath}/authoring/pluginPlacement/addPlugin"
 		modelAttribute="authorAddPluginFormBean" method="POST"
 	>

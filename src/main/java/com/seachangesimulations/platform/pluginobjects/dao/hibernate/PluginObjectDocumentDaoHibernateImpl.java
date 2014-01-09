@@ -52,7 +52,13 @@ public class PluginObjectDocumentDaoHibernateImpl extends
 		PluginObjectAssociation poa = (PluginObjectAssociation) query.uniqueResult();
 		
 		session.close();
-		PluginObjectDocument pod = new PluginObjectDocument().getById(poa.getObjectId());
+		PluginObjectDocument pod = new PluginObjectDocument();
+		
+		if (poa != null){
+			pod = new PluginObjectDocument().getById(poa.getObjectId());
+		} else {
+			System.out.println("POA was null for rpimid/pluginId/docIndex of " + rpimId + "/" + pluginId + "/" + docIndex);
+		}
 
 		return pod;
 	}

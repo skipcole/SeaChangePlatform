@@ -256,6 +256,7 @@ public class Plugin extends BaseSCPlatformObject {
 
 		newPlugin.setId(null);
 		newPlugin.setVersion(null);
+		newPlugin.setCustomized(true);
 		newPlugin.save();
 		System.out.println("id is " + originalPlugin.getId());
 
