@@ -12,7 +12,7 @@
 <meta http-equiv="pragma" content="no-cache" />
 
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>A Different Kind of Text Page Plugin</title>
+<title>Basic Chat Page</title>
 <!-- InstanceEndEditable -->
 
 <link href="/SeaChangePlatform/resources/css/SeaChangePlatform.css"
@@ -30,7 +30,7 @@
 	<!-- InstanceBeginEditable name="BodyRegion" -->
 	<div id="doc_1">Loading ...</div>
 	<div> Hello: <scp:actorname /></div>
-	<div> <scp:documenttext docIndex="1"  /></div>
+	<div> Talk amongst yourselves.</div>
 	<!-- InstanceEndEditable -->
 </body>
 <!-- InstanceEnd --></html>

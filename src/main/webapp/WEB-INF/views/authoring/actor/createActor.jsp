@@ -38,9 +38,6 @@
 <body>
 	<!-- InstanceBeginEditable name="BodyRegion" -->
 	<p>Create Actor</p>
-	test
-	<p>&nbsp;</p>
-	<p>Create Actor</p>
 	<sf:form method="post"
 		action="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/actor/create/${actor.id}"
 		modelAttribute="authorCreateActorFormBean"

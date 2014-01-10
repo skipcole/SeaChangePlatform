@@ -425,7 +425,8 @@ public class AuthorController extends BaseController {
 
 		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(rpId));
 
-		return "redirect:/authoring/rpId/" + rpId + "/phase/create/" + phase.getId();
+		// Return them to the clean page (no phase selected) in case they want to create a new phase.
+		return "redirect:/authoring/rpId/" + rpId + "/phase/create/0";
 
 	}
 

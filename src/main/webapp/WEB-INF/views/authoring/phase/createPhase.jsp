@@ -54,7 +54,13 @@
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td><input type="submit" name="createButton" id="createButton" value="Create" /></td>
+				<td>
+				<!--  if phase id != 0, then do edit button -->
+				<input type="submit" name="createButton" id="createButton" value="Create" />
+				<!--  } -->
+				<input type="submit" name="editButton" id="editButton" value="Edit" />
+				<!--  }  -->
+				</td>
 			</tr>
 		</table>
 	</sf:form>
