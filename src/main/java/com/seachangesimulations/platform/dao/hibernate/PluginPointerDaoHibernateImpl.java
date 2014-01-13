@@ -16,11 +16,6 @@ public class PluginPointerDaoHibernateImpl extends BaseDaoHibernateImpl<PluginPo
 		super(PluginPointer.class);
 	}
 
-	@Override
-	public List<PluginPointer> getAllForRoleplay(Long rpId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List <PluginPointer> getCurrentSet(Long rpId, Long aId, Long phId) {

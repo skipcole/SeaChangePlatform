@@ -15,7 +15,6 @@ import com.seachangesimulations.platform.domain.Person;
 import com.seachangesimulations.platform.domain.Phase;
 import com.seachangesimulations.platform.domain.Plugin;
 import com.seachangesimulations.platform.domain.PluginPointer;
-import com.seachangesimulations.platform.domain.Roleplay;
 import com.seachangesimulations.platform.domain.RoleplayInMotion;
 import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
@@ -25,7 +24,14 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
 @RequestMapping("/playing")
 public class PlayerController extends BaseController {
 
-	@RequestMapping(value = {"index" }, method = RequestMethod.GET)
+	/**
+	 * Shows the page where the player can select a role play to enter into.
+	 * 
+	 * @param principal
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = {"index" }, method = RequestMethod.GET) // NO_UCD (unused code)
 	public String showPlayerEntryPage(Principal principal, Model model) {
 
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.PLAYER_ZONE);
@@ -44,12 +50,18 @@ public class PlayerController extends BaseController {
 		return "redirect:/playing/index";
 	}
 	
+	/**
+	 * Creates the roleplay page with it tab headings.
+	 * 
+	 * @param praId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "pra/{praId}" }, method = RequestMethod.GET)
 	public String showTheRoleplayPage(@PathVariable Long praId, Model model) {
 
 		PersonRoleplayAssignment pra = new PersonRoleplayAssignment().getById(praId);
 		
-		Roleplay roleplay = new Roleplay().getById(pra.getRolePlayId());
 		RoleplayInMotion rpim = new RoleplayInMotion().getById(pra.getRpimId());
 
 		Phase phase = rpim.getMyPhase();
@@ -76,6 +88,13 @@ public class PlayerController extends BaseController {
 		return "playing/theRoleplay.jsp";
 	}
 	
+	/**
+	 * Shows the one individual plugin.
+	 * 
+	 * @param pluginPointerId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "showPlugin/{pluginPointerId}" }, method = RequestMethod.GET)
 	public String showPlugin(@PathVariable Long pluginPointerId, Model model) {
 		
@@ -134,6 +153,13 @@ public class PlayerController extends BaseController {
 		return pod;
 	}
 	
+	/**
+	 * Called by a 'control' player to change the phase of the roleplay.
+	 * 
+	 * @param model
+	 * @param phase
+	 * @return
+	 */
 	@RequestMapping(value = { "changePhase" }, method = RequestMethod.POST)
 	public String changeChase(Model model, @ModelAttribute("phase") Phase phase) {
 

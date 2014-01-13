@@ -1,35 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML >
-<html><!-- InstanceBegin template="/Templates/SeaChangePlatform.dwt.jsp" codeOutsideHTMLIsLocked="false" -->
+<html>
+<!-- InstanceBegin template="/Templates/SeaChangePlatform.dwt.jsp" codeOutsideHTMLIsLocked="false" -->
 <head>
 
-    
+
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Authoring Section - Sea Change Simulations, LLC</title>
 <!-- InstanceEndEditable -->
 
-<link href="/SeaChangePlatform/resources/css/SeaChangePlatform.css"
-	rel="stylesheet" type="text/css">
+<link href="/SeaChangePlatform/resources/css/SeaChangePlatform.css" rel="stylesheet" type="text/css">
 <link href="/SeaChangePlatform/javascript/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.min.css"
-	rel="stylesheet" type="text/css">
+	rel="stylesheet" type="text/css"
+>
 
 <script src="/SeaChangePlatform/resources/javascript/jquery-1.9.1.js"></script>
-<script
-	src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
-<script
-	src="/SeaChangePlatform/javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
-    
+<script src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
+<script src="/SeaChangePlatform/javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+
 <!-- Bootstrap -->
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- script src="//code.jquery.com/jquery.js"></script  -->
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/SeaChangePlatform/resources/js/bootstrap.min.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- script src="//code.jquery.com/jquery.js"></script  -->
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/SeaChangePlatform/resources/js/bootstrap.min.js"></script>
 <!-- Bootstrap -->
 
 <!-- InstanceBeginEditable name="head" -->
@@ -39,53 +36,66 @@
 	<!-- InstanceBeginEditable name="BodyRegion" -->
 	<p>Customize Plugin</p>
 	<p>&nbsp;</p>
-<p>
-On this page we allow the author to set objects used by this plugin.
-</p>
+	<p>On this page you may set objects used by this plugin.</p>
+	<p>	
+		<table>
+		<tr>
+			<td>Information about this plugin</td>
+			<td>insert here</td>
+		</tr>
+	</table>
+	
+	</p>
 	<p>&nbsp;</p>
 	<c:forEach var="pluginObjectDocument" items="${pluginObjectDocuments}">
-	<sf:form name="form_pod_${pluginObjectDocument.getId()}" method="POST"
-		action="${pageContext.request.contextPath}/authoring/plugin/${plugin.getId()}/customizePluginDocument/${pluginObjectDocument.getId()}"
-		modelAttribute="acpdfb_${pluginObjectDocument.getId()}">
-		<table border="1">
-		<tr>
-		<td>
-		<table>
+		<sf:form name="form_pod_${pluginObjectDocument.getId()}" method="POST"
+			action="${pageContext.request.contextPath}/authoring/plugin/${plugin.getId()}/customizePluginDocument/${pluginObjectDocument.getId()}"
+			modelAttribute="acpdfb_${pluginObjectDocument.getId()}"
+		>
+			<table border="1">
 				<tr>
-					<td><label for="documentName">Document Name</label></td>
-					<td><sf:input type="text" name="documentName" id="documentName_${pluginObjectDocument.getId()}"
-							path="documentName" /></td>
+					<td>
+						<table>
+							<tr>
+								<td><label for="documentName">Document Name</label></td>
+								<td><sf:input type="text" name="documentName" id="documentName_${pluginObjectDocument.getId()}"
+										path="documentName"
+									/></td>
+							</tr>
+							<tr>
+								<td>Document Text</td>
+								<td><sf:textarea type="text" name="documentText" id="documentText_${pluginObjectDocument.getId()}"
+										path="documentText" rows="5" cols="30"
+									/></td>
+							</tr>
+							<tr>
+								<td>Update</td>
+								<td><input type="submit" name="addObject" id="addObject" value="Submit"></td>
+							</tr>
+						</table>
+					</td>
+					<td valign="top">
+						<h3>Other Documents in this Roleplay</h3> <c:forEach var="otherDocument" items="${allDocumentsForThisRoleplay}">
+							<c:if test="${otherDocument.getId().intValue() != pluginObjectDocument.getId().intValue()}">
+								<c:out value="${otherDocument.getDocumentName()}" />
+								<br />
+							</c:if>
+						</c:forEach>
+					</td>
 				</tr>
-				<tr>
-					<td>Document Text</td>
-				<td><sf:textarea type="text" name="documentText" id="documentText_${pluginObjectDocument.getId()}"
-							path="documentText" rows="5" cols="30" /></td>
-				</tr>
-				<tr>
-					<td>Update</td>
-				<td><input type="submit" name="addObject" id="addObject"
-					value="Submit"></td>
-				</tr>
-		</table>
-		</td>
-		<td valign="top">
-		<h3>Other Documents in this Roleplay</h3>
-		<c:forEach var="otherDocument" items="${allDocumentsForThisRoleplay}">
-			<c:if test="${otherDocument.getId().intValue() != pluginObjectDocument.getId().intValue()}" >
-			<c:out value="${otherDocument.getDocumentName()}" /><br />
-			</c:if>
-		</c:forEach>
-		</td>
-		</tr>
-		</table>
-	</sf:form>
+			</table>
+		</sf:form>
 	</c:forEach>
-<hr />
-<p>
-<a href="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/" id="authorPlacePlugins">Back </a>
-</p>
+	<hr />
+	<p>
+		<a
+			href="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/"
+			id="authorPlacePlugins"
+		>Back </a>
+	</p>
 
 	<p>&nbsp;</p>
-<!-- InstanceEndEditable -->
+	<!-- InstanceEndEditable -->
 </body>
-<!-- InstanceEnd --></html>
+<!-- InstanceEnd -->
+</html>

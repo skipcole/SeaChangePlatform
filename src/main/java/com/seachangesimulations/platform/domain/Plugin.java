@@ -71,8 +71,13 @@ public class Plugin extends BaseSCPlatformObject {
 
 	private boolean isSystemPlugin;
 
+	/**
+	 * Creates the plugin paths for the links on the tabs to show each plugin.
+	 * 
+	 * @return
+	 */
 	public String generatePluginPath() {
-		return "/plugins/" + shortFormPluginName + "_" + shortFormOrgName + "/";
+		return "/plugins/" + pluginDirectory + "/";
 	}
 
 	/**
