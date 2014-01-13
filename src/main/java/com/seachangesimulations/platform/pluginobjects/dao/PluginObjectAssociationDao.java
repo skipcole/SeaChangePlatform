@@ -17,4 +17,6 @@ public interface PluginObjectAssociationDao extends BaseDao<PluginObjectAssociat
 	public List<PluginObjectAssociation> getAllForPlugin(Long id, Long rpId2, Long rpimId2);
 
 	public List<PluginObjectAssociation> getAllForRoleplay(Long roleplayId, String canonicalName);
+
+	public List<PluginObjectAssociation> getAllForRoleplay(Long rId);
 }

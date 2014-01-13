@@ -137,4 +137,22 @@ public class PluginObjectAssociationDaoHibernateImpl extends
 		return returnList;
 	}
 
+	@Override
+	public List<PluginObjectAssociation> getAllForRoleplay(Long rpId) {
+		List<PluginObjectAssociation> returnList;
+
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
+
+		Query query = session.createQuery(
+				"from PluginObjectAssociation where rpId = :rpId order by objectIndex").setLong(
+				"rpId", rpId);
+
+		returnList = query.list();
+
+		session.close();
+
+		return returnList;
+	}
+
 }

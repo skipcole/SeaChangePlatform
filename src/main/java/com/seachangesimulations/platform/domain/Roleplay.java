@@ -8,10 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.RolePlayDao;
+import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 
 @Entity
@@ -43,7 +45,7 @@ public class Roleplay extends BaseSCPlatformObject {
 	/**
 	 * Saves this roleplay and creates the initial objects that come with it.
 	 */
-	public void createWithIntialObjects(SessionInfoBean sessionInfoBean){
+	public void createWithStarterObjects(SessionInfoBean sessionInfoBean){
 		this.save();
 		Phase initialPhase = new Phase();
 		initialPhase.setRoleplayId(this.id);
@@ -52,6 +54,37 @@ public class Roleplay extends BaseSCPlatformObject {
 		initialPhase.setPhaseOrder(1);
 		initialPhase.save();
 		sessionInfoBean.setPhaseId(initialPhase.getId());
+		
+	}
+	
+	/**
+	 * Saves copy of object associations.
+	 */
+	public void createCopyofObjectsAndAssociationsForRpim(Long rpimId){
+		
+		// Get all plugin object associations for this roleplay
+		List <PluginObjectAssociation> poas = new PluginObjectAssociation().getAllForRoleplay(this.getId());
+		
+		// Make copies of them for this roleplay in motion.
+		for (PluginObjectAssociation poa : poas) {
+			PluginObjectAssociation newPoa = new PluginObjectAssociation();
+			
+			BeanUtils.copyProperties(poa, newPoa);
+			newPoa.setId(null);
+			newPoa.setVersion(null);
+			newPoa.setRpimId(rpimId);
+			newPoa.setAssociationType(newPoa.RPIM_PLUGIN_ASSOCIATION);
+			
+			// The original object id pointer will point back original object.
+			// If we have to make a copy for this roleplay, do so and point the association to i.
+			if (false){
+				// Create new objects based on old objects
+				//TODO makes it real
+				newPoa.setObjectId(null);
+			} 
+			newPoa.save();
+		}
+		
 	}
 
 	public Long create(String rolePlayName, Long orgId) {

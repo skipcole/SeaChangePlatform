@@ -103,7 +103,7 @@ public class AuthorController extends BaseController {
 
 		BeanUtils.copyProperties(authorCreateRoleplayFormBean, roleplay);
 
-		roleplay.createWithIntialObjects(getSessionInfoBean());
+		roleplay.createWithStarterObjects(getSessionInfoBean());
 
 		getSessionInfoBean().setRoleplayId(roleplay.getId());
 		getSessionInfoBean().setRoleplayName(roleplay.getRoleplayName());

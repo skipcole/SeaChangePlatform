@@ -104,14 +104,6 @@ public class PlayerController extends BaseController {
 		
 		getSessionInfoBean().setPluginId(plugin.getId());
 		
-		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
-		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
-		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
-		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
-		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
-		System.out.println("redirect:" + plugin.generatePluginPath() + "/1.jsp");
-
-		
 		if (plugin.isSystemPlugin()){
 			Phase phase = new Phase().getById(this.getSessionInfoBean().getPhaseId());
 			model.addAttribute("phase", phase);

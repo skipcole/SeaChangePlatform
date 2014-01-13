@@ -290,6 +290,7 @@ public class Plugin extends BaseSCPlatformObject {
 			newPoa.setObjectName(poa.getObjectName());
 			newPoa.setObjectId(bpo.getId());
 			newPoa.setObjectType(newObjectType);
+			newPoa.setAssociationType(PluginObjectAssociation.RP_PLUGIN_ASSOCIATION);
 			
 			newPoa.save();
 		}

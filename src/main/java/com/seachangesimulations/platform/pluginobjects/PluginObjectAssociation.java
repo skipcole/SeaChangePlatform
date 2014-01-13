@@ -114,6 +114,11 @@ public class PluginObjectAssociation extends BaseSCPlatformObject implements Com
 		PluginObjectAssociationDao dao = (PluginObjectAssociationDao) getApplicationContext().getBean("pluginObjectAssociationDao", PluginObjectAssociationDao.class);
 		return dao.getAllForPlugin(pluginId, objectType);
 	}
+	
+	public List <PluginObjectAssociation> getAllForRoleplay(Long rId){
+		PluginObjectAssociationDao dao = (PluginObjectAssociationDao) getApplicationContext().getBean("pluginObjectAssociationDao", PluginObjectAssociationDao.class);
+		return dao.getAllForRoleplay(rId);
+	}
 
 	public void save() {
 		PluginObjectAssociationDao dao = (PluginObjectAssociationDao) getApplicationContext().getBean("pluginObjectAssociationDao", PluginObjectAssociationDao.class);

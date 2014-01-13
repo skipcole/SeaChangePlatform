@@ -31,6 +31,12 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
 @RequestMapping("/facilitating")
 public class FacilitatorController extends BaseController {
 
+	/**
+	 * Creates objects on the facilitator's home page.
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "index" }, method = RequestMethod.GET)
 	public String showFacilitatorHome(Model model) {
 
@@ -70,6 +76,18 @@ public class FacilitatorController extends BaseController {
 
 	}
 
+	/**
+	 * Creates a roleplay in motion.
+	 * 
+	 * @param facCreateRPIMFormBean
+	 * @param bindingResult
+	 * @param rId
+	 * @param rpimId
+	 * @param model
+	 * @param request
+	 * @param principal
+	 * @return
+	 */
 	@RequestMapping(value = { "createRPIM/{rId}/{rpimId}" }, method = RequestMethod.POST)
 	public String createRPIMPost(
 			@ModelAttribute("facCreateRPIMFormBean") @Valid FacCreateRPIMFormBean facCreateRPIMFormBean,
@@ -83,6 +101,9 @@ public class FacilitatorController extends BaseController {
 		rpim.setRolePlayId(rId);
 		rpim.setPhaseId(new Phase().getFirstForRoleplay(rId));
 		rpim.save();
+		
+		// Create object plugin associations for this RPIM based off of the RP poas
+		roleplay.createCopyofObjectsAndAssociationsForRpim(rpim.getId());
 
 		InstructorRoleplayAssignment ira = new InstructorRoleplayAssignment();
 		ira.setInstructorId(new Long(getSessionInfoBean().getPersonId()));
@@ -95,6 +116,13 @@ public class FacilitatorController extends BaseController {
 		return "redirect:/facilitating/createRPIM/" + roleplay.getId() + "/" + rpim.getId();
 	}
 
+	/**
+	 * Creates the page that allows the addition/subraction of players to roles in a roleplay.
+	 * 
+	 * @param rpimId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = { "assignPlayers/{rpimId}" }, method = RequestMethod.GET)
 	public String assignPlayersGet(@PathVariable Long rpimId, Model model) {
 

@@ -20,6 +20,9 @@ public class DocumentTextTag extends BaseTag {
             
             // Using plugin id and doc index to locate the document
             System.out.println("plugin id is " + getSessionInfoBean().getPluginId());
+            System.out.println("rpim is " + getSessionInfoBean().getRolePlayInMotionId());
+            System.out.println("docindex is " + docIndex);
+            
             PluginObjectDocument pod = 
             		new PluginObjectDocument().getByRPimIdPluginIdAndIndex(getSessionInfoBean().getRolePlayInMotionId(), getSessionInfoBean().getPluginId(), docIndex);
             
