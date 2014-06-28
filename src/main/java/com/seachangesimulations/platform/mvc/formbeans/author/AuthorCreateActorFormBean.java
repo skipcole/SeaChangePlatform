@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 import org.springframework.beans.BeanUtils;
 
 import com.seachangesimulations.platform.domain.Actor;
+import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
 
 public class AuthorCreateActorFormBean {
 
@@ -25,9 +26,9 @@ public class AuthorCreateActorFormBean {
 	
 	private String publicDescription;
 	
-	private boolean controlCharacter = false;
+	/** If this actor has been designated as a normal, observer or control role BY DEFAULT. */
+	private int roleType = PersonRoleplayAssignment.NORMAL_ROLE;
 	
-
 	public Long getRoleplayId() {
 		return roleplayId;
 	}
@@ -53,14 +54,13 @@ public class AuthorCreateActorFormBean {
 		this.publicDescription = publicDescription;
 	}
 
-	public boolean isControlCharacter() {
-		return controlCharacter;
+	public int getRoleType() {
+		return roleType;
 	}
 
-	public void setControlCharacter(boolean controlCharacter) {
-		this.controlCharacter = controlCharacter;
+	public void setRoleType(int roleType) {
+		this.roleType = roleType;
 	}
-	
-	
+
 	
 }

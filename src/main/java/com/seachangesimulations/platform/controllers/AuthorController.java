@@ -39,7 +39,7 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
 import com.seachangesimulations.platform.utilities.Util;
 
 @Controller
-@RequestMapping("/authoring")
+@RequestMapping(CMC.AUTHORING_BASE)
 public class AuthorController extends BaseController {
 
 	/**
@@ -48,7 +48,7 @@ public class AuthorController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = {"index" }, method = RequestMethod.GET)
+	@RequestMapping(value = {CMC.INDEX }, method = RequestMethod.GET)
 	public String showAuthoringPage(Map<String, Object> model) {
 
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.AUTHOR_ZONE);
@@ -68,7 +68,7 @@ public class AuthorController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "roleplay/create/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = {CMC.A_ROLEPLAY_CREATE}, method = RequestMethod.GET)
 	public String showCreateRolePlayPage(@PathVariable Long id, Model model) {
 
 		Roleplay roleplay = new Roleplay().getModelObject(Roleplay.class, id);
@@ -90,7 +90,7 @@ public class AuthorController extends BaseController {
 	 * @param principal
 	 * @return
 	 */
-	@RequestMapping(value = { "roleplay/create/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = {CMC.A_ROLEPLAY_CREATE}, method = RequestMethod.POST)
 	public String handleCreateRolePlay(
 			@ModelAttribute("authorCreateRoleplayFormBean") @Valid AuthorCreateRoleplayFormBean authorCreateRoleplayFormBean,
 			@PathVariable Long id, BindingResult bindingResult, Principal principal, Model model) {
@@ -142,7 +142,7 @@ public class AuthorController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "roleplay/publish/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = {CMC.A_ROLEPLAY_PUBLISH}, method = RequestMethod.GET)
 	public String showPublishRolePlayPage(@PathVariable Long id, Model model) {
 
 		Roleplay roleplay = new Roleplay().getModelObject(Roleplay.class, id);
@@ -164,7 +164,7 @@ public class AuthorController extends BaseController {
 	 * @param principal
 	 * @return
 	 */
-	@RequestMapping(value = { "roleplay/publish/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = {CMC.A_ROLEPLAY_PUBLISH}, method = RequestMethod.POST)
 	public String publishRolePlay(
 			@ModelAttribute("authorPublishRoleplayFormBean") @Valid AuthorPublishRoleplayFormBean authorPublishRoleplayFormBean,
 			@PathVariable Long id, BindingResult bindingResult, Principal principal, Model model) {
@@ -286,6 +286,8 @@ public class AuthorController extends BaseController {
 		model.addAttribute("actor", actor);
 		model.addAttribute("authorCreateActorFormBean", new AuthorCreateActorFormBean(actor));
 		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(rpId));
+		
+		assignRoleTypeConstants(model);
 
 		return "authoring/actor/createActor.jsp";
 	}
@@ -339,6 +341,7 @@ public class AuthorController extends BaseController {
 		}
 
 		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(rpId));
+		assignRoleTypeConstants(model);
 
 		return "redirect:/authoring/rpId/" + rpId + "/actor/create/" + actor.getId();
 

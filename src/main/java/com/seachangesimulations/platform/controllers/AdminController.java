@@ -11,9 +11,8 @@ import com.seachangesimulations.platform.domain.assignment.PersonOrganizationAss
 import com.seachangesimulations.platform.mvc.formbeans.admin.AdminCreatePersonFormBean;
 
 
-
 @Controller
-@RequestMapping("/admin")
+@RequestMapping(CMC.ADMIN_BASE)
 public class AdminController {
 
 	static void loadLevelsIntoMap(Model model){

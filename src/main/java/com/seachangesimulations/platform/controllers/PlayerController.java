@@ -21,7 +21,7 @@ import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 
 @Controller
-@RequestMapping("/playing")
+@RequestMapping(CMC.PLAYING_BASE)
 public class PlayerController extends BaseController {
 
 	/**
@@ -31,7 +31,7 @@ public class PlayerController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = {"index" }, method = RequestMethod.GET) // NO_UCD (unused code)
+	@RequestMapping(value = {CMC.INDEX}, method = RequestMethod.GET) // NO_UCD (unused code)
 	public String showPlayerEntryPage(Principal principal, Model model) {
 
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.PLAYER_ZONE);
@@ -57,7 +57,7 @@ public class PlayerController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "pra/{praId}" }, method = RequestMethod.GET)
+	@RequestMapping(value = {CMC.P_PERSONROLEPLAYASSIGNMENT}, method = RequestMethod.GET)
 	public String showTheRoleplayPage(@PathVariable Long praId, Model model) {
 
 		PersonRoleplayAssignment pra = new PersonRoleplayAssignment().getById(praId);
@@ -95,13 +95,14 @@ public class PlayerController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "showPlugin/{pluginPointerId}" }, method = RequestMethod.GET)
+	@RequestMapping(value = {CMC.P_SHOWPLUGINPOINTER}, method = RequestMethod.GET)
 	public String showPlugin(@PathVariable Long pluginPointerId, Model model) {
 		
 		PluginPointer pluginPointer = new PluginPointer().getById(pluginPointerId);
 		
 		Plugin plugin = new Plugin().getById(pluginPointer.getPluginId());
 		
+		// Storing the id of the Plugin we are on.
 		getSessionInfoBean().setPluginId(plugin.getId());
 		
 		if (plugin.isSystemPlugin()){
@@ -111,7 +112,10 @@ public class PlayerController extends BaseController {
 					new Phase().getAllForRoleplay(this.getSessionInfoBean().getRoleplayId()));
 			return plugin.getPluginDirectory();
 		} else {
-			return "redirect:" + plugin.generatePluginPath() + "1.jsp";
+			// We have everything we need now so when the plugin sends a request for an object
+			// we can send it what it needs
+			printMyCoordinates();
+			return "redirect:" + plugin.generateLinkToPlugin();
 		}
 		
 		//model.addAttribute("pageText", pluginProvider.processPlugin(plugin, getSessionInfoBean()));
@@ -121,14 +125,16 @@ public class PlayerController extends BaseController {
 	}
 	
 	
+
+
 	@RequestMapping(value = { "getSessionInfo" }, method = RequestMethod.GET)
 	public  @ResponseBody SessionInfoBean getSessionInfoGetRequest() {
 		
 		return this.getSessionInfoBean();
 	}
 	
-	@RequestMapping(value = { "getObject/objectIndex/{objectIndex}.json" }, method = RequestMethod.GET)
-	public  @ResponseBody PluginObjectDocument getObjectInJSON(@PathVariable Long objectIndex) {
+	@RequestMapping(value = { "getObject/objectIndex/{objectIndex}" }, method = RequestMethod.GET)
+	public  @ResponseBody String getString(@PathVariable Long objectIndex) {
 		
 		PluginPointer pp = new PluginPointer().getByPlayerValues(
 				getSessionInfoBean().getRoleplayId(),
@@ -138,11 +144,14 @@ public class PlayerController extends BaseController {
 				);
 		
 		// objectIndex is used to get the correct object from the plugin.
+		printMyCoordinates();
 		
 		PluginObjectDocument pod = new PluginObjectDocument();
 		pod.setDocumentName("documentName");
 		pod.setDocumentText("doc text");
-		return pod;
+		
+		String fackJson = "xxxxxxxxxxxxxxxxx";
+		return fackJson;
 	}
 	
 	/**
@@ -152,7 +161,7 @@ public class PlayerController extends BaseController {
 	 * @param phase
 	 * @return
 	 */
-	@RequestMapping(value = { "changePhase" }, method = RequestMethod.POST)
+	@RequestMapping(value = {CMC.P_CHANGEPHASE}, method = RequestMethod.POST)
 	public String changeChase(Model model, @ModelAttribute("phase") Phase phase) {
 
 		System.out.println("changing phase");

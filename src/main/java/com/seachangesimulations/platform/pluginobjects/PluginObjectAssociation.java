@@ -34,6 +34,11 @@ public class PluginObjectAssociation extends BaseSCPlatformObject implements Com
 	
 	public static final String RPIM_PLUGIN_ASSOCIATION = "RPIM_PLUGIN_ASSOCIATION";
 	
+	
+	public static final int GRANULARITY_ROLEPLAYSET = 100;
+	public static final int GRANULARITY_ROLEPLAY = 50;	
+	public static final int GRANULARITY_RPIM = 10;
+	
 	/**
 	 * 
 	 */
@@ -51,6 +56,9 @@ public class PluginObjectAssociation extends BaseSCPlatformObject implements Com
 	private String objectType;
 	
 	private int objectIndex;
+	
+	/** Marks the granularity of this plugin object. */
+	private int objectGranularity = GRANULARITY_ROLEPLAYSET;
 	
 	/** Id of the Roleplay that this object is associated with. */
 	private Long rpId;
@@ -178,6 +186,15 @@ public class PluginObjectAssociation extends BaseSCPlatformObject implements Com
 		PluginObjectAssociationDao dao = (PluginObjectAssociationDao) getApplicationContext().getBean("pluginObjectAssociationDao", PluginObjectAssociationDao.class);
 		dao.delete(this);
 	}
+
+	public int getObjectGranularity() {
+		return objectGranularity;
+	}
+
+	public void setObjectGranularity(int objectGranularity) {
+		this.objectGranularity = objectGranularity;
+	}
+	
 	
 	
 

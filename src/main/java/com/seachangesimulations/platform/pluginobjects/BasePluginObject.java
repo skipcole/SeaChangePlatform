@@ -12,10 +12,6 @@ import com.seachangesimulations.platform.domain.BaseSCPlatformObject;
 @MappedSuperclass
 @XmlAccessorType (XmlAccessType.NONE)  // This means that if you want a field mapped, it has to be annotated.
 public abstract class BasePluginObject extends BaseSCPlatformObject implements Comparable{
-
-	private static final int GRANULARITY_ROLEPLAY = 100;
-	private static final int GRANULARITY_ROLEPLAYSET = 50;
-	private static final int GRANULARITY_RPIM = 10;
 	
 	@Override
 	public int compareTo(Object o) {
@@ -27,8 +23,6 @@ public abstract class BasePluginObject extends BaseSCPlatformObject implements C
 	// TODO Consider ramifications of allowing author set the granularity.
 	private boolean authorSettableGranularity = false;
 	
-	/** Flags the granularity of this plugin object. */
-	protected int pluginObjectGranularity;
 	
 	/** The base, uncustomized, plugin id that this object is associated with. */
 	protected Long basePluginId;
@@ -51,14 +45,6 @@ public abstract class BasePluginObject extends BaseSCPlatformObject implements C
 
 	public void setAuthorSettableGranularity(boolean authorSettableGranularity) {
 		this.authorSettableGranularity = authorSettableGranularity;
-	}
-
-	public int getPluginObjectGranularity() {
-		return pluginObjectGranularity;
-	}
-
-	public void setPluginObjectGranularity(int pluginObjectGranularity) {
-		this.pluginObjectGranularity = pluginObjectGranularity;
 	}
 
 	public Long getBasePluginId() {

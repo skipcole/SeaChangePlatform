@@ -91,15 +91,6 @@
 				<td><sf:input type="text" name="objectDescription" id="objectDescription" path="objectDescription" /></td>
 			</tr>
 			<tr>
-				<td>Granularity</td>
-				<td><label for="objectGranularity"></label> <sf:select
-					name="objectGranularity" id="objectGranularity" path="objectGranularity">
-						<option value="roleplay" selected>Roleplay</option>
-						<option value="rpim">Roleplay in Motion</option>
-						<option value="roleplayset">Set of Roleplays</option>
-				</sf:select></td>
-			</tr>
-			<tr>
 				<td>Add</td>
 				<td><input type="submit" name="addObject" id="addObject"
 					value="Submit"></td>

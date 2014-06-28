@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%><!DOCTYPE HTML >
-<%@taglib prefix="scp" uri="/WEB-INF/SeaChangePlatform.tld"%>
-<html><!-- InstanceBegin template="/Templates/SeaChangePlatformPlugin.dwt" codeOutsideHTMLIsLocked="false" -->
+<!DOCTYPE HTML >
+<html>
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -11,8 +9,7 @@
 <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
 <meta http-equiv="pragma" content="no-cache" />
 
-<!-- InstanceBeginEditable name="doctitle" -->
-<title>Basic Chat Page</title>
+<title>Basic Fixed Text Page Plugin</title>
 <!-- InstanceEndEditable -->
 
 <link href="/SeaChangePlatform/resources/css/SeaChangePlatform.css"
@@ -22,15 +19,17 @@
 <script
 	src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
 
-<!-- InstanceBeginEditable name="head" -->
-
-<!-- InstanceEndEditable -->
 </head>
 <body>
-	<!-- InstanceBeginEditable name="BodyRegion" -->
-	<div id="doc_1">Loading ...</div>
-	<div> Hello: <scp:actorname /></div>
-	<div> Talk amongst yourselves.</div>
-	<!-- InstanceEndEditable -->
+<script>
+$(document).ready(function() {
+	
+	$("#pageText").load("/SeaChangePlatform/playing/getObject/objectIndex/1");
+	
+    
+});
+</script>
+	<div id="pageText">Loading ...</div>
+
 </body>
-<!-- InstanceEnd --></html>
+</html>

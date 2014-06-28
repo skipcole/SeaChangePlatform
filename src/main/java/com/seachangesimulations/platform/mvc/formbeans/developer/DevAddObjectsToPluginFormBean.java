@@ -6,17 +6,15 @@ import com.seachangesimulations.platform.domain.Plugin;
 
 public class DevAddObjectsToPluginFormBean {
 	
-	String objectType;
+	private String objectType;
 	
-	String objectName;
+	private String objectName;
 	
-	String objectDescription;
+	private String objectDescription;
 	
-	String objectGranularity;
+	private Long objectId;
 	
-	Long objectId;
-	
-	Long pluginId;
+	private Long pluginId;
 
 	public DevAddObjectsToPluginFormBean() {
 
@@ -47,18 +45,6 @@ public class DevAddObjectsToPluginFormBean {
 
 	public String getObjectDescription() {
 		return objectDescription;
-	}
-
-	public void setObjectDescription(String objectDescription) {
-		this.objectDescription = objectDescription;
-	}
-
-	public String getObjectGranularity() {
-		return objectGranularity;
-	}
-
-	public void setObjectGranularity(String objectGranularity) {
-		this.objectGranularity = objectGranularity;
 	}
 
 	public Long getObjectId() {

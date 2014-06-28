@@ -35,4 +35,23 @@ public class PersonRoleplayAssignmentDaoHibernateImpl extends BaseDaoHibernateIm
 		return returnList;
 	}
 
+	@Override
+	public List<PersonRoleplayAssignment> getAllForActorRpimId(Long actorId, Long rpimId) {
+		
+		List <PersonRoleplayAssignment> returnList;
+		
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
+
+		Query query = session.createQuery("from PersonRoleplayAssignment where actorId = :actorId and rpimId = :rpimId")
+				.setLong("actorId", actorId)
+				.setLong("rpimId", rpimId);
+		
+		returnList = query.list();
+
+		session.close();
+		
+		return returnList;
+	}
+
 }

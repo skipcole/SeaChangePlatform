@@ -34,7 +34,7 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
  * 
  */
 @Controller
-@RequestMapping("/developing")
+@RequestMapping(CMC.DEVELOPING_BASE)
 public class DeveloperController extends BaseController {
 
 	/**
@@ -330,7 +330,7 @@ public class DeveloperController extends BaseController {
 	
 	/** Directs the user to the modify document page. */
 	@RequestMapping(value = { "modifyPluginObject/plugin/{pId}/document/{dId}" }, method = RequestMethod.GET)
-	public String addObjectsToPluginGet(@PathVariable Long pId, @PathVariable Long dId, Model model) {
+	public String modifyPluginObject(@PathVariable Long pId, @PathVariable Long dId, Model model) {
 
 		Plugin plugin = new Plugin().getModelObject(Plugin.class, pId);
 		PluginObjectDocument pod = new PluginObjectDocument().getById(dId);

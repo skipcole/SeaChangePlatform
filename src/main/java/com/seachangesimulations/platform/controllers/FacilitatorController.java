@@ -28,7 +28,7 @@ import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacLaunchRole
 import com.seachangesimulations.platform.service.SessionInfoBean;
 
 @Controller
-@RequestMapping("/facilitating")
+@RequestMapping(CMC.FACILITATING_BASE)
 public class FacilitatorController extends BaseController {
 
 	/**
@@ -37,7 +37,7 @@ public class FacilitatorController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "index" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.INDEX }, method = RequestMethod.GET)
 	public String showFacilitatorHome(Model model) {
 
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.FACILITATOR_ZONE);
@@ -129,28 +129,38 @@ public class FacilitatorController extends BaseController {
 		RoleplayInMotion rpim = new RoleplayInMotion().getById(rpimId);
 		Roleplay roleplay = new Roleplay().getById(rpim.getRolePlayId());
 
-		model.addAttribute("actorsForThisRoleplay", new Actor().getAllForRoleplay(rpim.getRolePlayId()));
-
-		model.addAttribute("roleplay", roleplay);
-		model.addAttribute("rpim", rpim);
-		
-		model.addAttribute("facAssignPlayersFormBean", new FacAssignPlayersFormBean());
+		addAssignmentEssenstials(roleplay, rpim, model);
 
 		return "/facilitating/assignPlayerstoRPIM.jsp";
 	}
 
-	@RequestMapping(value = { "assignPlayers/{rpimId}/actorId/{aId}" }, method = RequestMethod.POST)
-	public String assignPlayersPost(@PathVariable Long rpimId, @PathVariable Long aId,
+	private void addAssignmentEssenstials(Roleplay roleplay, RoleplayInMotion rpim, Model model) {
+		// Add the PersonRolePlayAssignments to the model
+		List pras = new PersonRoleplayAssignment().getRolePlayAssignments(rpim.getRolePlayId());
+		model.addAttribute("pras", pras);
+		
+		// Need to add these here so multiple forms (one for each assignment) on page will have access
+		model.addAttribute("facAssignPlayersFormBean", new FacAssignPlayersFormBean(pras));
+
+		model.addAttribute("roleplay", roleplay);
+		model.addAttribute("rpim", rpim);
+		assignRoleTypeConstants(model);
+		
+	}
+	
+	@RequestMapping(value = {CMC.F_ASSIGNPLAYER_RP_A_PRA}, method = RequestMethod.POST)
+	public String assignPlayersPost(@PathVariable Long rpimId, @PathVariable Long aId, @PathVariable Long praId,
 			@ModelAttribute("facAssignPlayersFormBean") FacAssignPlayersFormBean facAssignPlayersFormBean,	Model model) {
 		
 		RoleplayInMotion rpim = new RoleplayInMotion().getById(rpimId);
 		Roleplay roleplay = new Roleplay().getById(rpim.getRolePlayId());
 		Actor actor = new Actor().getById(aId);
+		
+		PersonRoleplayAssignment personRoleplayAssignment = new PersonRoleplayAssignment().getModelObject(PersonRoleplayAssignment.class, praId);
 
 		Person person = new Person().getByUsername(facAssignPlayersFormBean.getUserName());
 
 		if (person != null) {
-			PersonRoleplayAssignment personRoleplayAssignment = new PersonRoleplayAssignment();
 		
 			personRoleplayAssignment.setPersonId(person.getId());
 			personRoleplayAssignment.setRolePlayId(roleplay.getId());
@@ -164,8 +174,7 @@ public class FacilitatorController extends BaseController {
 		
 		}
 
-		model.addAttribute("roleplay", roleplay);
-		model.addAttribute("rpim", rpim);
+		addAssignmentEssenstials(roleplay, rpim, model);
 
 		return "redirect:/facilitating/assignPlayers/" + rpimId;
 	}

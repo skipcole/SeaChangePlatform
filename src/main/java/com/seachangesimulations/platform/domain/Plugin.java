@@ -19,6 +19,8 @@ import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 @Scope("prototype")
 public class Plugin extends BaseSCPlatformObject {
 
+	private static final String BASE_PLUGIN_DIRECTORY = "/resources/plugins/";
+	
 	/**
 	 * 
 	 */
@@ -77,7 +79,16 @@ public class Plugin extends BaseSCPlatformObject {
 	 * @return
 	 */
 	public String generatePluginPath() {
-		return "/plugins/" + pluginDirectory + "/";
+		return BASE_PLUGIN_DIRECTORY + pluginDirectory + "/";
+	}
+	
+	/**
+	 * Creates the plugin paths for the links on the tabs to show each plugin.
+	 * 
+	 * @return
+	 */
+	public String generateLinkToPlugin() {
+		return BASE_PLUGIN_DIRECTORY + pluginDirectory + "/" + shortFormPluginName + ".htm";
 	}
 
 	/**

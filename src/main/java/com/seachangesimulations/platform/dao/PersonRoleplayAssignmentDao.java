@@ -13,4 +13,7 @@ import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignm
 public interface PersonRoleplayAssignmentDao extends BaseDao<PersonRoleplayAssignment> {
 
 	public List<PersonRoleplayAssignment> getAllRoleplaysForPerson(Long pId);
+	
+	public List<PersonRoleplayAssignment> getAllForActorRpimId(Long actorId, Long rpimId);
+	
 }

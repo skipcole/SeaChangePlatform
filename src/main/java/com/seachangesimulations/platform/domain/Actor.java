@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.ActorDao;
+import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
 
 @Entity
 @Component
@@ -38,7 +39,8 @@ public class Actor extends BaseSCPlatformObject {
 	/** Name of the image associated with the Actor */
 	private String actorImageName;
 	
-	private boolean controlCharacter = false;
+	/** If this actor has been designated as a normal, observer or control role BY DEFAULT. */
+	private int roleType = PersonRoleplayAssignment.NORMAL_ROLE;
 	
 	
 	public void save(){
@@ -104,14 +106,12 @@ public class Actor extends BaseSCPlatformObject {
 		this.actorImageName = actorImageName;
 	}
 
-	public boolean isControlCharacter() {
-		return controlCharacter;
+	public int getRoleType() {
+		return roleType;
 	}
 
-	public void setControlCharacter(boolean controlCharacter) {
-		this.controlCharacter = controlCharacter;
+	public void setRoleType(int roleType) {
+		this.roleType = roleType;
 	}
-	
-	
 
 }

@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%><!DOCTYPE HTML >
-<%@taglib prefix="scp" uri="/WEB-INF/SeaChangePlatform.tld"%>
+<!DOCTYPE HTML >
 <html><!-- InstanceBegin template="/Templates/SeaChangePlatformPlugin.dwt" codeOutsideHTMLIsLocked="false" -->
 <head>
 
@@ -12,7 +10,7 @@
 <meta http-equiv="pragma" content="no-cache" />
 
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Basic Text Page Plugin</title>
+<title>Basic Chat Page</title>
 <!-- InstanceEndEditable -->
 
 <link href="/SeaChangePlatform/resources/css/SeaChangePlatform.css"
@@ -23,22 +21,14 @@
 	src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
 
 <!-- InstanceBeginEditable name="head" -->
-<script>
-$(document).ready(function() {
 
-	$("#doc_1").html("Dont fear the ajax.");
-	
-	setInterval( "alert('Hello')", 50000 );
-    
-});
-</script>
 <!-- InstanceEndEditable -->
 </head>
 <body>
 	<!-- InstanceBeginEditable name="BodyRegion" -->
 	<div id="doc_1">Loading ...</div>
 	<div> Hello: <scp:actorname /></div>
-	<div> <scp:documenttext docIndex="1"  /></div>
+	<div> Talk amongst yourselves.</div>
 	<!-- InstanceEndEditable -->
 </body>
 <!-- InstanceEnd --></html>
