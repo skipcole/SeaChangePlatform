@@ -30,4 +30,8 @@ public class CMC {
 	public static final String P_CHANGEPHASE = "changePhase";
 	public static final String P_SHOWPLUGINPOINTER = "showPlugin/{pluginPointerId}";
 	
+	/* Plugin Objects */
+	public static final String PLUGINOBJECT_BASE = "/po";
+	public static final String PO_DOC = "{pId}/getDocument/objectIndex/{objectIndex}.xml";
+	
 }

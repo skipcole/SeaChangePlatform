@@ -347,29 +347,6 @@ public class AuthorController extends BaseController {
 
 	}
 
-	/**
-	 * Returns an xml representation of an actor, if the requestor is authorized
-	 * to obtain it. The amount of information passed back can be modulated by
-	 * the optMod token.
-	 * 
-	 * @param scAuthToken
-	 * @param actorId
-	 * @param mod
-	 * @return
-	 */
-	@RequestMapping(value = { "/xml/scauthtoken/{scAuthToken}/actor/{actorId}/optMod/{mod}" }, method = RequestMethod.GET)
-	@ResponseBody
-	public String getXmlActor(@PathVariable String scAuthToken, @PathVariable Long actorId, @PathVariable String mod) {
-
-		System.out.println("scauth was: " + scAuthToken);
-		System.out.println("actor id was: " + actorId);
-		System.out.println("mod was: " + mod);
-		Actor a = new Actor();
-		a.setActorName("Richard");
-
-		return Util.packageIntoXML(Actor.class, a);
-
-	}
 
 	@RequestMapping(value = { "actor/edit/{id}" }, method = RequestMethod.POST)
 	public String editActorPost(@Valid Actor actor, BindingResult bindingResult,

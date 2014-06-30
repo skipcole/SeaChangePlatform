@@ -1,8 +1,12 @@
 package com.seachangesimulations.platform.controllers;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +21,7 @@ import com.seachangesimulations.platform.domain.Plugin;
 import com.seachangesimulations.platform.domain.PluginPointer;
 import com.seachangesimulations.platform.domain.RoleplayInMotion;
 import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
+import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 
@@ -103,6 +108,12 @@ public class PlayerController extends BaseController {
 		Plugin plugin = new Plugin().getById(pluginPointer.getPluginId());
 		
 		// Storing the id of the Plugin we are on.
+		mark();
+		System.out.println("We are on plugin pointer" + pluginPointerId);
+		System.out.println("We are on plugin " + plugin.getId());
+		System.out.flush();
+		mark();
+		
 		getSessionInfoBean().setPluginId(plugin.getId());
 		
 		if (plugin.isSystemPlugin()){
@@ -115,7 +126,7 @@ public class PlayerController extends BaseController {
 			// We have everything we need now so when the plugin sends a request for an object
 			// we can send it what it needs
 			printMyCoordinates();
-			return "redirect:" + plugin.generateLinkToPlugin();
+			return "redirect:" + plugin.generateLinkToPlugin() + "#" + plugin.getId();
 		}
 		
 		//model.addAttribute("pageText", pluginProvider.processPlugin(plugin, getSessionInfoBean()));
@@ -123,8 +134,7 @@ public class PlayerController extends BaseController {
 		//return "playing/showPlugin.jsp";
 		
 	}
-	
-	
+
 
 
 	@RequestMapping(value = { "getSessionInfo" }, method = RequestMethod.GET)
@@ -133,26 +143,7 @@ public class PlayerController extends BaseController {
 		return this.getSessionInfoBean();
 	}
 	
-	@RequestMapping(value = { "getObject/objectIndex/{objectIndex}" }, method = RequestMethod.GET)
-	public  @ResponseBody String getString(@PathVariable Long objectIndex) {
-		
-		PluginPointer pp = new PluginPointer().getByPlayerValues(
-				getSessionInfoBean().getRoleplayId(),
-				getSessionInfoBean().getActorId(),
-				getSessionInfoBean().getPhaseId(),
-				getSessionInfoBean().getPluginIndex()
-				);
-		
-		// objectIndex is used to get the correct object from the plugin.
-		printMyCoordinates();
-		
-		PluginObjectDocument pod = new PluginObjectDocument();
-		pod.setDocumentName("documentName");
-		pod.setDocumentText("doc text");
-		
-		String fackJson = "xxxxxxxxxxxxxxxxx";
-		return fackJson;
-	}
+
 	
 	/**
 	 * Called by a 'control' player to change the phase of the roleplay.

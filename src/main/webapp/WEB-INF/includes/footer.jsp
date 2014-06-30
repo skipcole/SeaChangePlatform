@@ -1,5 +1,5 @@
 <table align="center">
 	<tr>
-		<td><a href="http://wwww.seachangesimulations.com">The Sea Change Online Roleplay Platform</a></td>
+		<td><a href="http://www.seachangesimulations.com" target="_new">The Sea Change Online Roleplay Platform</a></td>
 	</tr>
 </table>

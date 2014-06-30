@@ -45,7 +45,27 @@ public class BaseController implements ApplicationContextAware {
 	
 	protected void printMyCoordinates() {
 		System.out.println("Roleplay" + getSessionInfoBean().getRoleplayName());
-		System.out.println("Actor" + getSessionInfoBean().getRoleplayName());
+		System.out.println("Actor" + getSessionInfoBean().getActorName());
+		
+		System.out.println("RoleplayId" + getSessionInfoBean().getRoleplayId());
+		System.out.println("ActorId" + getSessionInfoBean().getActorId());
+		System.out.println("PhaseId" + getSessionInfoBean().getPhaseId());
+		System.out.println("PluginIndex" + getSessionInfoBean().getPluginIndex());
+		System.out.println("PluginId" + getSessionInfoBean().getPluginId());
+		System.out.flush();
+		
+		
+	}
+	
+
+	public void mark() {
+		System.out.println("****************************************8888");
+		System.out.println("****************************************8888");
+		System.out.println("****************************************8888");
+		System.out.println("****************************************8888");
+		System.out.println("****************************************8888");
+		System.out.println("****************************************8888");
+		
 		
 	}
 	

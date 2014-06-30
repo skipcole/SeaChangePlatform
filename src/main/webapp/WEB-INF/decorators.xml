@@ -20,6 +20,7 @@
 		<pattern>/playing/showPlugin/**</pattern>
 		<pattern>/playing/getObject/**</pattern>
 		<pattern>/resources/plugins/**</pattern>
+		<pattern>/po/**</pattern>
 	</excludes>
 
 	<decorator name="layout" page="layout.jsp">

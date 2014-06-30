@@ -23,13 +23,15 @@
 <body>
 <script>
 $(document).ready(function() {
+	var docURL = document.URL;
+	var lastPound = docURL.lastIndexOf("#");
+	var ppId = docURL.substr(lastPound + 1);
 	
-	$("#pageText").load("/SeaChangePlatform/playing/getObject/objectIndex/1");
+	//alert('my ppid is ' + ppId);
 	
-    
+	$("#pageText").load("/SeaChangePlatform/po/" + ppId + "/getDocument/objectIndex/1.xml");
+	
 });
-</script>
-	<div id="pageText">Loading ...</div>
-
+</script><div id="pageText">Loading ...</div>
 </body>
 </html>

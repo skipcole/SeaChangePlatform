@@ -49,7 +49,7 @@
 					<td>admin words</td>
 				</security:authorize>
 				<security:authorize url="/developing/**">
-					<td>admin words</td>
+					<td>developer words</td>
 				</security:authorize>
 				<security:authorize url="/authoring/**">
 					<td>author words</td>

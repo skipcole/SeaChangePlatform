@@ -17,7 +17,7 @@
 
 <link href="/SeaChangePlatform/resources/css/SeaChangePlatform.css"
 	rel="stylesheet" type="text/css">
-<link href="/SeaChangePlatform/javascript/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.min.css"
+<link href="/SeaChangePlatform/resources/javascript/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.min.css"
 	rel="stylesheet" type="text/css">
 
 <script src="/SeaChangePlatform/resources/javascript/jquery-1.9.1.js"></script>
