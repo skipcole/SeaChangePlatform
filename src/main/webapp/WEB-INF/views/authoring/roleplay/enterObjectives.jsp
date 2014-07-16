@@ -18,12 +18,9 @@
 	rel="stylesheet" type="text/css">
 <link href="/SeaChangePlatform/resources/javascript/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.min.css"
 	rel="stylesheet" type="text/css">
-
-<script src="/SeaChangePlatform/resources/javascript/jquery-1.9.1.js"></script>
-<script
-	src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
-<script
-	src="/SeaChangePlatform/javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<link href="/SeaChangePlatform/resources/javascript/jQuery-TE_v.1.4.0/jquery-te-1.4.0.css"
+	rel="stylesheet" type="text/css">
+	
     
 <!-- Bootstrap -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -36,17 +33,30 @@
 <!-- InstanceEndEditable -->
 </head>
 <body>
+<script src="/SeaChangePlatform/resources/javascript/jquery-1.9.1.js"></script>
+<script
+	src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
+<script
+	src="/SeaChangePlatform/javascript/resources/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	
+<script
+	src="/SeaChangePlatform/resources/javascript/jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js"></script>
+<script>
+$( document ).ready(function() {
+	$(".editor").jqte();
+});
+</script>
 	<!-- InstanceBeginEditable name="BodyRegion" -->
-			<p>Enter Role Play Objectives</p>
+			<p>Enter Roleplay Objectives x</p>
 
-			<p> you are working on role play <c:out value="${sessionScope.sessionInfoBean.roleplayName}" />
+			<p> You are working on role play <em></em><c:out value="${sessionScope.sessionInfoBean.roleplayName}" /></em>
 			</p>
 
 			<sf:form id="roleplay" modelAttribute="roleplay" METHOD="POST" 
 				action="${pageContext.request.contextPath}/authoring/rolePlay/enterObjectives/${sessionScope.sessionInfoBean.roleplayId}" label="Roleplay Objectives">
 				
 				<sf:input type="hidden" path="roleplayName" />
-				<sf:textarea path="objectives" />
+				<sf:textarea class="editor" name="objectives" id="objectives" path="objectives" height="100%" />
 
 				<div class="input-append">
 					<input type="submit"	value="Enter Objectives" name="enterSave" id="enterSave" />

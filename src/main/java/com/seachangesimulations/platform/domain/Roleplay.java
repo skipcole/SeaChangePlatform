@@ -1,25 +1,32 @@
 
 package com.seachangesimulations.platform.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.seachangesimulations.platform.dao.RolePlayDao;
+import com.seachangesimulations.platform.dao.RoleplayDao;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 
 @Entity
 @Component
 @Scope("prototype")
-public class Roleplay extends BaseSCPlatformObject {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Roleplay extends BaseSCPlatformObject implements MayHaveSubObjects{
 
 	/**
 	 * 
@@ -33,12 +40,12 @@ public class Roleplay extends BaseSCPlatformObject {
 	}
 
 	public Roleplay getById(Long id){
-		RolePlayDao dao = (RolePlayDao) getApplicationContext().getBean("rolePlayDao", RolePlayDao.class);
+		RoleplayDao dao = (RoleplayDao) getApplicationContext().getBean("roleplayDao", RoleplayDao.class);
 		return dao.get(id);
 	}
 	
 	public void save(){
-		RolePlayDao dao = (RolePlayDao) getApplicationContext().getBean("rolePlayDao", RolePlayDao.class);
+		RoleplayDao dao = (RoleplayDao) getApplicationContext().getBean("roleplayDao", RoleplayDao.class);
 		dao.save(this);
 	}
 	
@@ -89,14 +96,14 @@ public class Roleplay extends BaseSCPlatformObject {
 
 	public Long create(String rolePlayName, Long orgId) {
 
-		RolePlayDao dao = (RolePlayDao) getApplicationContext().getBean("rolePlayDao", RolePlayDao.class);
+		RoleplayDao dao = (RoleplayDao) getApplicationContext().getBean("roleplayDao", RoleplayDao.class);
 
 		return dao.create(rolePlayName, orgId);
 	}
 	
 	
 	public List <Roleplay> getAll(){
-		RolePlayDao dao = (RolePlayDao) getApplicationContext().getBean("rolePlayDao", RolePlayDao.class);
+		RoleplayDao dao = (RoleplayDao) getApplicationContext().getBean("roleplayDao", RoleplayDao.class);
 		
 		return dao.getAll();
 		
@@ -379,6 +386,23 @@ public class Roleplay extends BaseSCPlatformObject {
 			return false;
 		}
 	}
+	
+	@Transient
+	private List<Phase> phases = new ArrayList<Phase>();
+
+	@Override
+	public void loadSubObjects() {
+
+		phases = new Phase().getAllForRoleplay(this.id);
+		
+	}
+
+	@Override
+	public void saveSubObjects() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

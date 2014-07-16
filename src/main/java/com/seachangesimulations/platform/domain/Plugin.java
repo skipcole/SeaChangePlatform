@@ -3,7 +3,12 @@ package com.seachangesimulations.platform.domain;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,7 +22,9 @@ import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 @Entity
 @Component
 @Scope("prototype")
-public class Plugin extends BaseSCPlatformObject {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Plugin extends BaseSCPlatformObject implements MayHaveSubObjects{
 
 	private static final String BASE_PLUGIN_DIRECTORY = "/resources/plugins/";
 	
@@ -329,4 +336,18 @@ public class Plugin extends BaseSCPlatformObject {
 		
 		return newPod;
 	}
+
+	@Override
+	public void loadSubObjects() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveSubObjects() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
 }

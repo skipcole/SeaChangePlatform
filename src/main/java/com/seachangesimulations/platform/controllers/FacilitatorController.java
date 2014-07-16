@@ -163,7 +163,7 @@ public class FacilitatorController extends BaseController {
 		if (person != null) {
 		
 			personRoleplayAssignment.setPersonId(person.getId());
-			personRoleplayAssignment.setRolePlayId(roleplay.getId());
+			personRoleplayAssignment.setRoleplayId(roleplay.getId());
 			personRoleplayAssignment.setRpimId(rpimId);
 			personRoleplayAssignment.setRoleplayName(roleplay.getRoleplayName());
 			personRoleplayAssignment.setRpimName(rpim.getRoleplayInMotionName());

@@ -32,7 +32,7 @@ public class PersonRoleplayAssignment extends BaseSCPlatformObject {
 	private Long rpimId;
 
 	/** Id of the role play that this object is associated with. */
-	private Long rolePlayId;
+	private Long roleplayId;
 
 	private Long actorId;
 	
@@ -119,12 +119,12 @@ public class PersonRoleplayAssignment extends BaseSCPlatformObject {
 		this.rpimId = rpimId;
 	}
 
-	public Long getRolePlayId() {
-		return rolePlayId;
+	public Long getRoleplayId() {
+		return roleplayId;
 	}
 
-	public void setRolePlayId(Long rolePlayId) {
-		this.rolePlayId = rolePlayId;
+	public void setRoleplayId(Long rolePlayId) {
+		this.roleplayId = rolePlayId;
 	}
 
 	public Long getActorId() {

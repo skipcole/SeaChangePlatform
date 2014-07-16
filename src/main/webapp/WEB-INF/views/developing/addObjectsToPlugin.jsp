@@ -56,7 +56,9 @@
 				<!-- TODO put in test to see if is document type object -->
 				<tr>
 					<td><c:out value="${pluginObjectAssociation.objectIndex}" /></td>
-					<td><a href="${pageContext.request.contextPath}/developing/modifyPluginObject/plugin/${pluginObjectAssociation.pluginId}/document/${pluginObjectAssociation.objectId}/"><c:out value="${pluginObjectAssociation.objectName}" /></a></td>
+					<td><a href="${pageContext.request.contextPath}/developing/modifyPluginObject/plugin/${pluginObjectAssociation.pluginId}/document/${pluginObjectAssociation.objectId}/"
+							id="object_${pluginObjectAssociation.objectId}" >
+					<c:out value="${pluginObjectAssociation.objectName}" /></a></td>
 					<td align="right"><a href="${pageContext.request.contextPath}/developing/plugin/${pluginObjectAssociation.pluginId}/removePluginObjectAssociation/${pluginObjectAssociation.objectId}/"><i>remove</i></a></td>
 				</tr>
 				<!--  End of test if it is document object -->

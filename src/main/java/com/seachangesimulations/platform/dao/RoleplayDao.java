@@ -10,7 +10,7 @@ import com.seachangesimulations.platform.domain.Roleplay;
  * function correctly in this software.
  * 
  */
-public interface RolePlayDao extends BaseDao<Roleplay> {
+public interface RoleplayDao extends BaseDao<Roleplay> {
 
 	public Long create(String rolePlayName, Long orgId);
 	

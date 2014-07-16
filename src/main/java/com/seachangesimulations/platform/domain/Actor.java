@@ -18,7 +18,7 @@ import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignm
 @Component
 @Scope("prototype")
 @XmlRootElement
-public class Actor extends BaseSCPlatformObject {
+public class Actor extends BaseSCPlatformObject implements MayHaveSubObjects{
 
 	/**
 	 * 
@@ -113,5 +113,18 @@ public class Actor extends BaseSCPlatformObject {
 	public void setRoleType(int roleType) {
 		this.roleType = roleType;
 	}
+
+	@Override
+	public void loadSubObjects() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveSubObjects() {
+		// TODO Auto-generated method stub
+	
+	}
+
 
 }

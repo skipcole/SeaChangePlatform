@@ -117,14 +117,14 @@ public class AuthorController extends BaseController {
 
 	}
 	
-	@RequestMapping(value = { "selectRoleplay" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_SELECT_GET }, method = RequestMethod.GET)
 	public String selectRoleplay(Model model) {
 
 		model.addAttribute("allRoleplays", new Roleplay().getAll());
 		return "authoring/selectRoleplay.jsp";
 	}
 	
-	@RequestMapping(value = { "changeRoleplay/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_CHANGE }, method = RequestMethod.GET)
 	public String changeRoleplay(@PathVariable Long id, Model model) {
 
 		this.getSessionInfoBean().setRoleplayId(id);
@@ -210,7 +210,7 @@ public class AuthorController extends BaseController {
 	 */
 
 	/** Gets the Enter Objectives Page */
-	@RequestMapping(value = { "rolePlay/enterObjectives/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_OBJECTIVES_GET }, method = RequestMethod.GET)
 	public ModelAndView getEnterObjectivesPage(@PathVariable String id, ModelAndView mav) {
 		Roleplay roleplay = new Roleplay().getById(new Long(id));
 		mav.getModelMap().addAttribute("roleplay", roleplay);
@@ -221,7 +221,7 @@ public class AuthorController extends BaseController {
 	}
 
 	/** Handles post and cancel on the Enter Objectives Page */
-	@RequestMapping(value = { "rolePlay/enterObjectives/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_OBJECTIVES_POST }, method = RequestMethod.POST)
 	public String enterObjectivesPost(HttpServletRequest request, @PathVariable String id,
 			@ModelAttribute("roleplay") Roleplay roleplay, BindingResult bindingResult) {
 
@@ -245,7 +245,7 @@ public class AuthorController extends BaseController {
 	}
 
 	/** Gets the Enter Audience Page */
-	@RequestMapping(value = { "rolePlay/enterAudience/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_AUDIENCE_GET }, method = RequestMethod.GET)
 	public ModelAndView getEnterAudiencePage(@PathVariable String id, ModelAndView mav) {
 		Roleplay roleplay = new Roleplay().getById(new Long(id));
 		mav.getModelMap().addAttribute("roleplay", roleplay);
@@ -256,7 +256,7 @@ public class AuthorController extends BaseController {
 	}
 
 	/** Handles post and cancel on the Enter Audience Page */
-	@RequestMapping(value = { "rolePlay/enterAudience/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_AUDIENCE_POST }, method = RequestMethod.POST)
 	public String enterAudiencePost(HttpServletRequest request, @PathVariable String id,
 			@ModelAttribute("roleplay") Roleplay roleplay, BindingResult bindingResult) {
 

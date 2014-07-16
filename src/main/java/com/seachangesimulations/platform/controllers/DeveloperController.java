@@ -43,7 +43,7 @@ public class DeveloperController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = {"index" }, method = RequestMethod.GET)
+	@RequestMapping(value = {CMC.INDEX }, method = RequestMethod.GET)
 	public String showDevelopingPage(Model model) {
 
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.DEVELOPER_ZONE);
@@ -74,7 +74,7 @@ public class DeveloperController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "choose" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.D_CHOOSE }, method = RequestMethod.POST)
 	public String chooseDevelopingTask(Model model, HttpServletRequest request) {
 
 		String pluginId = request.getParameter("pluginSelectionId");
@@ -112,6 +112,12 @@ public class DeveloperController extends BaseController {
 		System.out.println("warning. should not get here.");
 		return "developing/index.jsp";
 	}
+	
+	@RequestMapping(value = { CMC.D_API }, method = RequestMethod.GET)
+	public String apiText() {
+
+		return "developing/pluginAPI.jsp";
+	}
 
 	/**
 	 * This REST method takes the developer to the page to define the plugin, so
@@ -121,7 +127,7 @@ public class DeveloperController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "definePlugin/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.D_DEFINE_PLUGIN_GET }, method = RequestMethod.GET)
 	public String definePluginGet(@PathVariable Long id, Model model) {
 
 		Plugin plugin = new Plugin().getModelObject(Plugin.class, id);
@@ -144,7 +150,7 @@ public class DeveloperController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "definePlugin/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.D_DEFINE_PLUGIN_POST }, method = RequestMethod.POST)
 	public String definePluginPost(
 			@ModelAttribute("devDefinePluginFormBean") @Valid DevDefinePluginFormBean devDefinePluginFormBean,
 			BindingResult bindingResult, @PathVariable Long id, Model model) {
@@ -181,7 +187,7 @@ public class DeveloperController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "uploadPluginFiles/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.D_UPLOAD_PLUGIN_FILES_GET }, method = RequestMethod.GET)
 	public String uploadPluginFilesGet(@PathVariable Long id, Model model) {
 
 		Plugin plugin = new Plugin().getModelObject(Plugin.class, id);
@@ -204,7 +210,7 @@ public class DeveloperController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "uploadPluginFiles/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.D_UPLOAD_PLUGIN_FILES_POST }, method = RequestMethod.POST)
 	public String uploadPluginFilesPost(@PathVariable Long id,
 			@RequestParam(value = "pluginFile", required = false) MultipartFile pluginFile, Model model) {
 
@@ -243,7 +249,7 @@ public class DeveloperController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "addObjectsToPlugin/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.D_ADD_OBJECTS_TO_PLUGIN_FILES_GET }, method = RequestMethod.GET)
 	public String addObjectsToPluginGet(@PathVariable Long id, Model model) {
 
 		Plugin plugin = new Plugin().getModelObject(Plugin.class, id);
@@ -259,28 +265,7 @@ public class DeveloperController extends BaseController {
 
 	}
 	
-	
-	@RequestMapping(value = { "plugin/{pId}/removePluginObjectAssociation/{id}" }, method = RequestMethod.GET)
-	public String removePluginObjectAssociation(@PathVariable Long pId, @PathVariable Long id, Model model) {
 
-		PluginObjectAssociation poa = new PluginObjectAssociation().getById(id);
-		
-		// SKIP TODO - delete all object associated with this poa also, so they don't just hang around cluttering up the place.
-
-		poa.delete();
-		
-		Plugin plugin = new Plugin().getModelObject(Plugin.class, pId);
-
-		// Create new form bean with default values.
-		DevAddObjectsToPluginFormBean devAddObjectsToPluginFormBean = new DevAddObjectsToPluginFormBean(plugin);
-
-		model.addAttribute("plugin", plugin);
-		model.addAttribute("devAddObjectsToPluginFormBean", devAddObjectsToPluginFormBean);
-		model.addAttribute("pluginObjectAssociations", new PluginObjectAssociation().getAllForPlugin(pId));
-
-		return "/developing/addObjectsToPlugin.jsp";
-
-	}
 	/**
 	 * This method will add an object to a plugin.
 	 * 
@@ -289,7 +274,7 @@ public class DeveloperController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "addObjectsToPlugin/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.D_ADD_OBJECTS_TO_PLUGIN_FILES_POST }, method = RequestMethod.POST)
 	public String addObjectsToPluginPost(
 			@PathVariable Long id,
 			@ModelAttribute("devAddObjectsToPluginFormBean") @Valid DevAddObjectsToPluginFormBean devAddObjectsToPluginFormBean,
@@ -328,8 +313,30 @@ public class DeveloperController extends BaseController {
 
 	}
 	
+	@RequestMapping(value = { CMC.D_REMOVE_PLUGIN_POA_GET }, method = RequestMethod.GET)
+	public String removePluginObjectAssociation(@PathVariable Long pId, @PathVariable Long id, Model model) {
+
+		PluginObjectAssociation poa = new PluginObjectAssociation().getById(id);
+		
+		// SKIP TODO - delete all object associated with this poa also, so they don't just hang around cluttering up the place.
+
+		poa.delete();
+		
+		Plugin plugin = new Plugin().getModelObject(Plugin.class, pId);
+
+		// Create new form bean with default values.
+		DevAddObjectsToPluginFormBean devAddObjectsToPluginFormBean = new DevAddObjectsToPluginFormBean(plugin);
+
+		model.addAttribute("plugin", plugin);
+		model.addAttribute("devAddObjectsToPluginFormBean", devAddObjectsToPluginFormBean);
+		model.addAttribute("pluginObjectAssociations", new PluginObjectAssociation().getAllForPlugin(pId));
+
+		return "/developing/addObjectsToPlugin.jsp";
+
+	}
+	
 	/** Directs the user to the modify document page. */
-	@RequestMapping(value = { "modifyPluginObject/plugin/{pId}/document/{dId}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.D_MODIFY_PLUGIN_DOC_GET }, method = RequestMethod.GET)
 	public String modifyPluginObject(@PathVariable Long pId, @PathVariable Long dId, Model model) {
 
 		Plugin plugin = new Plugin().getModelObject(Plugin.class, pId);
@@ -346,7 +353,7 @@ public class DeveloperController extends BaseController {
 	}
 	
 	/** Returns mappings in page for developer to edit plugin document. */
-	@RequestMapping(value = { "plugin/{pId}/modifyPluginDocument/{dId}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.D_MODIFY_PLUGIN_DOC_POST }, method = RequestMethod.POST)
 	public String modifyPluginObjectDocument(
 			@PathVariable Long pId, @PathVariable Long dId,
 			@ModelAttribute("devModifyPluginDocumentFormBean") @Valid DevModifyPluginDocumentFormBean devModifyPluginDocumentFormBean,
@@ -363,60 +370,5 @@ public class DeveloperController extends BaseController {
 		
 		return "/developing/modifyPluginDocument.jsp";
 	}
-
-	/**
-	 * This REST method uploads the developer's changes to set of objects that a
-	 * plugin has.
-	 * 
-	 * @param id
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = { "OLD_addObjectsToPlugin/{id}" }, method = RequestMethod.POST)
-	public String definePluginPost(
-			@ModelAttribute("devAddObjectsToPluginFormBean") @Valid DevAddObjectsToPluginFormBean devAddObjectsToPluginFormBean,
-			BindingResult bindingResult, @PathVariable Long id, Model model) {
-
-		if (bindingResult.hasErrors()) {
-			return "/developing/addObjectsToPlugin.jsp";
-		}
-
-		Plugin plugin = new Plugin();
-
-		if (!((id == null) || (id.intValue() == 0))) {
-			plugin = plugin.getById(id);
-		}
-
-		// Copy in properties, set customized to false, since developers make
-		// uncustomized plugins for the authors to customize.
-		BeanUtils.copyProperties(devAddObjectsToPluginFormBean, plugin);
-		plugin.setCustomized(false);
-
-		plugin.save();
-
-		model.addAttribute("plugin", plugin);
-		model.addAttribute("devAddObjectsToPluginFormBean", devAddObjectsToPluginFormBean);
-
-		return "redirect:/developing/addObjectsToPlugin/" + plugin.getId();
-
-	}
-
-	/**
-	 * Returns a plugin based on its id, unless the id is '0', in which case it
-	 * returns a new plugin. This dance is done to allow an id of 0 to indicate
-	 * that we want a new object created, so we can use the same form for create
-	 * and edit.
-	 * 
-	 * @param id
-	 * @return
-	 * 
-	 *         private Plugin getModelPlugin(Long id) { Plugin plugin = new
-	 *         Plugin();
-	 * 
-	 *         if (id.intValue() > 0) { plugin = new Plugin().getById(id); }
-	 *         else { plugin.setId(new Long(0)); }
-	 * 
-	 *         return plugin; }
-	 */
 
 }

@@ -50,7 +50,8 @@
     </div>
 
 </div>
-<p>from the tag lib: <scp:actorname /></p>
+<br />
+<p>Your Role: <scp:actorname /></p>
 
 	<sf:form name="formChangePhase"  modelAttribute="phase"  method="post"
 		action="${pageContext.request.contextPath}/playing/changePhase"

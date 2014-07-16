@@ -7,11 +7,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import com.seachangesimulations.platform.dao.RolePlayDao;
+import com.seachangesimulations.platform.dao.RoleplayDao;
 import com.seachangesimulations.platform.domain.Roleplay;
 
 @Repository("rolePlayDao")
-public class RolePlayDaoHibernateImpl extends BaseDaoHibernateImpl<Roleplay> implements RolePlayDao {
+public class RolePlayDaoHibernateImpl extends BaseDaoHibernateImpl<Roleplay> implements RoleplayDao {
 
 	public RolePlayDaoHibernateImpl() {
 		super(Roleplay.class);

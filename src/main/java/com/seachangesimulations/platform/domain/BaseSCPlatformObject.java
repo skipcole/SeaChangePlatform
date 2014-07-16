@@ -11,7 +11,10 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -35,6 +38,7 @@ public abstract class BaseSCPlatformObject implements TimeStamped, Serializable,
 	/** Database id of this object used by Hibernate. */
 	@Id
 	@GeneratedValue
+	@XmlElement
 	protected Long id;
 
 	@Version
@@ -166,5 +170,9 @@ public abstract class BaseSCPlatformObject implements TimeStamped, Serializable,
 	
 	/** All of the children need a 'getById' method. */
 	public abstract <T> T getById(Long id);
+	
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
 
 }

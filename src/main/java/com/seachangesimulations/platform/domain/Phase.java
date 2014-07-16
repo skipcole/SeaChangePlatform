@@ -15,7 +15,7 @@ import com.seachangesimulations.platform.dao.PhaseDao;
 @Entity
 @Component
 @Scope("prototype")
-public class Phase extends BaseSCPlatformObject {
+public class Phase extends BaseSCPlatformObject implements MayHaveSubObjects{
 
 	public Phase() {
 
@@ -167,4 +167,17 @@ public class Phase extends BaseSCPlatformObject {
 		return initialPhase.getId();
 
 	}
+
+	@Override
+	public void loadSubObjects() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveSubObjects() {
+		// TODO Auto-generated method stub
+	
+	}
+
 }

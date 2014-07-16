@@ -57,6 +57,9 @@ public class SessionInfoBean {
 
 	/** Records if user is authorized to create role plays in this organization. */
 	private boolean isPlayer = false;
+	
+	/** Records if user is authorized to create role plays in this organization. */
+	private boolean isControl = false;
 
 	/**
 	 * Id of this person logged in, not to be confused with the id of the
@@ -70,6 +73,10 @@ public class SessionInfoBean {
 	/** ID of Role Play being conducted or worked on. */
 	@XmlAttribute
 	private Long roleplayId;
+	
+	/** ID of Person Roleplay Assignment being conducted or worked on. */
+	@XmlAttribute
+	private Long praId;
 
 	/** Name of simulation being conducted or worked on. */
 	@XmlAttribute
@@ -153,6 +160,14 @@ public class SessionInfoBean {
 		this.isPlayer = isPlayer;
 	}
 
+	public boolean isControl() {
+		return isControl;
+	}
+
+	public void setControl(boolean isControl) {
+		this.isControl = isControl;
+	}
+
 	public Long getPersonId() {
 		if (personId != null) {
 			return personId;
@@ -181,6 +196,14 @@ public class SessionInfoBean {
 
 	public void setRoleplayId(Long roleplayId) {
 		this.roleplayId = roleplayId;
+	}
+	
+	public Long getPraId() {
+		return praId;
+	}
+
+	public void setPraId(Long praId) {
+		this.praId = praId;
 	}
 
 	public String getRoleplayName() {

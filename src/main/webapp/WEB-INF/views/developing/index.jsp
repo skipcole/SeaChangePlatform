@@ -58,7 +58,7 @@
 	<h2>Plugin Development Overview</h2>
 	<p>
 		To create a plugin you will first write the pages that will be shown
-		to the player according to <a href="plugin/pluginAPI.jsp">our API</a>.
+		to the player according to <a href="/SeaChangePlatform/developing/pluginAPI">our API</a>.
 		You will then create the definitional information using this web
 		application. Finally, you will use this web application to 'publish'
 		your plugin so that it may be used on this platform.

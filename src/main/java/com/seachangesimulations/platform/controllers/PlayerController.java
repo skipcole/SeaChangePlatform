@@ -2,7 +2,10 @@ package com.seachangesimulations.platform.controllers;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +25,8 @@ import com.seachangesimulations.platform.domain.Plugin;
 import com.seachangesimulations.platform.domain.PluginPointer;
 import com.seachangesimulations.platform.domain.RoleplayInMotion;
 import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
+import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacLaunchRoleplayFormBean;
+import com.seachangesimulations.platform.mvc.formbeans.player.RoleplayAlertBean;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.service.SessionInfoBean;
@@ -71,7 +77,8 @@ public class PlayerController extends BaseController {
 
 		Phase phase = rpim.getMyPhase();
 		
-		getSessionInfoBean().setRoleplayId(pra.getRolePlayId());
+		getSessionInfoBean().setPraId(pra.getId());
+		getSessionInfoBean().setRoleplayId(pra.getRoleplayId());
 		getSessionInfoBean().setRolePlayInMotionId(pra.getRpimId());
 		getSessionInfoBean().setActorId(pra.getActorId());
 		getSessionInfoBean().setPhaseId(phase.getId());
@@ -81,16 +88,49 @@ public class PlayerController extends BaseController {
 		
 		model.addAttribute("personRoleplayAssignments", pra);
 		
-		List playersTabs = new PluginPointer().getCurrentSet(pra.getRolePlayId(), pra.getActorId(), phase.getId());
+		List playersTabs = new PluginPointer().getCurrentSet(pra.getRoleplayId(), pra.getActorId(), phase.getId());
+		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
 		
-		if (true) {
-			playersTabs.add(new PluginPointer().getControlPluginByHandle(PluginPointer.SYSTEM_CONTROL));
-			model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
-		}
+		addControlFeatures(playersTabs, model);
 		
 		model.addAttribute("pluginPointers", playersTabs);
 		
 		return "playing/theRoleplay.jsp";
+	}
+	
+	/**
+	 * Called when the phase is changed to a new phase.
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = {CMC.P_REFRESH}, method = RequestMethod.GET)
+	public String refreshTheRoleplayPage(Model model) {
+		
+		getSessionInfoBean().setPluginIndex(new Long(0));
+		
+		List playersTabs = new PluginPointer().getCurrentSet(getSessionInfoBean().getRoleplayId(), getSessionInfoBean().getActorId(), getSessionInfoBean().getPhaseId());
+		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
+		
+		addControlFeatures(playersTabs, model);
+		
+		model.addAttribute("pluginPointers", playersTabs);
+		
+		return "playing/theRoleplay.jsp";
+	}
+	
+	/**
+	 * Adds control features to a player, if they are a control character.
+	 * 
+	 * @param playersTabs
+	 * @param model
+	 */
+	public void addControlFeatures(List playersTabs, Model model){
+
+		if (getSessionInfoBean().isControl()) {
+			playersTabs.add(new PluginPointer().getControlPluginByHandle(PluginPointer.SYSTEM_CONTROL));
+			
+		}
 	}
 	
 	/**
@@ -153,10 +193,12 @@ public class PlayerController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = {CMC.P_CHANGEPHASE}, method = RequestMethod.POST)
-	public String changeChase(Model model, @ModelAttribute("phase") Phase phase) {
+	public String changePhase(Model model, @ModelAttribute("phase") Phase phase) {
 
 		System.out.println("changing phase");
-		// SKIPTODO - make it reals
+
+		System.out.println("phase is " + phase.getId());
+		
 		this.getSessionInfoBean().setPhaseId(new Long(1));
 		
 		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
@@ -165,5 +207,43 @@ public class PlayerController extends BaseController {
 		
 	}
 	
+	public static LinkedHashMap<String, String> eventMap = new LinkedHashMap<String, String>();
+	
+	@RequestMapping(value = {CMC.P_GETEVENTS}, method = RequestMethod.GET)
+	public @ResponseBody Object getEventJSON(@PathVariable Long lastEventIGot) {
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
+		System.out.println(" Here I am.  " + lastEventIGot);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
+		
+		if (eventMap.get("alert") == null) {
+			eventMap.put("alert", "myAlert");
+		}
+		
+		return eventMap;
+		
+	}
+	
+	@RequestMapping(value = {CMC.P_POSTEVENTS}, method = RequestMethod.POST)
+	public void postEventJSON(@ModelAttribute("roleplayAlertBean") RoleplayAlertBean roleplayAlertBean) {
+		
+		System.out.println("I got sent the value : " + roleplayAlertBean.getAlertText());
+	
+		eventMap = new LinkedHashMap<String, String>();
+		eventMap.put("alert", roleplayAlertBean.getAlertText());
+		
+		if ("phase_change".equalsIgnoreCase(roleplayAlertBean.getAlertText())){
+			System.out.println("changing phase");
+
+			
+			this.getSessionInfoBean().setPhaseId(new Long(2));
+		}
+	
+	
+	}
 		
 }
