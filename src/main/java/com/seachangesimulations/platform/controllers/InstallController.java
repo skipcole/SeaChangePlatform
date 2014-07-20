@@ -1,6 +1,7 @@
 
 package com.seachangesimulations.platform.controllers;
 
+import java.security.Principal;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -16,20 +17,23 @@ import com.seachangesimulations.platform.domain.Plugin;
 import com.seachangesimulations.platform.domain.PluginPointer;
 import com.seachangesimulations.platform.domain.assignment.PersonOrganizationAssignment;
 import com.seachangesimulations.platform.mvc.formbeans.admin.AdminInstallationFormBean;
+import com.seachangesimulations.platform.utilities.ObjectPackager;
+import com.seachangesimulations.platform.utilities.PlatformProperties;
 
 @Controller
+@RequestMapping(CMC.INSTALL)
 public class InstallController extends BaseController{
 	
 	private static final Logger LOGGER = Logger
             .getLogger(InstallController.class.getName());
 
-	@RequestMapping(value = { "/install" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.INDEX }, method = RequestMethod.GET)
 	public String showInstallPage(Map<String, Object> model) {
 		LOGGER.debug("In the /install GET Request Mapping");
 		return "install/index.jsp";
 	}
 
-	@RequestMapping(value = { "/install/installForm" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.I_INSTALLFORM }, method = RequestMethod.GET)
 	public String showInstallForm(Model model) {
 		LOGGER.debug("In the /install/installForm GET Request Mapping");
 		model.addAttribute(new AdminInstallationFormBean());
@@ -43,7 +47,7 @@ public class InstallController extends BaseController{
 	 * @param bindingResult
 	 * @return
 	 */
-	@RequestMapping(value = { "/install/installForm" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.I_INSTALLFORM_POST }, method = RequestMethod.POST)
 	public String processInstallForm(AdminInstallationFormBean aifb, BindingResult bindingResult) {
 
 		try {
@@ -62,17 +66,10 @@ public class InstallController extends BaseController{
 
 			p.save();
 			
-			Plugin controlPlugin = new Plugin();
-			controlPlugin.setSystemPlugin(true);
-			controlPlugin.setPluginDirectory("playing/controlTab.jsp");
-			controlPlugin.save();
+
+			createControlPlugins();
+			readLoadedPlugins();
 			
-			PluginPointer controlPointer = new PluginPointer();
-			controlPointer.setSystemPluginPointer(true);
-			controlPointer.setSystemPluginHandle(PluginPointer.SYSTEM_CONTROL);
-			controlPointer.setPluginHeading("Control");
-			controlPointer.setPluginId(controlPlugin.getId());
-			controlPointer.save();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,9 +78,30 @@ public class InstallController extends BaseController{
 		return "redirect:/install/installSuccess";
 	}
 	
-	@RequestMapping(value = { "/install/installSuccess" }, method = RequestMethod.GET)
-	public String showInstallSuccess(Model model) {
+	private void readLoadedPlugins() {
+		ObjectPackager.loadPluginsFromDisk(PlatformProperties.getValue("pluginSourceDirectory"));		
+	}
 
+	public void createControlPlugins(){
+		Plugin controlPlugin = new Plugin();
+		controlPlugin.setSystemPlugin(true);
+		controlPlugin.setPluginDirectory("playing/controlTab.jsp");
+		controlPlugin.save();
+		
+		PluginPointer controlPointer = new PluginPointer();
+		controlPointer.setSystemPluginPointer(true);
+		controlPointer.setSystemPluginHandle(PluginPointer.SYSTEM_CONTROL);
+		controlPointer.setPluginHeading("Control");
+		controlPointer.setPluginId(controlPlugin.getId());
+		controlPointer.save();
+	}
+	
+	@RequestMapping(value = { CMC.I_INSTALL_SUCCESS }, method = RequestMethod.GET)
+	public String showInstallSuccess(Model model, Principal principal) {
+
+		// Prevent Spring Security from throwing spurious error by setting this to null
+		principal = null;
+		
 		return "install/installSuccess.jsp";
 	}
 	

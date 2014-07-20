@@ -7,13 +7,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML >
 <html>
-<!-- InstanceBegin template="/Templates/SeaChangePlatform.dwt.jsp" codeOutsideHTMLIsLocked="false" -->
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
 
-
-<!-- InstanceBeginEditable name="doctitle" -->
 <title>Playing</title>
-<!-- InstanceEndEditable -->
 
 <link href="/SeaChangePlatform/resources/css/SeaChangePlatform.css"
 	rel="stylesheet" type="text/css">
@@ -21,52 +23,38 @@
 	href="/SeaChangePlatform/resources/javascript/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.min.css"
 	rel="stylesheet" type="text/css">
 
-
-
-<!-- Bootstrap -->
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<!-- script src="//code.jquery.com/jquery.js"></script  -->
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="/SeaChangePlatform/resources/js/bootstrap.min.js"></script>
-<!-- Bootstrap -->
-
-<!-- InstanceBeginEditable name="head" -->
-
-
-<!-- InstanceEndEditable -->
 </head>
 <body>
-	<!-- InstanceBeginEditable name="BodyRegion" -->
+	
 	<script src="/SeaChangePlatform/resources/javascript/jquery-1.9.1.js"></script>
 	<script
 		src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
 	<script
-		src="/SeaChangePlatform/javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+		src="/SeaChangePlatform/resources/javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script
 		src="/SeaChangePlatform/resources/javascript/eventmanager.js"></script>
+		
+		<script src="/SeaChangePlatform/resources/js/bootstrap.min.js"></script>
 
-	<div id="wrapper">
 
-		<div class="tabbable">
-			<ul class="nav nav-tabs">
+   <div width="100%" border="0" >  
+			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">     
 				<c:forEach var="pluginPointer" items="${pluginPointers}">
-					<li><a href="#pane_${pluginPointer.id}"
-						id="tabpane_${pluginPointer.id}" data-toggle="tab"> <c:out
-								value="${pluginPointer.pluginHeading}" />
-					</a></li>
+					<li><a href="#pane_${pluginPointer.id}" id="tabpane_${pluginPointer.id}" data-toggle="tab">
+					<c:out value="${pluginPointer.pluginHeading}" /></a>
+					</li>
 				</c:forEach>
 			</ul>
 
-			<div class="tab-content">
+			<div id="my-tab-content" class="tab-content">
 				<c:set var="activeTab" value=" active" />
 
 				<c:forEach var="pluginPointer" items="${pluginPointers}">
 
-					<div class="tab-pane<c:out value="${activeTab}"/>"
+					<div class="tab-pane<c:out value='${activeTab}'/>"
 						id="pane_${pluginPointer.id}" style="border: 0;">
 
-						<iframe
-							src="${pageContext.request.contextPath}/playing/showPlugin/${pluginPointer.id}"
+						<iframe	src="${pageContext.request.contextPath}/playing/showPlugin/${pluginPointer.id}"
 							width="100%" height="100%" seamless="seamless"> </iframe>
 					</div>
 
@@ -76,20 +64,16 @@
 			</div>
 			<!--  End of div tab content -->
 
-		</div>
-		<!--  end of div tabbable -->
 
+	</div> <!--  end of div container -->
 
-	</div>
-	<!--  end of div wrapper -->
-
-	<!--  left in for debugging 6/29  -->
+	<!--  left in for debugging 6/29  
 	<c:forEach var="pluginPointer" items="${pluginPointers}">
 
-		<!--  a href="${pageContext.request.contextPath}/playing/showPlugin/${pluginPointer.id}" >Try this one: ${pageContext.request.contextPath}/playing/showPlugin/${pluginPointer.id}<br /> </a -->
+		<a href="${pageContext.request.contextPath}/playing/showPlugin/${pluginPointer.id}" >Try this one: ${pageContext.request.contextPath}/playing/showPlugin/${pluginPointer.id}<br /> </a>
 
 	</c:forEach>
-	<!--  end of left in for debugging 6/29  -->
+	  end of left in for debugging 6/29  -->
 
 <script>
 
@@ -100,7 +84,8 @@ function getAlerts() {
 		    if (key == 'alert'){
 		    	alert(val);
 		    	
-		    	if (val == "phase_change"){
+		    	// turned off by adding _ while I debug tabs
+		    	if (val == "phase_change_"){
 					alert('phase_change');
 				 	top.document.location="${pageContext.request.contextPath}/playing/refresh";
 				}
@@ -123,7 +108,14 @@ $( document ).ready(function() {
 });
 
 </script>
-	<!-- InstanceEndEditable -->
+<script>
+<script>
+jQuery(document).ready(function ($) {
+    $('#tabs').tab();
+});
+</script>
+</script>
+
 </body>
-<!-- InstanceEnd -->
+
 </html>

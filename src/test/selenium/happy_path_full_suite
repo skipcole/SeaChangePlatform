@@ -9,7 +9,6 @@
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
 <tr><td><a href="create_and_login.html">install_first_users</a></td></tr>
-<tr><td><a href="create_plugin.html">create_plugin</a></td></tr>
 <tr><td><a href="create_first_rp.html">create_first_rp</a></td></tr>
 <tr><td><a href="create_first_rpim.html">create_first_rpim</a></td></tr>
 <tr><td><a href="loginAsPlayer1.html">loginAsPlayer1</a></td></tr>

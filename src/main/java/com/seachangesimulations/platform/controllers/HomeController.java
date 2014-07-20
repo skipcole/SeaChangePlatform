@@ -73,18 +73,6 @@ public class HomeController extends BaseController {
 		LOGGER.debug("In the /accessDenied Request Mapping");
 		return "accessDenied.jsp";
 	}
-
-	@RequestMapping(value = { "/admin/index" }, method = RequestMethod.GET)
-	public String showAdminPage(Map<String, Object> model) {
-		getSessionInfoBean().setPlatformZone(SessionInfoBean.ADMIN_ZONE);
-		return "admin/index.jsp";
-	}
-	
-	@RequestMapping(value = { "/admin/index/setZone" }, method = RequestMethod.GET)
-	public String setAdminZone(Map<String, Object> model) {
-		getSessionInfoBean().setPlatformZone(SessionInfoBean.ADMIN_ZONE);
-		return "redirect:/admin/index";
-	}
 	
 	
 	

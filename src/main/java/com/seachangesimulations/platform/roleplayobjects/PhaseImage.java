@@ -21,7 +21,6 @@ import com.seachangesimulations.platform.domain.BaseSCPlatformObject;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PhaseImage  extends BaseSCPlatformObject{
 
-	private Long id = null;
 	private Long phaseId = null;
 	private String phaseImageName = "";
 	

@@ -7,15 +7,46 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.solr.common.util.FileUtils;
+
 import com.seachangesimulations.platform.domain.Phase;
 import com.seachangesimulations.platform.domain.Plugin;
 import com.seachangesimulations.platform.domain.Roleplay;
+import com.seachangesimulations.platform.pluginobjects.PluginFileDescriptor;
+import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
+import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
 import com.seachangesimulations.platform.roleplayobjects.PhaseImage;
 
 public class ObjectPackager {
+	
+	public static String PLUGIN_DEF_FILE = "pluginDefinition.xml";
 
 	public static void main(String[] args) {
 
+
+		Plugin plugin = createTemplatePlugin();
+		packagePlugin(plugin, "C:\\SeaChangePlatform\\zPluginOriginDirectory\\BasicFixedTextPage\\pluginDefinition.xml");
+
+		//loadPluginsFromDisk("C:\\SeaChangePlatform\\zPluginOriginDirectory");
+		
+		/*
+		Roleplay roleplay = new Roleplay();
+		
+		roleplay.setId(new Long(1));
+		roleplay.setRoleplayName("a roleplay name");
+		roleplay.save();
+		
+		String fileLocation = "C:\\SeaChangePlatform\\zSavedRoleplays\\file.xml";
+		
+		packageRoleplay(roleplay, fileLocation);
+
+		unPackageRoleplay(new File(fileLocation));
+		*/
+
+	}
+	
+	public static Plugin createTemplatePlugin(){
+		
 		Plugin plugin = new Plugin();
 		
 		plugin.setAuthor("Skip Cole");
@@ -31,36 +62,35 @@ public class ObjectPackager {
 		plugin.setShortFormOrgName("SeaChangeSimulations");
 		plugin.setShortFormPluginName("BasicFixedTextPage");
 		
-		//packagePlugin(plugin, "C:\\SeaChangePlatform\\zPluginOriginDirectory\\BasicFixedTextPage\\pluginDefinition.xml");
-
-		loadPluginsFromDisk("C:\\SeaChangePlatform\\zPluginOriginDirectory");
+		PluginObjectDocument pod = new PluginObjectDocument();
+		pod.setId(new Long(1));
+		pod.setDocumentName("basicTextDocName");
+		pod.setDocumentDescription("basicTextDocDescription");
+		plugin.getPluginObjects().add(pod);
 		
-		/*
-		Roleplay roleplay = new Roleplay();
+		PluginObjectAssociation poa = new PluginObjectAssociation();
+		poa.setPluginId(plugin.getId());
+		poa.setObjectId(pod.getId());
+		poa.setObjectType(PluginObjectDocument.class.getCanonicalName());
+		plugin.getPluginObjectAssociations().add(poa);
 		
-		roleplay.setId(new Long(1));
-		roleplay.setRoleplayName("a roleplay name");
-		roleplay.save();
+		PluginFileDescriptor pfd = new PluginFileDescriptor();
+		pfd.setFileDescription("main html page");
+		pfd.setFileName("BasicFixedTextPage.htm");
+		pfd.setFilePath("");
+		plugin.getPluginFiles().add(pfd);
 		
-		
-		
-		packageRoleplay(roleplay, "C:\\SeaChangePlatform\\zSavedRoleplays\\file.xml");
-
-		unPackageRoleplay();
-		*/
-
+		return plugin;
 	}
 
-	private static void unPackageRoleplay() {
+	private static void unPackageRoleplay(File roleplayFile) {
 
 		try {
 
-			File file = new File(
-					"C:\\SeaChangePlatform\\zSavedRoleplays\\file.xml");
 			JAXBContext jaxbContext = JAXBContext.newInstance(Roleplay.class);
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			Roleplay roleplay = (Roleplay) jaxbUnmarshaller.unmarshal(file);
+			Roleplay roleplay = (Roleplay) jaxbUnmarshaller.unmarshal(roleplayFile);
 			System.out.println(roleplay);
 			
 			roleplay.saveSubObjects();
@@ -103,7 +133,7 @@ public class ObjectPackager {
 	private static void packagePlugin(Plugin plugin, String fileLocation) {
 		
 		File file = new File(fileLocation);
-		Class [] classList = {Plugin.class};
+		Class [] classList = {Plugin.class, PluginFileDescriptor.class, PluginObjectAssociation.class, PluginObjectDocument.class};
 		saveXMLObjectToFile(file, classList, plugin);
 		
 	}
@@ -114,6 +144,7 @@ public class ObjectPackager {
 
 			JAXBContext jaxbContext = JAXBContext.newInstance(classList);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			jaxbMarshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "");
 
 			// output pretty printed
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -144,12 +175,22 @@ public class ObjectPackager {
 
 		        			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 		        			Plugin plugin = (Plugin) jaxbUnmarshaller.unmarshal(pluginDefinitionFile);
+		        			
+		        			plugin.setPluginOriginDirectory(fileEntry.getName());
 		        			System.out.println(plugin);
+		        			
+		        			// Save plugin to get its id
+		        			plugin.save();
+		        			
+		        			// Save plugin definition file (just for reference, future reads will be from the database.)
+		        			String savingToFileName = PlatformProperties.getValue("pluginFileDirectory") 
+		        					+ File.separator + plugin.generatePluginDirectory() + File.separator + PLUGIN_DEF_FILE;
+		        			FileUtils.copyFile(pluginDefinitionFile, new File(savingToFileName));
 		        			
 		        			plugin.saveSubObjects();
 		        			
 
-		        		} catch (JAXBException e) {
+		        		} catch (Exception e) {
 		        			e.printStackTrace();
 		        		}
 		            } else {

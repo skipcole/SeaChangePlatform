@@ -9,6 +9,6 @@
 <body>
 Installation Success.
 
-You may now <a href="${pageContext.request.contextPath}/admin/index" id="login"> login</a> to the admin panel.
+You may now <a href="${pageContext.request.contextPath}/admin/index" id="login_link"> login</a> to the platform.
 </body>
 </html>

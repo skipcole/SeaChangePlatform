@@ -565,7 +565,7 @@ public class AuthorController extends BaseController {
 		return "redirect:/authoring/rpId/" + getSessionInfoBean().getRoleplayId() + "/a/" + getSessionInfoBean().getActorId() + "/ph/" + phase.getId() + "/pluginPlacement";
 	}
 
-	@RequestMapping(value = { "pluginPlacement/customizePlugin/plugin/{pId}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET }, method = RequestMethod.GET)
 	public String showCustomizePluginPage(@PathVariable("pId") Long pId, Model model) {
 
 		System.out.println("pId was " + pId);

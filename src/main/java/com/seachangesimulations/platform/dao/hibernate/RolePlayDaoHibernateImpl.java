@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.seachangesimulations.platform.dao.RoleplayDao;
 import com.seachangesimulations.platform.domain.Roleplay;
 
-@Repository("rolePlayDao")
+@Repository("roleplayDao")
 public class RolePlayDaoHibernateImpl extends BaseDaoHibernateImpl<Roleplay> implements RoleplayDao {
 
 	public RolePlayDaoHibernateImpl() {

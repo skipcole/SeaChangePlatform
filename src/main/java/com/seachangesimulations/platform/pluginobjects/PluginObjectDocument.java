@@ -8,6 +8,7 @@ import javax.persistence.Lob;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -18,18 +19,18 @@ import com.seachangesimulations.platform.pluginobjects.dao.PluginObjectDocumentD
 @Entity
 @Component
 @Scope("prototype")
-//@//XmlRootElement
-@XmlAccessorType (XmlAccessType.NONE)   // This means that if you want a field mapped, it has to be annotated.
+@XmlRootElement
+@XmlAccessorType (XmlAccessType.FIELD)   // This means that if you want a field mapped, it has to be annotated.
 public class PluginObjectDocument extends BasePluginObject {
 	
-	@XmlAttribute
+	//@XmlAttribute
 	private String documentName;
 	
-	@XmlAttribute
+	//@XmlAttribute
 	private String documentDescription;
 	
 	@Lob
-	@XmlAttribute
+	//@XmlAttribute
 	private String documentText;
 
 	public String getDocumentName() {

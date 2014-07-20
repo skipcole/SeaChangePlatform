@@ -3,6 +3,8 @@ package com.seachangesimulations.platform.pluginobjects;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.context.annotation.Scope;
@@ -25,6 +27,7 @@ import com.seachangesimulations.platform.pluginobjects.dao.PluginObjectAssociati
 @Entity
 @Component
 @Scope("prototype")
+@XmlAccessorType (XmlAccessType.FIELD)
 @XmlRootElement
 public class PluginObjectAssociation extends BaseSCPlatformObject implements Comparable{
 
