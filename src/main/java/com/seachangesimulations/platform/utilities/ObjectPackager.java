@@ -11,6 +11,7 @@ import org.apache.solr.common.util.FileUtils;
 
 import com.seachangesimulations.platform.domain.Phase;
 import com.seachangesimulations.platform.domain.Plugin;
+import com.seachangesimulations.platform.domain.PluginPointer;
 import com.seachangesimulations.platform.domain.Roleplay;
 import com.seachangesimulations.platform.pluginobjects.PluginFileDescriptor;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
@@ -20,6 +21,8 @@ import com.seachangesimulations.platform.roleplayobjects.PhaseImage;
 public class ObjectPackager {
 	
 	public static String PLUGIN_DEF_FILE = "pluginDefinition.xml";
+	public static String CONTROL_PLUGIN_DIR = "SystemPluginDefinitions";
+	
 
 	public static void main(String[] args) {
 
@@ -161,13 +164,12 @@ public class ObjectPackager {
 	public static void loadPluginsFromDisk(String fileLocation){
 		File file = new File(fileLocation);
 		
-
+			// Loop over all of the directories found.
 		    for (File fileEntry : file.listFiles()) {
-		        if (fileEntry.isDirectory()) {
+		        if ((fileEntry.isDirectory()) && (!(CONTROL_PLUGIN_DIR.equalsIgnoreCase(fileEntry.getName())))) {
 		        	System.out.println("Checking directory: " + fileEntry.getAbsolutePath());
 		            File pluginDefinitionFile = new File(fileEntry.getAbsolutePath() + File.separator + "pluginDefinition.xml");
-		            
-		            
+		                        
 		            if (pluginDefinitionFile.exists()){
 		            	try {
 
@@ -196,7 +198,43 @@ public class ObjectPackager {
 		            } else {
 		            	System.out.println("   Warning: Plugin Definition File " + pluginDefinitionFile.getAbsolutePath() + " not found.");
 		            }
-		        } 
+		        } else if ((fileEntry.isDirectory()) && (CONTROL_PLUGIN_DIR.equalsIgnoreCase(fileEntry.getName()))) {
+		        	System.out.println("Checking Control Plugin Directory: " + fileEntry.getAbsolutePath());
+		        	
+		        	for (File possiblePluginDefinition : fileEntry.listFiles()) {
+		        		if (possiblePluginDefinition.isFile() && (possiblePluginDefinition.getName().endsWith(".xml"))){
+		        			System.out.println("found possible contol plugin: " + possiblePluginDefinition.getName());
+		        			try {
+
+			        			JAXBContext jaxbContext = JAXBContext.newInstance(Plugin.class);
+
+			        			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			        			Plugin plugin = (Plugin) jaxbUnmarshaller.unmarshal(possiblePluginDefinition);
+			        			
+			        			if (plugin.isSystemPlugin()){
+			        				
+			        				// Save plugin to get its id
+			        				plugin.save();
+			        				
+			        				PluginPointer controlPointer = new PluginPointer();
+			        				controlPointer.setSystemPluginPointer(true);
+			        				controlPointer.setSystemPluginHandle(PluginPointer.SYSTEM_CONTROL);
+			        				controlPointer.setPluginHeading(plugin.getShortFormPluginName());
+			        				controlPointer.setPluginId(plugin.getId());
+			        				controlPointer.save();
+			        				
+			        			} else {
+			        				System.out.println("Warning: non-system plugin found in system plugin directory.");
+			        			}
+			        			
+
+			        		} catch (Exception e) {
+			        			e.printStackTrace();
+			        		}
+		        		}
+		        	}
+		        	
+		        }
 		}
 		
 	}

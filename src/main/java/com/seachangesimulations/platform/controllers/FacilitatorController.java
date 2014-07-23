@@ -170,6 +170,8 @@ public class FacilitatorController extends BaseController {
 			personRoleplayAssignment.setActorId(aId);
 			personRoleplayAssignment.setActorName(actor.getActorName());
 			
+			personRoleplayAssignment.setRoleType(facAssignPlayersFormBean.getRoleType());
+			
 			personRoleplayAssignment.save();
 		
 		}

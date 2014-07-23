@@ -42,6 +42,8 @@ public class CMC {
 	public static final String A_ROLEPLAY_AUDIENCE_GET = "rolePlay/enterAudience/{id}";
 	public static final String A_ROLEPLAY_AUDIENCE_POST = "rolePlay/enterAudience/{id}";
 	public static final String A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET = "pluginPlacement/customizePlugin/plugin/{pId}";
+	public static final String A_ROLEPLAY_PP_CHANGE_ACTOR = "pluginPlacement/changeActor/{aId}";
+	public static final String A_ROLEPLAY_PP_CHANGE_PHASE = "pluginPlacement/changePhase/{pId}";
 	
 	public static final String A_ROLEPLAY_PUBLISH = "roleplay/publish/{id}";
 	

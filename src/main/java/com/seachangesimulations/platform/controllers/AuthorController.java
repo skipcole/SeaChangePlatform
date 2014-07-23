@@ -519,6 +519,22 @@ public class AuthorController extends BaseController {
 		Long rpId = getSessionInfoBean().getRoleplayId();
 		Long aId = getSessionInfoBean().getActorId();
 		Long phId = getSessionInfoBean().getPhaseId();
+		
+		
+		System.out.println(getSessionInfoBean().toString());
+		
+		if(rpId == null){
+			rpId = new Long(0);
+			System.out.println("rpids null");
+		}
+		if(aId == null){
+			aId = new Long(0);
+			System.out.println("a ids null");
+		}
+		if(phId == null){
+			phId = new Long(0);
+			System.out.println("phids null");
+		}
 
 		model.addAttribute("pluginPointers", new PluginPointer().getCurrentSet(rpId, aId, phId));
 		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(rpId));
@@ -536,16 +552,15 @@ public class AuthorController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = { "pluginPlacement/changeActor" }, method = RequestMethod.POST)
-	public String placePluginChangeActor(HttpServletRequest request, Model model,
-			@ModelAttribute("actor") Actor actor ) {
-
-		getSessionInfoBean().setActorId(actor.getId());
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PP_CHANGE_ACTOR }, method = RequestMethod.GET)
+	public String placePluginChangeActor(HttpServletRequest request, Model model, @PathVariable("aId") Long aId ) {
+		
+		getSessionInfoBean().setActorId(aId);
 		
 		addModelObjectsOnPlacePluginsPage(model);
 
 		return "redirect:/authoring/rpId/" + getSessionInfoBean().getRoleplayId() + "/a/" + 
-			actor.getId() + "/ph/" + getSessionInfoBean().getPhaseId() + "/pluginPlacement";
+			aId + "/ph/" + getSessionInfoBean().getPhaseId() + "/pluginPlacement";
 	}
 
 	/**
@@ -554,15 +569,15 @@ public class AuthorController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = { "pluginPlacement/changePhase" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PP_CHANGE_PHASE }, method = RequestMethod.GET)
 	public String placePluginChangePhase(HttpServletRequest request, Model model,
-			@ModelAttribute("phase") Phase phase) {
+			@PathVariable("pId") Long pId ) {
 
-		getSessionInfoBean().setPhaseId(phase.getId());
+		getSessionInfoBean().setPhaseId(pId);
 
 		addModelObjectsOnPlacePluginsPage(model);
 
-		return "redirect:/authoring/rpId/" + getSessionInfoBean().getRoleplayId() + "/a/" + getSessionInfoBean().getActorId() + "/ph/" + phase.getId() + "/pluginPlacement";
+		return "redirect:/authoring/rpId/" + getSessionInfoBean().getRoleplayId() + "/a/" + getSessionInfoBean().getActorId() + "/ph/" + pId + "/pluginPlacement";
 	}
 
 	@RequestMapping(value = { CMC.A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET }, method = RequestMethod.GET)

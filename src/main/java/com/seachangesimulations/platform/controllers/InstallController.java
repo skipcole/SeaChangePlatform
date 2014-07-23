@@ -66,8 +66,6 @@ public class InstallController extends BaseController{
 
 			p.save();
 			
-
-			createControlPlugins();
 			readLoadedPlugins();
 			
 
@@ -82,19 +80,6 @@ public class InstallController extends BaseController{
 		ObjectPackager.loadPluginsFromDisk(PlatformProperties.getValue("pluginSourceDirectory"));		
 	}
 
-	public void createControlPlugins(){
-		Plugin controlPlugin = new Plugin();
-		controlPlugin.setSystemPlugin(true);
-		controlPlugin.setPluginDirectory("playing/controlTab.jsp");
-		controlPlugin.save();
-		
-		PluginPointer controlPointer = new PluginPointer();
-		controlPointer.setSystemPluginPointer(true);
-		controlPointer.setSystemPluginHandle(PluginPointer.SYSTEM_CONTROL);
-		controlPointer.setPluginHeading("Control");
-		controlPointer.setPluginId(controlPlugin.getId());
-		controlPointer.save();
-	}
 	
 	@RequestMapping(value = { CMC.I_INSTALL_SUCCESS }, method = RequestMethod.GET)
 	public String showInstallSuccess(Model model, Principal principal) {

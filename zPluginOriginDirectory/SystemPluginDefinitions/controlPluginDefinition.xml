@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+    <customized>false</customized>
+    <author>Skip Cole</author>
+    <authorURI>http://www.seachangesimulations.com</authorURI>
+    <description>The Control Plugin for the Facilitator to use.</description>
+    <license>Creative Commons</license>
+    <pluginDirectory>playing/controlTab.jsp</pluginDirectory>
+    <pluginName>Control</pluginName>
+    <pluginURI>http://www.seachangesimulations.com/registeredPlugins/SeaChangeSimulationsLLC/control</pluginURI>
+    <pluginReleaseMajorNumber>1</pluginReleaseMajorNumber>
+    <pluginReleaseMinorNumber>0</pluginReleaseMinorNumber>
+    <pluginReleaseMicroNumber>0</pluginReleaseMicroNumber>
+    <pluginReleaseLetters>SNAPSHOT</pluginReleaseLetters>
+    <shortFormOrgName>SeaChangeSimulations</shortFormOrgName>
+    <shortFormPluginName>Control</shortFormPluginName>
+    <pluginOriginDirectory></pluginOriginDirectory>
+    <isSystemPlugin>true</isSystemPlugin>
+</plugin>

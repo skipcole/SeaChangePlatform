@@ -7,8 +7,6 @@
 <html><!-- InstanceBegin template="/Templates/SeaChangePlatform.dwt.jsp" codeOutsideHTMLIsLocked="false" -->
 <head>
 
-    
-<!-- InstanceBeginEditable name="doctitle" -->
 <title>Authoring Section - Sea Change Simulations, LLC</title>
 <!-- InstanceEndEditable -->
 
@@ -17,24 +15,19 @@
 <link href="/SeaChangePlatform/resources/javascript/jquery-ui-1.10.3.custom/css/start/jquery-ui-1.10.3.custom.min.css"
 	rel="stylesheet" type="text/css">
 
-<script src="/SeaChangePlatform/resources/javascript/jquery-1.9.1.js"></script>
-<script
-	src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
-<script
-	src="/SeaChangePlatform/javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
-    
-<!-- Bootstrap -->
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- script src="//code.jquery.com/jquery.js"></script  -->
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/SeaChangePlatform/resources/js/bootstrap.min.js"></script>
-<!-- Bootstrap -->
-
-<!-- InstanceBeginEditable name="head" -->
-<!-- InstanceEndEditable -->
 </head>
 <body>
-	<!-- InstanceBeginEditable name="BodyRegion" -->
+
+	<script src="/SeaChangePlatform/resources/javascript/jquery-1.9.1.js"></script>
+	<script
+		src="/SeaChangePlatform/resources/javascript/seachangeplatform.js"></script>
+	<script
+		src="/SeaChangePlatform/resources/javascript/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+	<script
+		src="/SeaChangePlatform/resources/javascript/eventmanager.js"></script>
+		
+		<script src="/SeaChangePlatform/resources/js/bootstrap.min.js"></script>
+		
 	<sf:form name="formChangeActor"  modelAttribute="actor" method="post"
 		action="${pageContext.request.contextPath}/authoring/pluginPlacement/changeActor"
 	>
@@ -49,7 +42,6 @@
 			<sf:options items="${actorsForThisRoleplay}"  itemValue="id" itemLabel="actorName" ></sf:options>
 		</sf:select>
 
-		<input type="submit" name="selectActorButton" id="selectActorButton" value="Submit">
 	</sf:form>
 	<sf:form name="formChangePhase"  modelAttribute="phase"  method="post"
 		action="${pageContext.request.contextPath}/authoring/pluginPlacement/changePhase"
@@ -63,8 +55,6 @@
 			<sf:options items="${phasesForThisRoleplay}"  itemValue="id" itemLabel="phaseName" ></sf:options>
 		</sf:select>
 		
-		
-		<input type="submit" name="selectPhaseButton" id="selectPhaseButton" value="Submit">
 	</sf:form>
 	<hr />
 	<h2>Current Plugins</h2>
@@ -94,6 +84,25 @@
 		<input type="submit" name="addPluginButton" id="addPluginButton" value="Add">
 	</sf:form>
 	<p>&nbsp;</p>
-	<!-- InstanceEndEditable -->
+
+<script>
+	
+$( document ).ready(function() {
+	
+	// On change, submit to new actor
+	$( "#selectActorList" ).change(function() {
+		var url = "${pageContext.request.contextPath}/authoring/pluginPlacement/changeActor/" + $("#selectActorList").val();    
+		$(location).attr('href',url);
+	});
+	
+	// On change, submit to new phase
+	$( "#selectPhaseList" ).change(function() {
+		var url = "${pageContext.request.contextPath}/authoring/pluginPlacement/changePhase/" + $("#selectPhaseList").val();    
+		$(location).attr('href',url);
+	});
+	
+});
+
+</script>
 </body>
-<!-- InstanceEnd --></html>
+</html>
