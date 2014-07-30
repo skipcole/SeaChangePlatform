@@ -15,5 +15,7 @@ public interface PersonRoleplayAssignmentDao extends BaseDao<PersonRoleplayAssig
 	public List<PersonRoleplayAssignment> getAllRoleplaysForPerson(Long pId);
 	
 	public List<PersonRoleplayAssignment> getAllForActorRpimId(Long actorId, Long rpimId);
+
+	public List<PersonRoleplayAssignment> getAllForRpimId(Long rpimId);
 	
 }

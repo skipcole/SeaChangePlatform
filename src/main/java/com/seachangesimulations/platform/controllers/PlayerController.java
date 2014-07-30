@@ -29,7 +29,11 @@ import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacLaunchRole
 import com.seachangesimulations.platform.mvc.formbeans.player.RoleplayAlertBean;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
+import com.seachangesimulations.platform.rpimobjects.Alert;
+import com.seachangesimulations.platform.rpimobjects.AlertJSON;
+import com.seachangesimulations.platform.rpimobjects.Event;
 import com.seachangesimulations.platform.service.SessionInfoBean;
+import com.seachangesimulations.platform.utilities.Util;
 
 @Controller
 @RequestMapping(CMC.PLAYING_BASE)
@@ -82,6 +86,8 @@ public class PlayerController extends BaseController {
 		getSessionInfoBean().setRolePlayInMotionId(pra.getRpimId());
 		getSessionInfoBean().setActorId(pra.getActorId());
 		getSessionInfoBean().setPhaseId(phase.getId());
+		getSessionInfoBean().setPhaseName(phase.getPhaseName());
+		getSessionInfoBean().setControl(pra.isControl());
 		
 		// When entering show the plugin loaded at the first (most left) index
 		getSessionInfoBean().setPluginIndex(new Long(0));
@@ -148,11 +154,11 @@ public class PlayerController extends BaseController {
 		Plugin plugin = new Plugin().getById(pluginPointer.getPluginId());
 		
 		// Storing the id of the Plugin we are on.
-		mark();
+		Util.mark();
 		System.out.println("We are on plugin pointer" + pluginPointerId);
 		System.out.println("We are on plugin " + plugin.getId());
 		System.out.flush();
-		mark();
+		Util.mark();
 		
 		getSessionInfoBean().setPluginId(plugin.getId());
 		
@@ -177,13 +183,11 @@ public class PlayerController extends BaseController {
 
 
 
-	@RequestMapping(value = { "getSessionInfo" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.P_GETSESSIONINFO }, method = RequestMethod.GET)
 	public  @ResponseBody SessionInfoBean getSessionInfoGetRequest() {
 		
 		return this.getSessionInfoBean();
 	}
-	
-
 	
 	/**
 	 * Called by a 'control' player to change the phase of the roleplay.
@@ -192,18 +196,27 @@ public class PlayerController extends BaseController {
 	 * @param phase
 	 * @return
 	 */
-	@RequestMapping(value = {CMC.P_CHANGEPHASE}, method = RequestMethod.POST)
-	public String changePhase(Model model, @ModelAttribute("phase") Phase phase) {
+	@RequestMapping(value = {CMC.P_CHANGEPHASE}, method = RequestMethod.GET)
+	public void changePhase(Model model, @PathVariable Long phaseId) {
 
+		Util.mark();
 		System.out.println("changing phase");
-
-		System.out.println("phase is " + phase.getId());
 		
-		this.getSessionInfoBean().setPhaseId(new Long(1));
+		if (this.getSessionInfoBean().isControl()){
+			
+			this.getSessionInfoBean().setPhaseId(phaseId);
+			this.getSessionInfoBean().setPhaseName(new Phase().getById(phaseId).getPhaseName());
+			
+			// creates event and applicable alerts
+			Event event = Phase.createPhaseChangeEvent(getSessionInfoBean(), phaseId);
+			
+		} else {
+			System.out.println("non control character attept to change phase");
+		}
+
+		System.out.println("phase is " + phaseId);
 		
 		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
-		
-		return "authoring/selectRoleplay.jsp";
 		
 	}
 	
@@ -211,20 +224,20 @@ public class PlayerController extends BaseController {
 	
 	@RequestMapping(value = {CMC.P_GETEVENTS}, method = RequestMethod.GET)
 	public @ResponseBody Object getEventJSON(@PathVariable Long lastEventIGot) {
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
+
+		Util.mark();
 		System.out.println(" Here I am.  " + lastEventIGot);
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
 		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
-		
-		if (eventMap.get("alert") == null) {
-			eventMap.put("alert", "myAlert");
-		}
-		
-		return eventMap;
+
+		eventMap.put("alert", "myAlert");
+
+		AlertJSON alertJSON = new AlertJSON();
+		alertJSON.setAlertId(new Long(eventMap.size()));
+		alertJSON.setAlertText("boom");
+		alertJSON.setAlertType(Alert.ALERT_TYPE_PHASE_CHANGE);
+		return alertJSON;
+
 		
 	}
 	

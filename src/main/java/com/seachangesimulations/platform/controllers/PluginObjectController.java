@@ -60,11 +60,11 @@ public class PluginObjectController extends BaseController{
 		Plugin plugin = new Plugin().getById(pId);
 		
 		// Storing the id of the Plugin we are on.
-		mark();
+		Util.mark();
 		System.out.println("We are on plugin pointer" + pId);
 		System.out.println("We are on plugin " + plugin.getId());
 		System.out.flush();
-		mark();
+		Util.mark();
 		
 		getSessionInfoBean().setPluginId(plugin.getId());
 		
@@ -109,11 +109,11 @@ public class PluginObjectController extends BaseController{
 		Plugin plugin = new Plugin().getById(pluginPointer.getPluginId());
 		
 		// Storing the id of the Plugin we are on.
-		mark();
+		Util.mark();
 		System.out.println("We are on plugin pointer" + pluginPointerId);
 		System.out.println("We are on plugin " + plugin.getId());
 		System.out.flush();
-		mark();
+		Util.mark();
 		
 		getSessionInfoBean().setPluginId(plugin.getId());
 		return "set to " + plugin.getId();

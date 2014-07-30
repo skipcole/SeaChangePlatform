@@ -71,5 +71,37 @@ public class Util {
 		return returnBytes;
 
 	}
+	
+	public static void mark(String myMark) {
+		System.out.println(myMark + "***************************************");
+		System.out.println(myMark + "***************************************");
+		System.out.println(myMark + "***************************************");
+		System.out.println(myMark + "***************************************");
+		System.out.println(myMark + "***************************************");
+		System.out.println(myMark + "***************************************");
+	}
+
+	public static void mark() {
+		System.out.println("***************************************");
+		System.out.println("***************************************");
+		System.out.println("***************************************");
+		System.out.println("***************************************");
+		System.out.println("***************************************");
+		System.out.println("***************************************");
+	}
+
+	public static int string2Int(String parameter) {
+		
+		int returnValue = 0;
+		
+		try {
+			returnValue = new Integer(parameter).intValue();
+		} catch (Exception e){
+			mark();
+			System.out.println("Error converting parameter to int with input: " + parameter);
+		}
+		
+		return returnValue;
+	}
 
 }

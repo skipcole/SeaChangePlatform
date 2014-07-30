@@ -57,16 +57,4 @@ public class BaseController implements ApplicationContextAware {
 		
 	}
 	
-
-	public void mark() {
-		System.out.println("****************************************8888");
-		System.out.println("****************************************8888");
-		System.out.println("****************************************8888");
-		System.out.println("****************************************8888");
-		System.out.println("****************************************8888");
-		System.out.println("****************************************8888");
-		
-		
-	}
-	
 }

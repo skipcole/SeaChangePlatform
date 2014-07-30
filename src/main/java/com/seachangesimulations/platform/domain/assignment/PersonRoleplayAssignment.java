@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.seachangesimulations.platform.dao.PersonRoleplayAssignmentDao;
 import com.seachangesimulations.platform.domain.Actor;
 import com.seachangesimulations.platform.domain.BaseSCPlatformObject;
+import com.seachangesimulations.platform.utilities.Util;
 
 @Entity
 @Component
@@ -42,6 +43,10 @@ public class PersonRoleplayAssignment extends BaseSCPlatformObject {
 	
 	private String rpimName;
 	
+	private String normalSelected = "";
+	private String controlSelected = "";
+	private String observerSelected = "";
+	
 	public static final int NORMAL_ROLE = 0;
 	public static final int CONTROL_ROLE = 1;
 	public static final int OBSERVER_ROLE = 2;
@@ -49,6 +54,9 @@ public class PersonRoleplayAssignment extends BaseSCPlatformObject {
 	/** If this actor has been designated as a normal, observer or control role. */
 	private int roleType = NORMAL_ROLE;
 	
+	/** Kept here so method isControl is easily reachable by Spring. */
+	@SuppressWarnings("unused")
+	private boolean control = false;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -56,6 +64,15 @@ public class PersonRoleplayAssignment extends BaseSCPlatformObject {
 		PersonRoleplayAssignmentDao dao = (PersonRoleplayAssignmentDao) getApplicationContext().getBean(
 				"personRoleplayAssignmentDao", PersonRoleplayAssignmentDao.class);
 		return dao.get(id);
+	}
+	
+	public List <PersonRoleplayAssignment> getAllPlayers(Long rpimId){
+		
+		PersonRoleplayAssignmentDao dao = (PersonRoleplayAssignmentDao) getApplicationContext().getBean(
+				"personRoleplayAssignmentDao", PersonRoleplayAssignmentDao.class);
+		
+		return dao.getAllForRpimId(rpimId);
+		
 	}
 	
 	/** Returns a list of all of the person-roleplay assignments (PRAs) for this roleplay. If no assignments have been
@@ -83,8 +100,7 @@ public class PersonRoleplayAssignment extends BaseSCPlatformObject {
 				pra.setRpimId(rpimId);
 				pra.setRoleType(actor.getRoleType());
 				
-				// Set the id to indicate that this is new
-				pra.setId(new Long(0));
+				pra.save();
 				
 				returnList.add(pra);
 			} else {
@@ -183,6 +199,44 @@ public class PersonRoleplayAssignment extends BaseSCPlatformObject {
 	public void setRoleType(int roleType) {
 		this.roleType = roleType;
 	}
+
+	public String getNormalSelected() {
+		if (roleType == NORMAL_ROLE){
+			normalSelected = " checked ";
+		} else {
+			normalSelected = " ";
+		}
+		return normalSelected;
+	}
+
+	public String getControlSelected() {
+		if (roleType == CONTROL_ROLE){
+			controlSelected = " checked ";
+		} else {
+			controlSelected = " ";
+		}
+		return controlSelected;
+	}
+
+	public String getObserverSelected() {
+		if (roleType == OBSERVER_ROLE){
+			observerSelected = " checked ";
+		} else {
+			observerSelected = " ";
+		}
+		return observerSelected;
+	}
+
+	public boolean isControl() {
+		if (roleType == CONTROL_ROLE){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
+	
 	
 	
 }

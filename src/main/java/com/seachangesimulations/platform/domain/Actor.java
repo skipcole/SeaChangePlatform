@@ -39,7 +39,7 @@ public class Actor extends BaseSCPlatformObject implements MayHaveSubObjects{
 	/** Name of the image associated with the Actor */
 	private String actorImageName;
 	
-	/** If this actor has been designated as a normal, observer or control role BY DEFAULT. */
+	/** If this actor has been designated as a normal, observer or control role BY DEFAULT (facilitator can override). */
 	private int roleType = PersonRoleplayAssignment.NORMAL_ROLE;
 	
 	

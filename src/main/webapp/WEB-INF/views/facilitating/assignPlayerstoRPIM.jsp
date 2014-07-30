@@ -41,25 +41,24 @@
 
 <table width="100%" border="1" cellspacing="0" cellpadding="2">
 	<c:forEach var="pra" items="${pras}">
-	<sf:form method="POST" id="facAssignPlayersFormBean${pra.actorId}"
-		action="${pageContext.request.contextPath}/facilitating/assignPlayers/${rpim.id}/actorId/${pra.actorId}/praId/${pra.id}"
-		modelAttribute="facAssignPlayersFormBean">
+	<form method="POST" id="facAssignPlayersFormBean${pra.actorId}"
+		action="${pageContext.request.contextPath}/facilitating/assignPlayers/${rpim.id}/actorId/${pra.actorId}/praId/${pra.id}" >
 		<tr>
 			<td><c:out value="${pra.actorName}" />
 			</td>
-			<td><sf:input type="text" name="userName" id="userName${pra.actorId}" path="userName" /></td>
+			<td><input type="text" name="userName" id="userName${pra.id}" /></td>
 				<td>
 						<input type="submit" name="assignButton${pra.id}${pra.actorId}" id="assignButton${pra.id}${pra.actorId}"
 							value="Assign" />
 				</td>
 				<td>
-					<sf:radiobutton path="${roleTypeAssignments.get(pra.id)}" id="roleTypeNormal" value="${normalValue}" />Normal<br />
-					<sf:radiobutton  path="${roleTypeAssignments.get(pra.id)}" id="roleTypeControl" value="${controlValue}" />Control<br />
-					<sf:radiobutton  path="${roleTypeAssignments.get(pra.id)}" id="roleTypeObserver" value="${observerValue}" />Observer
+					<input type="radio" name="roleType" id="roleTypeNormal${pra.id}" value="${normalValue}" ${pra.normalSelected}  />Normal<br />
+					<input type="radio" name="roleType" id="roleTypeControl${pra.id}" value="${controlValue}" ${pra.controlSelected} />Control<br />
+					<input type="radio" name="roleType" id="roleTypeObserver${pra.id}" value="${observerValue}" ${pra.observerSelected} />Observer
 				</td>
 		</tr>
 		
-	</sf:form>
+	</form>
 	</c:forEach>
 	</table>
 	<p>&nbsp;</p>

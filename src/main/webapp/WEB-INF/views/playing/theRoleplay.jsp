@@ -77,23 +77,17 @@
 
 <script>
 
-function getAlerts() {
-	$.getJSON( "${pageContext.request.contextPath}/playing/getEventJSON/1.json", function( data ) {
-		  var items = [];
-		  $.each( data, function( key, val ) {
-		    if (key == 'alert'){
-		    	alert(val);
-		    	
-		    	// turned off by adding _ while I debug tabs
-		    	if (val == "phase_change_"){
-					alert('phase_change');
-				 	top.document.location="${pageContext.request.contextPath}/playing/refresh";
-				}
-		    	
-		    }
-		  });
+var highestReceivedAlert = 0;
 
-		});
+function getAlerts() {
+	
+	var url = "${pageContext.request.contextPath}/playing/getEventJSON/" + highestReceivedAlert + ".json";
+	
+	alert(url);
+	$.getJSON( url, function( data ) {
+		alert(data.alertText);
+		highestReceivedAlert = (data.alertId);
+	});
 }
 
 </script>
@@ -102,7 +96,7 @@ $( document ).ready(function() {
 
 	setInterval(function() {
 		getAlerts();
-	}, 10000);
+	}, 5000);
 	
 	
 });

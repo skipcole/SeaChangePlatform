@@ -13,7 +13,7 @@
  	function startTimers()
  	{
  		getSimEvent();
- 		setTimeout("startTimers()", 6000);
+ 		setTimeout("startTimers()", 600000);
  	}
  	
  	$( document ).ready(function() {

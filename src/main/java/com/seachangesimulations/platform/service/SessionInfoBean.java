@@ -98,6 +98,9 @@ public class SessionInfoBean {
 	@XmlAttribute
 	private Long phaseId = new Long(0);
 	
+	@XmlAttribute
+	private String phaseName = "";
+	
 	/** Index of what plugin (tab) they are currently on. */
 	@XmlAttribute
 	private Long pluginIndex = new Long(0);
@@ -248,6 +251,14 @@ public class SessionInfoBean {
 		this.phaseId = phaseId;
 	}
 	
+	public String getPhaseName() {
+		return phaseName;
+	}
+
+	public void setPhaseName(String phaseName) {
+		this.phaseName = phaseName;
+	}
+
 	public Long getPluginIndex() {
 		return pluginIndex;
 	}

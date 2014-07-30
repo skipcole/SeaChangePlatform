@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.PhaseDao;
+import com.seachangesimulations.platform.rpimobjects.Alert;
+import com.seachangesimulations.platform.rpimobjects.Event;
+import com.seachangesimulations.platform.service.SessionInfoBean;
 
 @Entity
 @Component
@@ -178,6 +181,34 @@ public class Phase extends BaseSCPlatformObject implements MayHaveSubObjects{
 	public void saveSubObjects() {
 		// TODO Auto-generated method stub
 	
+	}
+
+	/**
+	 * Creates the phase change events and creates alerts.
+	 * 
+	 * @param sessionInfoBean
+	 * @param phaseId
+	 */
+	public static void createPhaseChangeEvent(SessionInfoBean sessionInfoBean,
+			Long phaseId) {
+		
+		Phase oldPhase = new Phase().getById(sessionInfoBean.getPhaseId());
+		Phase newPhase = new Phase().getById(phaseId);
+		
+		Event event = new Event();
+		event.setEventType(Event.ET_PHASE_CHANGE);
+		event.setEventName(Event.ET_PHASE_CHANGE_NAME);
+		event.setEventDescription("Phase changed from " + oldPhase.getPhaseName() + " to " + newPhase.getPhaseName());
+		event.setTimeOfEvent(new Date());
+		event.setRoleplayId(sessionInfoBean.getRoleplayId());
+		event.setRpimId(sessionInfoBean.getRolePlayInMotionId());
+		event.setInitiatingActorId(sessionInfoBean.getActorId());
+		event.setInitiatingUserId(sessionInfoBean.getPersonId());
+		
+		event.save();
+		
+		Alert.createAlertsForPhaseChange(event);
+		
 	}
 
 }

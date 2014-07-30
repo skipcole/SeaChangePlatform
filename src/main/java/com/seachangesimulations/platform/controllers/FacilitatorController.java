@@ -1,6 +1,7 @@
 package com.seachangesimulations.platform.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +23,10 @@ import com.seachangesimulations.platform.domain.Roleplay;
 import com.seachangesimulations.platform.domain.RoleplayInMotion;
 import com.seachangesimulations.platform.domain.assignment.InstructorRoleplayAssignment;
 import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
-import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacAssignPlayersFormBean;
 import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacCreateRPIMFormBean;
 import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacLaunchRoleplayFormBean;
 import com.seachangesimulations.platform.service.SessionInfoBean;
+import com.seachangesimulations.platform.utilities.Util;
 
 @Controller
 @RequestMapping(CMC.FACILITATING_BASE)
@@ -58,7 +59,7 @@ public class FacilitatorController extends BaseController {
 	}
 	
 
-	@RequestMapping(value = { "createRPIM/{rId}/{rpimId}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.F_CREATE_RPIM_GET }, method = RequestMethod.GET)
 	public String createRPIMGet(@PathVariable Long rId, @PathVariable Long rpimId, Model model) {
 
 		Roleplay roleplay = new Roleplay().getById(rId);
@@ -88,7 +89,7 @@ public class FacilitatorController extends BaseController {
 	 * @param principal
 	 * @return
 	 */
-	@RequestMapping(value = { "createRPIM/{rId}/{rpimId}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.F_CREATE_RPIM_POST }, method = RequestMethod.POST)
 	public String createRPIMPost(
 			@ModelAttribute("facCreateRPIMFormBean") @Valid FacCreateRPIMFormBean facCreateRPIMFormBean,
 			BindingResult bindingResult, @PathVariable Long rId, @PathVariable Long rpimId, Model model,
@@ -115,6 +116,17 @@ public class FacilitatorController extends BaseController {
 
 		return "redirect:/facilitating/createRPIM/" + roleplay.getId() + "/" + rpim.getId();
 	}
+	
+	private void addAssignmentEssentials(Roleplay roleplay, RoleplayInMotion rpim, Model model) {
+		// Add the PersonRolePlayAssignments to the model
+		List <PersonRoleplayAssignment> pras = new PersonRoleplayAssignment().getRolePlayAssignments(rpim.getRolePlayId());
+		model.addAttribute("pras", pras);
+
+		model.addAttribute("roleplay", roleplay);
+		model.addAttribute("rpim", rpim);
+		assignRoleTypeConstants(model);
+		
+	}
 
 	/**
 	 * Creates the page that allows the addition/subraction of players to roles in a roleplay.
@@ -123,45 +135,34 @@ public class FacilitatorController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = { "assignPlayers/{rpimId}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.F_ASSIGN_PLAYER_GET }, method = RequestMethod.GET)
 	public String assignPlayersGet(@PathVariable Long rpimId, Model model) {
 
 		RoleplayInMotion rpim = new RoleplayInMotion().getById(rpimId);
 		Roleplay roleplay = new Roleplay().getById(rpim.getRolePlayId());
 
-		addAssignmentEssenstials(roleplay, rpim, model);
+		addAssignmentEssentials(roleplay, rpim, model);
 
 		return "/facilitating/assignPlayerstoRPIM.jsp";
 	}
 
-	private void addAssignmentEssenstials(Roleplay roleplay, RoleplayInMotion rpim, Model model) {
-		// Add the PersonRolePlayAssignments to the model
-		List pras = new PersonRoleplayAssignment().getRolePlayAssignments(rpim.getRolePlayId());
-		model.addAttribute("pras", pras);
-		
-		// Need to add these here so multiple forms (one for each assignment) on page will have access
-		model.addAttribute("facAssignPlayersFormBean", new FacAssignPlayersFormBean(pras));
 
-		model.addAttribute("roleplay", roleplay);
-		model.addAttribute("rpim", rpim);
-		assignRoleTypeConstants(model);
-		
-	}
 	
 	@RequestMapping(value = {CMC.F_ASSIGNPLAYER_RP_A_PRA}, method = RequestMethod.POST)
 	public String assignPlayersPost(@PathVariable Long rpimId, @PathVariable Long aId, @PathVariable Long praId,
-			@ModelAttribute("facAssignPlayersFormBean") FacAssignPlayersFormBean facAssignPlayersFormBean,	Model model) {
+			HttpServletRequest request,	Model model) {
 		
 		RoleplayInMotion rpim = new RoleplayInMotion().getById(rpimId);
 		Roleplay roleplay = new Roleplay().getById(rpim.getRolePlayId());
 		Actor actor = new Actor().getById(aId);
 		
 		PersonRoleplayAssignment personRoleplayAssignment = new PersonRoleplayAssignment().getModelObject(PersonRoleplayAssignment.class, praId);
-
-		Person person = new Person().getByUsername(facAssignPlayersFormBean.getUserName());
+		
+		// Two values from form (userName and roleType)
+		Person person = new Person().getByUsername(request.getParameter("userName"));
+		int thisRoleType = Util.string2Int(request.getParameter("roleType"));
 
 		if (person != null) {
-		
 			personRoleplayAssignment.setPersonId(person.getId());
 			personRoleplayAssignment.setRoleplayId(roleplay.getId());
 			personRoleplayAssignment.setRpimId(rpimId);
@@ -169,19 +170,17 @@ public class FacilitatorController extends BaseController {
 			personRoleplayAssignment.setRpimName(rpim.getRoleplayInMotionName());
 			personRoleplayAssignment.setActorId(aId);
 			personRoleplayAssignment.setActorName(actor.getActorName());
-			
-			personRoleplayAssignment.setRoleType(facAssignPlayersFormBean.getRoleType());
-			
+			personRoleplayAssignment.setRoleType(thisRoleType);
 			personRoleplayAssignment.save();
 		
 		}
 
-		addAssignmentEssenstials(roleplay, rpim, model);
+		addAssignmentEssentials(roleplay, rpim, model);
 
 		return "redirect:/facilitating/assignPlayers/" + rpimId;
 	}
 
-	@RequestMapping(value = { "launchRPIM/{rpimId}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.F_LAUNCH_RPIM_GET }, method = RequestMethod.GET)
 	public String launchRPIMGet(@PathVariable Long rpimId, Model model) {
 
 		RoleplayInMotion rpim = new RoleplayInMotion().getModelObject(RoleplayInMotion.class, rpimId);
@@ -198,7 +197,7 @@ public class FacilitatorController extends BaseController {
 
 	}
 
-	@RequestMapping(value = { "launchRPIM/{rpimId}" }, method = RequestMethod.POST)
+	@RequestMapping(value = {CMC.F_LAUNCH_RPIM_POST }, method = RequestMethod.POST)
 	public String launchRPIMPost(
 			@ModelAttribute("facLaunchRPIMFormBean") @Valid FacLaunchRoleplayFormBean facLaunchRoleplayFormBean,
 			BindingResult bindingResult, @PathVariable Long rpimId, Model model, final HttpServletRequest request,

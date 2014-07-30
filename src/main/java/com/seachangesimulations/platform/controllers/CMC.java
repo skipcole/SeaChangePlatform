@@ -50,12 +50,18 @@ public class CMC {
 	/* Facilitating */
 	public static final String FACILITATING_BASE = "/facilitating";
 	public static final String F_ASSIGNPLAYER_RP_A_PRA = "assignPlayers/{rpimId}/actorId/{aId}/praId/{praId}";
+	public static final String F_CREATE_RPIM_GET = "createRPIM/{rId}/{rpimId}";
+	public static final String F_CREATE_RPIM_POST = "createRPIM/{rId}/{rpimId}" ;
+	public static final String F_ASSIGN_PLAYER_GET = "assignPlayers/{rpimId}";
+	public static final String F_LAUNCH_RPIM_GET = "launchRPIM/{rpimId}";
+	public static final String F_LAUNCH_RPIM_POST = "launchRPIM/{rpimId}";
 	
 	/* Playing */
 	public static final String PLAYING_BASE = "/playing";
 	/* All URIs that start with "P_" indicate that they also start with '/playing/' */
 	public static final String P_PERSONROLEPLAYASSIGNMENT = "pra/{praId}";
-	public static final String P_CHANGEPHASE = "changePhase";
+	public static final String P_CHANGEPHASE = "changePhase/{phaseId}";
+	public static final String P_GETSESSIONINFO = "getSessionInfo";
 	public static final String P_REFRESH = "refresh";
 	public static final String P_SHOWPLUGINPOINTER = "showPlugin/{pluginPointerId}";
 	public static final String P_GETEVENTS = "getEventJSON/{lastEventIGot}.json";
@@ -64,6 +70,13 @@ public class CMC {
 	/* Plugin Objects */
 	public static final String PLUGINOBJECT_BASE = "/po";
 	public static final String PO_DOC = "{pId}/getDocument/objectIndex/{objectIndex}.xml";
+
+	
+
+
+	
+
+	
 
 	
 
