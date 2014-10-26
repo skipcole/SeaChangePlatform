@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="">
+    <customized>false</customized>
+    <author>Skip Cole</author>
+    <authorURI>http://www.seachangesimulations.com</authorURI>
+    <description>A page to see the messages one has received.</description>
+    <license>Creative Commons</license>
+    <pluginName>Basic View Messages Page</pluginName>
+    <pluginURI>http://www.seachangesimulations.com/registeredPlugins/SeaChangeSimulationsLLC/basicViewMessagesPage</pluginURI>
+    <pluginReleaseMajorNumber>1</pluginReleaseMajorNumber>
+    <pluginReleaseMinorNumber>0</pluginReleaseMinorNumber>
+    <pluginReleaseMicroNumber>0</pluginReleaseMicroNumber>
+    <pluginReleaseLetters>SNAPSHOT</pluginReleaseLetters>
+    <shortFormOrgName>SeaChangeSimulations</shortFormOrgName>
+    <shortFormPluginName>BasicViewMessagesPage</shortFormPluginName>
+    <pluginOriginDirectory></pluginOriginDirectory>
+    <isSystemPlugin>false</isSystemPlugin>
+    <pluginFiles>
+        <pluginFile>
+            <fileDescription>main html page</fileDescription>
+            <fileName>BasicViewMessagesPage.htm</fileName>
+            <filePath></filePath>
+        </pluginFile>
+    </pluginFiles>
+</plugin>
