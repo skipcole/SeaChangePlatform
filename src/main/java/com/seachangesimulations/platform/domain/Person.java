@@ -2,6 +2,7 @@
 package com.seachangesimulations.platform.domain;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.PersonDao;
 import com.seachangesimulations.platform.domain.assignment.PersonOrganizationAssignment;
+import com.seachangesimulations.platform.rpimobjects.Alert;
+import com.seachangesimulations.platform.rpimobjects.AlertJSON;
+import com.seachangesimulations.platform.service.SessionInfoBean;
 
 @Entity
 @Component
@@ -284,5 +288,23 @@ public class Person extends BaseSCPlatformObject implements UserDetails{
 		PersonDao dao = (PersonDao) getApplicationContext().getBean("personDao", PersonDao.class);
 		return dao.get(id);
 	}
+	
+	public static AlertJSON getNextAlert(SessionInfoBean sessionInfoBean,
+			Long lastAlertIGot) {
+		
+		List <Alert> myAlerts = 
+				new Alert().getPlayersAlerts(sessionInfoBean.getPersonId(), sessionInfoBean.getActorId(), 
+						sessionInfoBean.getRolePlayInMotionId(), lastAlertIGot);
+		
+		
+		AlertJSON alertJSON = new AlertJSON();
+		alertJSON.setAlertId(new Long(2));
+		alertJSON.setAlertText("boom");
+		alertJSON.setAlertType(Alert.ALERT_TYPE_PHASE_CHANGE);
+		
+		return alertJSON;
+		
+	}
+
 	
 }

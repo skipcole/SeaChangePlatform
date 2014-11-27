@@ -96,7 +96,7 @@ $( document ).ready(function() {
 
 	setInterval(function() {
 		getAlerts();
-	}, 5000);
+	}, 50000);
 	
 	
 });

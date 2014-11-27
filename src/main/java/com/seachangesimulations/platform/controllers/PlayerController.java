@@ -208,7 +208,7 @@ public class PlayerController extends BaseController {
 			this.getSessionInfoBean().setPhaseName(new Phase().getById(phaseId).getPhaseName());
 			
 			// creates event and applicable alerts
-			Event event = Phase.createPhaseChangeEvent(getSessionInfoBean(), phaseId);
+			Phase.createPhaseChangeEvent(getSessionInfoBean(), phaseId);
 			
 		} else {
 			System.out.println("non control character attept to change phase");
@@ -220,42 +220,44 @@ public class PlayerController extends BaseController {
 		
 	}
 	
-	public static LinkedHashMap<String, String> eventMap = new LinkedHashMap<String, String>();
-	
-	@RequestMapping(value = {CMC.P_GETEVENTS}, method = RequestMethod.GET)
-	public @ResponseBody Object getEventJSON(@PathVariable Long lastEventIGot) {
+	@RequestMapping(value = {CMC.P_SEND_MESSAGE_GET}, method = RequestMethod.GET)
+	public String getSendMessagePage(Model model) {
 
 		Util.mark();
-		System.out.println(" Here I am.  " + lastEventIGot);
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastEventIGot);
+		System.out.println(" Here I am. Returning  playing/sendMessage.jsp");
 
-		eventMap.put("alert", "myAlert");
+		return "playing/sendMessage.jsp";
 
-		AlertJSON alertJSON = new AlertJSON();
-		alertJSON.setAlertId(new Long(eventMap.size()));
-		alertJSON.setAlertText("boom");
-		alertJSON.setAlertType(Alert.ALERT_TYPE_PHASE_CHANGE);
+		
+	}
+	
+	@RequestMapping(value = {CMC.P_GETALERTS}, method = RequestMethod.GET)
+	public @ResponseBody Object getAlertJSON(@PathVariable Long lastAlertIGot) {
+
+		Util.mark();
+		System.out.println(" Here I am.  " + lastAlertIGot);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastAlertIGot);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX " + lastAlertIGot);
+
+		AlertJSON alertJSON = Person.getNextAlert(this.getSessionInfoBean(), lastAlertIGot);
 		return alertJSON;
 
 		
 	}
 	
+	/**
+	 * Receives event from player (such as Control) to be shared with other players.
+	 * 
+	 * @param roleplayAlertBean
+	 */
 	@RequestMapping(value = {CMC.P_POSTEVENTS}, method = RequestMethod.POST)
 	public void postEventJSON(@ModelAttribute("roleplayAlertBean") RoleplayAlertBean roleplayAlertBean) {
 		
+		Util.mark();
+		
 		System.out.println("I got sent the value : " + roleplayAlertBean.getAlertText());
 	
-		eventMap = new LinkedHashMap<String, String>();
-		eventMap.put("alert", roleplayAlertBean.getAlertText());
-		
-		if ("phase_change".equalsIgnoreCase(roleplayAlertBean.getAlertText())){
-			System.out.println("changing phase");
-
-			
-			this.getSessionInfoBean().setPhaseId(new Long(2));
-		}
-	
+		Util.mark();
 	
 	}
 		

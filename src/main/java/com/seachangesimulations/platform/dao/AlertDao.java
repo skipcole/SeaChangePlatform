@@ -2,6 +2,8 @@
 package com.seachangesimulations.platform.dao;
 
 
+import java.util.List;
+
 import com.seachangesimulations.platform.rpimobjects.Alert;
 
 /**
@@ -10,5 +12,8 @@ import com.seachangesimulations.platform.rpimobjects.Alert;
  * 
  */
 public interface AlertDao extends BaseDao<Alert> {
+
+	List<Alert> getPlayersAlerts(Long personId, Long actorId,
+			Long rpimId, Long lastAlertReceived);
 
 }

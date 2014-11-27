@@ -59,13 +59,17 @@ public class CMC {
 	/* Playing */
 	public static final String PLAYING_BASE = "/playing";
 	/* All URIs that start with "P_" indicate that they also start with '/playing/' */
+	// bnp is short for 'bare naked page' - a page without headings.
 	public static final String P_PERSONROLEPLAYASSIGNMENT = "pra/{praId}";
 	public static final String P_CHANGEPHASE = "changePhase/{phaseId}";
 	public static final String P_GETSESSIONINFO = "getSessionInfo";
 	public static final String P_REFRESH = "refresh";
 	public static final String P_SHOWPLUGINPOINTER = "showPlugin/{pluginPointerId}";
-	public static final String P_GETEVENTS = "getEventJSON/{lastEventIGot}.json";
+	public static final String P_GETALERTS = "getEventJSON/{lastEventIGot}.json";
+	public static final String P_SEND_MESSAGE_GET = "bnpSendMessageGet";
 	public static final String P_POSTEVENTS = "postEvent";
+	
+	
 	
 	/* Plugin Objects */
 	public static final String PLUGINOBJECT_BASE = "/po";

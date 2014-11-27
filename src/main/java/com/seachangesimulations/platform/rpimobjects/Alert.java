@@ -20,31 +20,29 @@ import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignm
 @Scope("prototype")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Alert extends BaseSCPlatformObject{
-	
-	
+public class Alert extends BaseSCPlatformObject {
+
 	public static String ALERT_TYPE_ERROR = "alert_type_error";
 	public static String ALERT_TYPE_WARRNING = "alert_type_warning";
 	public static String ALERT_TYPE_INFO = "alert_type_info";
 	public static String ALERT_TYPE_PHASE_CHANGE = "alert_type_phase_change";
-	
+
 	private String alertType = "";
-	
+
 	private String alertText = "";
-	
+
 	private Long roleplayId;
-	
+
 	private Long rpimId;
-	
+
 	private Long targetActorId;
-	
+
 	private Long targetPersonId;
-	
-	
 
 	@Override
 	public Alert getById(Long id) {
-		AlertDao dao = (AlertDao) getApplicationContext().getBean("alertDao", AlertDao.class);
+		AlertDao dao = (AlertDao) getApplicationContext().getBean("alertDao",
+				AlertDao.class);
 		return dao.get(id);
 	}
 
@@ -103,28 +101,41 @@ public class Alert extends BaseSCPlatformObject{
 	 */
 	public static void createAlertsForPhaseChange(Event event) {
 
-		List <PersonRoleplayAssignment> allPeopleInThisRoleplay = new PersonRoleplayAssignment().getAllPlayers(event.getRpimId());
-		
-		for (PersonRoleplayAssignment thisPra: allPeopleInThisRoleplay){
-			
-			Alert alert = new Alert();
-			alert.setAlertType(Alert.ALERT_TYPE_PHASE_CHANGE);
-			alert.setAlertText(event.getEventDescription());
-			alert.setRoleplayId(event.getRoleplayId());
-			alert.setRpimId(event.getRpimId());
-			alert.setTargetActorId(thisPra.getActorId());
-			alert.setTargetPersonId(thisPra.getPersonId());
-			
-			alert.save();
-			
+		List<PersonRoleplayAssignment> allPeopleInThisRoleplay = new PersonRoleplayAssignment()
+				.getAllPlayers(event.getRpimId());
+
+		for (PersonRoleplayAssignment thisPra : allPeopleInThisRoleplay) {
+
+			if (thisPra.getPersonId() != null) {
+				
+				Alert alert = new Alert();
+				alert.setAlertType(Alert.ALERT_TYPE_PHASE_CHANGE);
+				alert.setAlertText(event.getEventDescription());
+				alert.setRoleplayId(event.getRoleplayId());
+				alert.setRpimId(event.getRpimId());
+				alert.setTargetActorId(thisPra.getActorId());
+				alert.setTargetPersonId(thisPra.getPersonId());
+
+				alert.save();
+			}
 		}
-		
+
 	}
 
 	public void save() {
-		AlertDao dao = (AlertDao) getApplicationContext().getBean("alertDao", AlertDao.class);
+		AlertDao dao = (AlertDao) getApplicationContext().getBean("alertDao",
+				AlertDao.class);
 		dao.save(this);
 	}
 
+	public List<Alert> getPlayersAlerts(Long personId, Long actorId,
+			Long rpimId, Long lastAlertReceived) {
+
+		AlertDao dao = (AlertDao) getApplicationContext().getBean("alertDao",
+				AlertDao.class);
+
+		return dao.getPlayersAlerts(personId, actorId, rpimId,
+				lastAlertReceived);
+	}
 
 }

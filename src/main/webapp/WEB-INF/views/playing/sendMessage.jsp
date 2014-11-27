@@ -13,7 +13,7 @@
 
 
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Control</title>
+<title>Send Message</title>
 <!-- InstanceEndEditable -->
 
 <link href="/SeaChangePlatform/resources/css/SeaChangePlatform.css"
@@ -25,7 +25,7 @@
 	rel="stylesheet" type="text/css">
 <link href="/SeaChangePlatform/Templates/FacilitatorTemplate.css"
 	rel="stylesheet" type="text/css">
-<!-- InstanceEndEditable -->
+
 </head>
 <body>
 
@@ -45,47 +45,9 @@
 	</div>
 	<br />
 	<p>
-		Your Role:
-		<scp:actorname />
 	</p>
 
-	<form id="formChangePhase" method="get" action="#">
-		<p>Phase:${sessionScope.sessionInfoBean.phaseName}</p>
-		<select id="selectPhaseList">
-			<c:forEach var="phaseForThisRoleplay"
-				items="${phasesForThisRoleplay}">
-				<option value="${phaseForThisRoleplay.id}">
-					<c:out value="${phaseForThisRoleplay.phaseName}" /></option>
-			</c:forEach>
+send a message
 
-		</select> <input type="submit" name="selectPhaseButton" id="selectPhaseButton"
-			value="Submit">
-	</form>
-
-	<script>
-	$( document ).ready(function() {
-		$("#formChangePhase")
-				.submit(
-						function() {
-
-							var url = "${pageContext.request.contextPath}/playing/changePhase/" + $("#selectPhaseList").val();
-
-							$.ajax({
-								type : "GET",
-								url : url,
-								success: function()
-						           {
-						               alert('shot at url'); // show response from the php script.
-						           }
-							});
-							
-							alert(url);
-
-							return false; // avoid to execute the actual submit of the form.
-						});
-	});
-	</script>
-	
-	<p><a href="${pageContext.request.contextPath}/playing/bnpSendMessageGet/" >Send Message</a></p>
 </body>
 </html>

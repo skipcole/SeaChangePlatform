@@ -88,8 +88,6 @@ public class Actor extends BaseSCPlatformObject implements MayHaveSubObjects{
 		return dao.create(name, rpId, orgId);
 	}
 
-
-
 	public Long getRoleplayId() {
 		return roleplayId;
 	}
@@ -125,6 +123,5 @@ public class Actor extends BaseSCPlatformObject implements MayHaveSubObjects{
 		// TODO Auto-generated method stub
 	
 	}
-
 
 }

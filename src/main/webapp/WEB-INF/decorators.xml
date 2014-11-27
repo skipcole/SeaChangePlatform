@@ -19,6 +19,7 @@
 		<pattern>/welcome</pattern>
 		<pattern>/playing/showPlugin/**</pattern>
 		<pattern>/playing/getObject/**</pattern>
+		<pattern>/playing/bnpSendMessageGet/**</pattern>
 		<pattern>/resources/plugins/**</pattern>
 		<pattern>/po/**</pattern>
 	</excludes>
