@@ -43,7 +43,7 @@ public class InstallController extends BaseController{
 	/**
 	 * Handles the creation of the first user (the admin user) on a platform, and creates the first organization.
 	 * 
-	 * @param installationObject
+	 * @param aifb AdminInstallationFormBean
 	 * @param bindingResult
 	 * @return
 	 */

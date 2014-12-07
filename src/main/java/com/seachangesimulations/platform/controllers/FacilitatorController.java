@@ -35,38 +35,52 @@ public class FacilitatorController extends BaseController {
 	/**
 	 * Creates objects on the facilitator's home page.
 	 * 
-	 * @param model
-	 * @return
+	 * @param model	Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { CMC.INDEX }, method = RequestMethod.GET)
 	public String showFacilitatorHome(Model model) {
 
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.FACILITATOR_ZONE);
-		
+
 		// Will move this elsewhere later, but for now
 
-		List <Roleplay> roleplays = new Roleplay().getAll();
+		List<Roleplay> roleplays = new Roleplay().getAll();
 		model.addAttribute("roleplays", roleplays);
 
 		return "/facilitating/index.jsp";
 	}
-	
+
+	/**
+	 * 
+	 * @param model	Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "index/setZone" }, method = RequestMethod.GET)
 	public String setFacilitatorZone(Model model) {
 
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.FACILITATOR_ZONE);
 		return "redirect:/facilitating/index";
 	}
-	
 
+	/**
+	 * 
+	 * @param roleplayId Roleplay Id.
+	 * @param rpimId Roleplay in Motion Id.
+	 * @param model	Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { CMC.F_CREATE_RPIM_GET }, method = RequestMethod.GET)
-	public String createRPIMGet(@PathVariable Long rId, @PathVariable Long rpimId, Model model) {
+	public String createRPIMGet(@PathVariable Long roleplayId,
+			@PathVariable Long rpimId, Model model) {
 
-		Roleplay roleplay = new Roleplay().getById(rId);
-		RoleplayInMotion rpim = new RoleplayInMotion().getModelObject(RoleplayInMotion.class, rpimId);
+		Roleplay roleplay = new Roleplay().getById(roleplayId);
+		RoleplayInMotion rpim = new RoleplayInMotion().getModelObject(
+				RoleplayInMotion.class, rpimId);
 
 		// Create new form bean with default values.
-		FacCreateRPIMFormBean facCreateRPIMFormBean = new FacCreateRPIMFormBean(roleplay);
+		FacCreateRPIMFormBean facCreateRPIMFormBean = new FacCreateRPIMFormBean(
+				roleplay);
 
 		model.addAttribute("roleplay", roleplay);
 		model.addAttribute("rpim", rpim);
@@ -81,29 +95,28 @@ public class FacilitatorController extends BaseController {
 	 * Creates a roleplay in motion.
 	 * 
 	 * @param facCreateRPIMFormBean
-	 * @param bindingResult
-	 * @param rId
-	 * @param rpimId
-	 * @param model
-	 * @param request
-	 * @param principal
-	 * @return
+	 * @param roleplayId Roleplay Id
+	 * @param rpimId Roleplay in Motion Id
+	 * @param model	Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { CMC.F_CREATE_RPIM_POST }, method = RequestMethod.POST)
 	public String createRPIMPost(
 			@ModelAttribute("facCreateRPIMFormBean") @Valid FacCreateRPIMFormBean facCreateRPIMFormBean,
-			BindingResult bindingResult, @PathVariable Long rId, @PathVariable Long rpimId, Model model,
-			final HttpServletRequest request, Principal principal) {
+			@PathVariable Long roleplayId,
+			@PathVariable Long rpimId, Model model) {
 
-		Roleplay roleplay = new Roleplay().getById(rId);
-		RoleplayInMotion rpim = new RoleplayInMotion().getModelObject(RoleplayInMotion.class, rpimId);
+		Roleplay roleplay = new Roleplay().getById(roleplayId);
+		RoleplayInMotion rpim = new RoleplayInMotion().getModelObject(
+				RoleplayInMotion.class, rpimId);
 
 		BeanUtils.copyProperties(facCreateRPIMFormBean, rpim);
-		rpim.setRolePlayId(rId);
-		rpim.setPhaseId(new Phase().getFirstForRoleplay(rId));
+		rpim.setRolePlayId(roleplayId);
+		rpim.setPhaseId(new Phase().getFirstForRoleplay(roleplayId));
 		rpim.save();
-		
-		// Create object plugin associations for this RPIM based off of the RP poas
+
+		// Create object plugin associations for this RPIM based off of the RP
+		// poas
 		roleplay.createCopyofObjectsAndAssociationsForRpim(rpim.getId());
 
 		InstructorRoleplayAssignment ira = new InstructorRoleplayAssignment();
@@ -114,26 +127,36 @@ public class FacilitatorController extends BaseController {
 		model.addAttribute("roleplay", roleplay);
 		model.addAttribute("rpim", rpim);
 
-		return "redirect:/facilitating/createRPIM/" + roleplay.getId() + "/" + rpim.getId();
+		return "redirect:/facilitating/createRPIM/" + roleplay.getId() + "/"
+				+ rpim.getId();
 	}
-	
-	private void addAssignmentEssentials(Roleplay roleplay, RoleplayInMotion rpim, Model model) {
+
+	/**
+	 * 
+	 * @param roleplay Roleplay.
+	 * @param rpim Roleplay in Motion.
+	 * @param model	Model to hold objects for the view.
+	 */
+	private void addAssignmentEssentials(Roleplay roleplay,
+			RoleplayInMotion rpim, Model model) {
 		// Add the PersonRolePlayAssignments to the model
-		List <PersonRoleplayAssignment> pras = new PersonRoleplayAssignment().getRolePlayAssignments(rpim.getRolePlayId());
+		List<PersonRoleplayAssignment> pras = new PersonRoleplayAssignment()
+				.getRolePlayAssignments(rpim.getRolePlayId());
 		model.addAttribute("pras", pras);
 
 		model.addAttribute("roleplay", roleplay);
 		model.addAttribute("rpim", rpim);
 		assignRoleTypeConstants(model);
-		
+
 	}
 
 	/**
-	 * Creates the page that allows the addition/subraction of players to roles in a roleplay.
+	 * Creates the page that allows the addition/subraction of players to roles
+	 * in a roleplay.
 	 * 
-	 * @param rpimId
-	 * @param model
-	 * @return
+	 * @param rpimId  Roleplay in Motion Id.
+	 * @param model	Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { CMC.F_ASSIGN_PLAYER_GET }, method = RequestMethod.GET)
 	public String assignPlayersGet(@PathVariable Long rpimId, Model model) {
@@ -146,33 +169,45 @@ public class FacilitatorController extends BaseController {
 		return "/facilitating/assignPlayerstoRPIM.jsp";
 	}
 
+	/**
+	 * 
+	 * @param rpimId  Roleplay in Motion Id.
+	 * @param actorId Actor Id.
+	 * @param praId Person Roleplay Assignment Id.
+	 * @param request HttpServletRequest (holding userName to be assigned).
+	 * @param model	Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
+	@RequestMapping(value = { CMC.F_ASSIGNPLAYER_RP_A_PRA }, method = RequestMethod.POST)
+	public String assignPlayersPost(@PathVariable Long rpimId,
+			@PathVariable Long actorId, @PathVariable Long praId,
+			HttpServletRequest request, Model model) {
 
-	
-	@RequestMapping(value = {CMC.F_ASSIGNPLAYER_RP_A_PRA}, method = RequestMethod.POST)
-	public String assignPlayersPost(@PathVariable Long rpimId, @PathVariable Long aId, @PathVariable Long praId,
-			HttpServletRequest request,	Model model) {
-		
 		RoleplayInMotion rpim = new RoleplayInMotion().getById(rpimId);
 		Roleplay roleplay = new Roleplay().getById(rpim.getRolePlayId());
-		Actor actor = new Actor().getById(aId);
-		
-		PersonRoleplayAssignment personRoleplayAssignment = new PersonRoleplayAssignment().getModelObject(PersonRoleplayAssignment.class, praId);
-		
+		Actor actor = new Actor().getById(actorId);
+
+		PersonRoleplayAssignment personRoleplayAssignment = new PersonRoleplayAssignment()
+				.getModelObject(PersonRoleplayAssignment.class, praId);
+
 		// Two values from form (userName and roleType)
-		Person person = new Person().getByUsername(request.getParameter("userName"));
+		Person person = new Person().getByUsername(request
+				.getParameter("userName"));
 		int thisRoleType = Util.string2Int(request.getParameter("roleType"));
 
 		if (person != null) {
 			personRoleplayAssignment.setPersonId(person.getId());
 			personRoleplayAssignment.setRoleplayId(roleplay.getId());
 			personRoleplayAssignment.setRpimId(rpimId);
-			personRoleplayAssignment.setRoleplayName(roleplay.getRoleplayName());
-			personRoleplayAssignment.setRpimName(rpim.getRoleplayInMotionName());
-			personRoleplayAssignment.setActorId(aId);
+			personRoleplayAssignment
+					.setRoleplayName(roleplay.getRoleplayName());
+			personRoleplayAssignment
+					.setRpimName(rpim.getRoleplayInMotionName());
+			personRoleplayAssignment.setActorId(actorId);
 			personRoleplayAssignment.setActorName(actor.getActorName());
 			personRoleplayAssignment.setRoleType(thisRoleType);
 			personRoleplayAssignment.save();
-		
+
 		}
 
 		addAssignmentEssentials(roleplay, rpim, model);
@@ -180,10 +215,17 @@ public class FacilitatorController extends BaseController {
 		return "redirect:/facilitating/assignPlayers/" + rpimId;
 	}
 
+	/**
+	 * 
+	 * @param rpimId Roleplay in Motion Id.
+	 * @param model	Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { CMC.F_LAUNCH_RPIM_GET }, method = RequestMethod.GET)
 	public String launchRPIMGet(@PathVariable Long rpimId, Model model) {
 
-		RoleplayInMotion rpim = new RoleplayInMotion().getModelObject(RoleplayInMotion.class, rpimId);
+		RoleplayInMotion rpim = new RoleplayInMotion().getModelObject(
+				RoleplayInMotion.class, rpimId);
 		Roleplay roleplay = new Roleplay().getById(rpim.getRolePlayId());
 
 		// Launch new form bean with default values.
@@ -197,13 +239,21 @@ public class FacilitatorController extends BaseController {
 
 	}
 
-	@RequestMapping(value = {CMC.F_LAUNCH_RPIM_POST }, method = RequestMethod.POST)
+	/**
+	 * 
+	 * @param facLaunchRoleplayFormBean Facilitator Launch Roleplay Form Bean.
+	 * @param rpimId Roleplay in Motion Id.
+	 * @param model	Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
+	@RequestMapping(value = { CMC.F_LAUNCH_RPIM_POST }, method = RequestMethod.POST)
 	public String launchRPIMPost(
 			@ModelAttribute("facLaunchRPIMFormBean") @Valid FacLaunchRoleplayFormBean facLaunchRoleplayFormBean,
-			BindingResult bindingResult, @PathVariable Long rpimId, Model model, final HttpServletRequest request,
-			Principal principal) {
+			@PathVariable Long rpimId,
+			Model model) {
 
-		RoleplayInMotion rpim = new RoleplayInMotion().getModelObject(RoleplayInMotion.class, rpimId);
+		RoleplayInMotion rpim = new RoleplayInMotion().getModelObject(
+				RoleplayInMotion.class, rpimId);
 		Roleplay roleplay = new Roleplay().getById(rpim.getRolePlayId());
 
 		boolean saveChanges = false;

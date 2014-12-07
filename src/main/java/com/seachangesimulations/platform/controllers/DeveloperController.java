@@ -41,7 +41,7 @@ public class DeveloperController extends BaseController {
 	/**
 	 * Shows the developer control section.
 	 * 
-	 * @param model
+	 * @param model	Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = {CMC.INDEX }, method = RequestMethod.GET)
@@ -72,7 +72,7 @@ public class DeveloperController extends BaseController {
 	/**
 	 * Gets the page to selection action
 	 * 
-	 * @param model
+	 * @param model	Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = { CMC.D_CHOOSE }, method = RequestMethod.POST)
@@ -125,7 +125,7 @@ public class DeveloperController extends BaseController {
 	 * they can view and make edits (if necessary) to the plugin definition.
 	 * 
 	 * @param id
-	 * @param model
+	 * @param model	Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = { CMC.D_DEFINE_PLUGIN_GET }, method = RequestMethod.GET)
@@ -148,7 +148,7 @@ public class DeveloperController extends BaseController {
 	 * definitions.
 	 * 
 	 * @param id
-	 * @param model
+	 * @param model	Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = { CMC.D_DEFINE_PLUGIN_POST }, method = RequestMethod.POST)
@@ -185,7 +185,7 @@ public class DeveloperController extends BaseController {
 	 * plugin.
 	 * 
 	 * @param id
-	 * @param model
+	 * @param model	Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = { CMC.D_UPLOAD_PLUGIN_FILES_GET }, method = RequestMethod.GET)
@@ -212,7 +212,7 @@ public class DeveloperController extends BaseController {
 	 * definitions.
 	 * 
 	 * @param id
-	 * @param model
+	 * @param model	Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = { CMC.D_UPLOAD_PLUGIN_FILES_POST }, method = RequestMethod.POST)
@@ -250,21 +250,21 @@ public class DeveloperController extends BaseController {
 	 * This REST method takes the developer to the page to define the plugin, so
 	 * they can view and make edits (if necessary) to the plugin definition.
 	 * 
-	 * @param id
-	 * @param model
-	 * @return
+	 * @param pluginId	Id of the plugin to add objects to
+	 * @param model	Model to hold objects for the view.
+	 * @return path to jsp file
 	 */
 	@RequestMapping(value = { CMC.D_ADD_OBJECTS_TO_PLUGIN_FILES_GET }, method = RequestMethod.GET)
-	public String addObjectsToPluginGet(@PathVariable Long id, Model model) {
+	public String addObjectsToPluginGet(@PathVariable Long pluginId, Model model) {
 
-		Plugin plugin = new Plugin().getModelObject(Plugin.class, id);
+		Plugin plugin = new Plugin().getModelObject(Plugin.class, pluginId);
 
 		// Create new form bean with default values.
 		DevAddObjectsToPluginFormBean devAddObjectsToPluginFormBean = new DevAddObjectsToPluginFormBean(plugin);
 
 		model.addAttribute("plugin", plugin);
 		model.addAttribute("devAddObjectsToPluginFormBean", devAddObjectsToPluginFormBean);
-		model.addAttribute("pluginObjectAssociations", new PluginObjectAssociation().getAllForPlugin(id));
+		model.addAttribute("pluginObjectAssociations", new PluginObjectAssociation().getAllForPlugin(pluginId));
 
 		return "/developing/addObjectsToPlugin.jsp";
 
@@ -274,18 +274,18 @@ public class DeveloperController extends BaseController {
 	/**
 	 * This method will add an object to a plugin.
 	 * 
-	 * @param id
+	 * @param pluginId Id of the Plugin to be worked on.
 	 * @param devAddObjectsToPluginFormBean
-	 * @param model
+	 * @param model	Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = { CMC.D_ADD_OBJECTS_TO_PLUGIN_FILES_POST }, method = RequestMethod.POST)
 	public String addObjectsToPluginPost(
-			@PathVariable Long id,
+			@PathVariable Long pluginId,
 			@ModelAttribute("devAddObjectsToPluginFormBean") @Valid DevAddObjectsToPluginFormBean devAddObjectsToPluginFormBean,
 			Model model) {
 
-		Plugin plugin = new Plugin().getModelObject(Plugin.class, id);
+		Plugin plugin = new Plugin().getModelObject(Plugin.class, pluginId);
 		
 		System.out.println(devAddObjectsToPluginFormBean.getObjectType());
 		
@@ -312,7 +312,7 @@ public class DeveloperController extends BaseController {
 		// Clear the values stored in this form.
 		model.addAttribute("devAddObjectsToPluginFormBean", new DevAddObjectsToPluginFormBean());
 		
-		model.addAttribute("pluginObjectAssociations", new PluginObjectAssociation().getAllForPlugin(id));
+		model.addAttribute("pluginObjectAssociations", new PluginObjectAssociation().getAllForPlugin(pluginId));
 
 		return "/developing/addObjectsToPlugin.jsp";
 
@@ -340,12 +340,19 @@ public class DeveloperController extends BaseController {
 
 	}
 	
-	/** Directs the user to the modify document page. */
+	/**
+	 * Directs the user to the modify document page.
+	 * 
+	 * @param pluginId Id of the Plugin to be worked on.
+	 * @param pluginObjectDocId
+	 * @param model	Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { CMC.D_MODIFY_PLUGIN_DOC_GET }, method = RequestMethod.GET)
-	public String modifyPluginObject(@PathVariable Long pId, @PathVariable Long dId, Model model) {
+	public String modifyPluginObject(@PathVariable Long pluginId, @PathVariable Long pluginObjectDocId, Model model) {
 
-		Plugin plugin = new Plugin().getModelObject(Plugin.class, pId);
-		PluginObjectDocument pod = new PluginObjectDocument().getById(dId);
+		Plugin plugin = new Plugin().getModelObject(Plugin.class, pluginId);
+		PluginObjectDocument pod = new PluginObjectDocument().getById(pluginObjectDocId);
 		
 		model.addAttribute("plugin", plugin);
 		model.addAttribute("pod", pod);
@@ -357,14 +364,22 @@ public class DeveloperController extends BaseController {
 	
 	}
 	
-	/** Returns mappings in page for developer to edit plugin document. */
+	/**
+	 * Returns mappings in page for developer to edit plugin document
+	 * 
+	 * @param pluginId Id of the Plugin to be worked on.
+	 * @param dId
+	 * @param devModifyPluginDocumentFormBean
+	 * @param model	Model to hold objects for the view.
+	 * @return
+	 */
 	@RequestMapping(value = { CMC.D_MODIFY_PLUGIN_DOC_POST }, method = RequestMethod.POST)
 	public String modifyPluginObjectDocument(
-			@PathVariable Long pId, @PathVariable Long dId,
+			@PathVariable Long pluginId, @PathVariable Long dId,
 			@ModelAttribute("devModifyPluginDocumentFormBean") @Valid DevModifyPluginDocumentFormBean devModifyPluginDocumentFormBean,
 			Model model) {
 		
-		Plugin plugin = new Plugin().getModelObject(Plugin.class, pId);
+		Plugin plugin = new Plugin().getModelObject(Plugin.class, pluginId);
 		PluginObjectDocument pod = new PluginObjectDocument().getById(dId);
 		
 		BeanUtils.copyProperties(devModifyPluginDocumentFormBean, pod);

@@ -42,8 +42,8 @@ public class PlayerController extends BaseController {
 	/**
 	 * Shows the page where the player can select a role play to enter into.
 	 * 
-	 * @param principal
-	 * @param model
+	 * @param principal The principal object, containing the person's name and login info.
+	 * @param model Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = {CMC.INDEX}, method = RequestMethod.GET) // NO_UCD (unused code)
@@ -69,7 +69,7 @@ public class PlayerController extends BaseController {
 	 * Creates the roleplay page with it tab headings.
 	 * 
 	 * @param praId
-	 * @param model
+	 * @param model Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = {CMC.P_PERSONROLEPLAYASSIGNMENT}, method = RequestMethod.GET)
@@ -107,7 +107,7 @@ public class PlayerController extends BaseController {
 	/**
 	 * Called when the phase is changed to a new phase.
 	 * 
-	 * @param model
+	 * @param model Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = {CMC.P_REFRESH}, method = RequestMethod.GET)
@@ -129,7 +129,7 @@ public class PlayerController extends BaseController {
 	 * Adds control features to a player, if they are a control character.
 	 * 
 	 * @param playersTabs
-	 * @param model
+	 * @param model Model to hold objects for the view.
 	 */
 	public void addControlFeatures(List playersTabs, Model model){
 
@@ -143,7 +143,7 @@ public class PlayerController extends BaseController {
 	 * Shows the one individual plugin.
 	 * 
 	 * @param pluginPointerId
-	 * @param model
+	 * @param model Model to hold objects for the view.
 	 * @return
 	 */
 	@RequestMapping(value = {CMC.P_SHOWPLUGINPOINTER}, method = RequestMethod.GET)
@@ -192,9 +192,8 @@ public class PlayerController extends BaseController {
 	/**
 	 * Called by a 'control' player to change the phase of the roleplay.
 	 * 
-	 * @param model
-	 * @param phase
-	 * @return
+	 * @param model Model to hold objects for the view.
+	 * @param phaseId
 	 */
 	@RequestMapping(value = {CMC.P_CHANGEPHASE}, method = RequestMethod.GET)
 	public void changePhase(Model model, @PathVariable Long phaseId) {

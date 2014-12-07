@@ -45,7 +45,6 @@ public class Person extends BaseSCPlatformObject implements UserDetails{
 	 * 
 	 * @param username
 	 * @param password
-	 * @param orgId
 	 * @param initialAuthLevel
 	 * @return
 	 */

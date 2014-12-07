@@ -46,16 +46,23 @@ public class AuthorController extends BaseController {
 	 * Shows the authoring control section.
 	 * 
 	 * @param model
-	 * @return
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
-	@RequestMapping(value = {CMC.INDEX }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.INDEX }, method = RequestMethod.GET)
 	public String showAuthoringPage(Map<String, Object> model) {
 
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.AUTHOR_ZONE);
 		return "authoring/index.jsp";
 	}
-	
-	@RequestMapping(value = {"index/setZone" }, method = RequestMethod.GET)
+
+	/**
+	 * 
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
+	@RequestMapping(value = { "index/setZone" }, method = RequestMethod.GET)
 	public String setAuthorZone(Map<String, Object> model) {
 
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.AUTHOR_ZONE);
@@ -66,18 +73,21 @@ public class AuthorController extends BaseController {
 	 * Gets the create page.
 	 * 
 	 * @param model
-	 * @return
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
-	@RequestMapping(value = {CMC.A_ROLEPLAY_CREATE}, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_CREATE }, method = RequestMethod.GET)
 	public String showCreateRolePlayPage(@PathVariable Long id, Model model) {
 
 		Roleplay roleplay = new Roleplay().getModelObject(Roleplay.class, id);
 
 		// Create new form bean with default values.
-		AuthorCreateRoleplayFormBean authorCreateRoleplayFormBean = new AuthorCreateRoleplayFormBean(roleplay);
+		AuthorCreateRoleplayFormBean authorCreateRoleplayFormBean = new AuthorCreateRoleplayFormBean(
+				roleplay);
 
 		model.addAttribute("roleplay", roleplay);
-		model.addAttribute("authorCreateRoleplayFormBean", authorCreateRoleplayFormBean);
+		model.addAttribute("authorCreateRoleplayFormBean",
+				authorCreateRoleplayFormBean);
 
 		return "authoring/roleplay/createRoleplay.jsp";
 	}
@@ -88,17 +98,18 @@ public class AuthorController extends BaseController {
 	 * @param roleplay
 	 * @param bindingResult
 	 * @param principal
-	 * @return
+	 * @return path to JSP.
 	 */
-	@RequestMapping(value = {CMC.A_ROLEPLAY_CREATE}, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_CREATE }, method = RequestMethod.POST)
 	public String handleCreateRolePlay(
 			@ModelAttribute("authorCreateRoleplayFormBean") @Valid AuthorCreateRoleplayFormBean authorCreateRoleplayFormBean,
-			@PathVariable Long id, BindingResult bindingResult, Principal principal, Model model) {
+			@PathVariable Long roleplayId, BindingResult bindingResult,
+			Principal principal, Model model) {
 
 		Roleplay roleplay = new Roleplay();
 
-		if (!((id == null) || (id.intValue() == 0))) {
-			roleplay = roleplay.getById(id);
+		if (!((roleplayId == null) || (roleplayId.intValue() == 0))) {
+			roleplay = roleplay.getById(roleplayId);
 		}
 
 		BeanUtils.copyProperties(authorCreateRoleplayFormBean, roleplay);
@@ -108,50 +119,69 @@ public class AuthorController extends BaseController {
 		getSessionInfoBean().setRoleplayId(roleplay.getId());
 		getSessionInfoBean().setRoleplayName(roleplay.getRoleplayName());
 
-		Person.saveLastRolePlayEdited((String) principal.getName(), roleplay.getId());
+		Person.saveLastRolePlayEdited((String) principal.getName(),
+				roleplay.getId());
 
 		model.addAttribute("roleplay", roleplay);
-		model.addAttribute("authorCreateRoleplayFormBean", authorCreateRoleplayFormBean);
+		model.addAttribute("authorCreateRoleplayFormBean",
+				authorCreateRoleplayFormBean);
 
 		return "redirect:/authoring/roleplay/create/" + roleplay.getId();
 
 	}
-	
+
+	/**
+	 * 
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_SELECT_GET }, method = RequestMethod.GET)
 	public String selectRoleplay(Model model) {
 
 		model.addAttribute("allRoleplays", new Roleplay().getAll());
 		return "authoring/selectRoleplay.jsp";
 	}
-	
-	@RequestMapping(value = { CMC.A_ROLEPLAY_CHANGE }, method = RequestMethod.GET)
-	public String changeRoleplay(@PathVariable Long id, Model model) {
 
-		this.getSessionInfoBean().setRoleplayId(id);
+	/**
+	 * 
+	 * @param roleplayId
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
+	@RequestMapping(value = { CMC.A_ROLEPLAY_CHANGE }, method = RequestMethod.GET)
+	public String changeRoleplay(@PathVariable Long roleplayId, Model model) {
+
+		this.getSessionInfoBean().setRoleplayId(roleplayId);
 		this.getSessionInfoBean().setActorId(null);
-		this.getSessionInfoBean().setPhaseId(new Phase().getFirstForRoleplay(id));
-		
+		this.getSessionInfoBean().setPhaseId(
+				new Phase().getFirstForRoleplay(roleplayId));
+
 		model.addAttribute("allRoleplays", new Roleplay().getAll());
 		return "authoring/selectRoleplay.jsp";
-		
+
 	}
 
 	/**
 	 * Gets the publish page.
 	 * 
 	 * @param model
-	 * @return
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
-	@RequestMapping(value = {CMC.A_ROLEPLAY_PUBLISH}, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PUBLISH }, method = RequestMethod.GET)
 	public String showPublishRolePlayPage(@PathVariable Long id, Model model) {
 
 		Roleplay roleplay = new Roleplay().getModelObject(Roleplay.class, id);
 
 		// Publish new form bean with default values.
-		AuthorPublishRoleplayFormBean authorPublishRoleplayFormBean = new AuthorPublishRoleplayFormBean(roleplay);
+		AuthorPublishRoleplayFormBean authorPublishRoleplayFormBean = new AuthorPublishRoleplayFormBean(
+				roleplay);
 
 		model.addAttribute("roleplay", roleplay);
-		model.addAttribute("authorPublishRoleplayFormBean", authorPublishRoleplayFormBean);
+		model.addAttribute("authorPublishRoleplayFormBean",
+				authorPublishRoleplayFormBean);
 
 		return "authoring/roleplay/publishRoleplay.jsp";
 	}
@@ -162,12 +192,13 @@ public class AuthorController extends BaseController {
 	 * @param roleplay
 	 * @param bindingResult
 	 * @param principal
-	 * @return
+	 * @return path to JSP.
 	 */
-	@RequestMapping(value = {CMC.A_ROLEPLAY_PUBLISH}, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PUBLISH }, method = RequestMethod.POST)
 	public String publishRolePlay(
 			@ModelAttribute("authorPublishRoleplayFormBean") @Valid AuthorPublishRoleplayFormBean authorPublishRoleplayFormBean,
-			@PathVariable Long id, BindingResult bindingResult, Principal principal, Model model) {
+			@PathVariable Long id, BindingResult bindingResult,
+			Principal principal, Model model) {
 
 		Roleplay roleplay = new Roleplay();
 
@@ -194,25 +225,29 @@ public class AuthorController extends BaseController {
 			getSessionInfoBean().setRoleplayId(roleplay.getId());
 			getSessionInfoBean().setRoleplayName(roleplay.getRoleplayName());
 
-			Person.saveLastRolePlayEdited((String) principal.getName(), roleplay.getId());
+			Person.saveLastRolePlayEdited((String) principal.getName(),
+					roleplay.getId());
 		}
 
 		model.addAttribute("roleplay", roleplay);
-		model.addAttribute("authorPublishRoleplayFormBean", authorPublishRoleplayFormBean);
+		model.addAttribute("authorPublishRoleplayFormBean",
+				authorPublishRoleplayFormBean);
 
 		return "redirect:/authoring/roleplay/publish/" + roleplay.getId();
 
 	}
 
-	/*
-	 * ********************************* Update
-	 * *********************************
+	/**
+	 * Gets the Enter Objectives Page
+	 * 
+	 * @param roleplayId
+	 * @param mav
+	 * @return path to JSP.
 	 */
-
-	/** Gets the Enter Objectives Page */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_OBJECTIVES_GET }, method = RequestMethod.GET)
-	public ModelAndView getEnterObjectivesPage(@PathVariable String id, ModelAndView mav) {
-		Roleplay roleplay = new Roleplay().getById(new Long(id));
+	public ModelAndView getEnterObjectivesPage(@PathVariable String roleplayId,
+			ModelAndView mav) {
+		Roleplay roleplay = new Roleplay().getById(new Long(roleplayId));
 		mav.getModelMap().addAttribute("roleplay", roleplay);
 		mav.setViewName("authoring/roleplay/enterObjectives.jsp");
 
@@ -220,12 +255,23 @@ public class AuthorController extends BaseController {
 
 	}
 
-	/** Handles post and cancel on the Enter Objectives Page */
+	/**
+	 * Handles post and cancel on the Enter Objectives Page
+	 * 
+	 * @param request
+	 * @param roleplayId
+	 * @param roleplay
+	 * @param bindingResult
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_OBJECTIVES_POST }, method = RequestMethod.POST)
-	public String enterObjectivesPost(HttpServletRequest request, @PathVariable String id,
-			@ModelAttribute("roleplay") Roleplay roleplay, BindingResult bindingResult) {
+	public String enterObjectivesPost(HttpServletRequest request,
+			@PathVariable String roleplayId,
+			@ModelAttribute("roleplay") Roleplay roleplay,
+			BindingResult bindingResult) {
 
-		System.out.println("enterSave was " + request.getParameter("enterSave"));
+		System.out
+				.println("enterSave was " + request.getParameter("enterSave"));
 
 		if (request.getParameter("cancel") != null) {
 			System.out.println("cancel was " + request.getParameter("cancel"));
@@ -238,16 +284,23 @@ public class AuthorController extends BaseController {
 		// associated with hibernate, and even
 		// overriding its equals method does not help.
 		System.out.println("Save called ");
-		Roleplay roleplay2 = new Roleplay().getById(new Long(id));
+		Roleplay roleplay2 = new Roleplay().getById(new Long(roleplayId));
 		roleplay2.setObjectives(roleplay.getObjectives());
 		roleplay2.save();
 		return "authoring/roleplay/enterObjectives.jsp";
 	}
 
-	/** Gets the Enter Audience Page */
+	/**
+	 * Gets the Enter Audience Page
+	 * 
+	 * @param roleplayId
+	 * @param mav
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_AUDIENCE_GET }, method = RequestMethod.GET)
-	public ModelAndView getEnterAudiencePage(@PathVariable String id, ModelAndView mav) {
-		Roleplay roleplay = new Roleplay().getById(new Long(id));
+	public ModelAndView getEnterAudiencePage(@PathVariable String roleplayId,
+			ModelAndView mav) {
+		Roleplay roleplay = new Roleplay().getById(new Long(roleplayId));
 		mav.getModelMap().addAttribute("roleplay", roleplay);
 		mav.setViewName("authoring/roleplay/enterAudience.jsp");
 
@@ -255,18 +308,26 @@ public class AuthorController extends BaseController {
 
 	}
 
-	/** Handles post and cancel on the Enter Audience Page */
+	/**
+	 * Handles post and cancel on the Enter Audience Page
+	 * 
+	 * @param request
+	 * @param roleplayId
+	 * @param roleplay
+	 * @param bindingResult
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_AUDIENCE_POST }, method = RequestMethod.POST)
-	public String enterAudiencePost(HttpServletRequest request, @PathVariable String id,
-			@ModelAttribute("roleplay") Roleplay roleplay, BindingResult bindingResult) {
-
-		System.out.println("enterSave was " + request.getParameter("enterSave"));
+	public String enterAudiencePost(HttpServletRequest request,
+			@PathVariable String roleplayId,
+			@ModelAttribute("roleplay") Roleplay roleplay,
+			BindingResult bindingResult) {
 
 		if (request.getParameter("cancel") != null) {
 			return "authoring/index.jsp";
 		}
 
-		Roleplay roleplay2 = new Roleplay().getById(new Long(id));
+		Roleplay roleplay2 = new Roleplay().getById(new Long(roleplayId));
 		roleplay2.setAudience(roleplay.getAudience());
 		roleplay2.save();
 		return "authoring/roleplay/enterAudience.jsp";
@@ -276,39 +337,54 @@ public class AuthorController extends BaseController {
 	 * Gets the create/edit Actor page.
 	 * 
 	 * @param model
-	 * @return
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { "rpId/{rpId}/actor/create/{id}" }, method = RequestMethod.GET)
-	public String createActorGet(@PathVariable Long rpId, @PathVariable Long id, Model model) {
+	public String createActorGet(@PathVariable Long rpId,
+			@PathVariable Long id, Model model) {
 
 		Actor actor = new Actor().getModelObject(Actor.class, id);
 
 		model.addAttribute("actor", actor);
-		model.addAttribute("authorCreateActorFormBean", new AuthorCreateActorFormBean(actor));
+		model.addAttribute("authorCreateActorFormBean",
+				new AuthorCreateActorFormBean(actor));
 		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(rpId));
-		
+
 		assignRoleTypeConstants(model);
 
 		return "authoring/actor/createActor.jsp";
 	}
-	
-	public List<Actor> getActorsForRolePlay(Long rpId){
-		return  new Actor().getAllForRoleplay(rpId);
+
+	/**
+	 * 
+	 * @param roleplayId
+	 * @return List of actors for the Roleplay
+	 */
+	public List<Actor> getActorsForRolePlay(Long roleplayId) {
+		return new Actor().getAllForRoleplay(roleplayId);
 	}
 
 	/**
 	 * Puts the new Actor onto the server.
 	 * 
+	 * @param rpId
+	 * @param actorId
+	 * @param model
+	 *            Model to hold objects for the view.
 	 * @param authorCreateActorFormBean
 	 * @param bindingResult
 	 * @param actorImage
-	 * @param mav
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { "rpId/{rpId}/actor/create/{id}" }, method = RequestMethod.POST)
-	public String createActorPost(@PathVariable Long rpId, @PathVariable Long id, Model model,
+	public String createActorPost(
+			@PathVariable Long rpId,
+			@PathVariable Long actorId,
+			Model model,
 			@ModelAttribute("authorCreateActorFormBean") @Valid AuthorCreateActorFormBean authorCreateActorFormBean,
-			BindingResult bindingResult, @RequestParam(value = "actorImage", required = false) MultipartFile actorImage) {
+			BindingResult bindingResult,
+			@RequestParam(value = "actorImage", required = false) MultipartFile actorImage) {
 
 		if (bindingResult.hasErrors()) {
 			return "/authoring/actor/createActor.jsp";
@@ -316,8 +392,8 @@ public class AuthorController extends BaseController {
 
 		Actor actor = new Actor();
 
-		if (!((id == null) || (id.intValue() == 0))) {
-			actor = actor.getById(id);
+		if (!((actorId == null) || (actorId.intValue() == 0))) {
+			actor = actor.getById(actorId);
 		}
 
 		authorCreateActorFormBean.setRoleplayId(rpId);
@@ -335,7 +411,8 @@ public class AuthorController extends BaseController {
 			try {
 				mo.saveContent(actorImage.getBytes());
 			} catch (Exception e) {
-				System.out.println("problem with setting content on mo. " + e.getMessage());
+				System.out.println("problem with setting content on mo. "
+						+ e.getMessage());
 			}
 
 		}
@@ -343,14 +420,26 @@ public class AuthorController extends BaseController {
 		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(rpId));
 		assignRoleTypeConstants(model);
 
-		return "redirect:/authoring/rpId/" + rpId + "/actor/create/" + actor.getId();
+		return "redirect:/authoring/rpId/" + rpId + "/actor/create/"
+				+ actor.getId();
 
 	}
 
-
+	/**
+	 * 
+	 * @param actor
+	 * @param bindingResult
+	 * @param actorImage
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "actor/edit/{id}" }, method = RequestMethod.POST)
-	public String editActorPost(@Valid Actor actor, BindingResult bindingResult,
-			@RequestParam(value = "actorImage", required = false) MultipartFile actorImage, Model model) {
+	public String editActorPost(
+			@Valid Actor actor,
+			BindingResult bindingResult,
+			@RequestParam(value = "actorImage", required = false) MultipartFile actorImage,
+			Model model) {
 
 		return "authoring/actor/createActor.jsp";
 	}
@@ -359,16 +448,20 @@ public class AuthorController extends BaseController {
 	 * Gets the create Phase page.
 	 * 
 	 * @param model
-	 * @return
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { "rpId/{rpId}/phase/create/{id}" }, method = RequestMethod.GET)
-	public String createPhaseGet(@PathVariable Long rpId, @PathVariable Long id, Model model) {
+	public String createPhaseGet(@PathVariable Long rpId,
+			@PathVariable Long id, Model model) {
 
 		Phase phase = new Phase().getModelObject(Phase.class, id);
 
 		model.addAttribute("phase", phase);
-		model.addAttribute("authorCreatePhaseFormBean", new AuthorCreatePhaseFormBean(phase));
-		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(rpId));
+		model.addAttribute("authorCreatePhaseFormBean",
+				new AuthorCreatePhaseFormBean(phase));
+		model.addAttribute("phasesForThisRoleplay",
+				new Phase().getAllForRoleplay(rpId));
 
 		return "authoring/phase/createPhase.jsp";
 	}
@@ -380,10 +473,13 @@ public class AuthorController extends BaseController {
 	 * @param bindingResult
 	 * @param phaseImage
 	 * @param mav
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { "rpId/{rpId}/phase/create/{id}" }, method = RequestMethod.POST)
-	public String createPhasePost(@PathVariable Long rpId, @PathVariable Long id, Model model,
+	public String createPhasePost(
+			@PathVariable Long rpId,
+			@PathVariable Long id,
+			Model model,
 			@ModelAttribute("authorCreatePhaseFormBean") @Valid AuthorCreatePhaseFormBean authorCreatePhaseFormBean,
 			BindingResult bindingResult) {
 
@@ -403,20 +499,31 @@ public class AuthorController extends BaseController {
 
 		phase.save();
 
-		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(rpId));
+		model.addAttribute("phasesForThisRoleplay",
+				new Phase().getAllForRoleplay(rpId));
 
-		// Return them to the clean page (no phase selected) in case they want to create a new phase.
+		// Return them to the clean page (no phase selected) in case they want
+		// to create a new phase.
 		return "redirect:/authoring/rpId/" + rpId + "/phase/create/0";
 
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "phase/createPhaseSuccess/{id}" }, method = RequestMethod.GET)
 	public String createPhaseSuccess(@PathVariable Long id, Model model) {
 
-		List<Phase> thePhases = new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId());
+		List<Phase> thePhases = new Phase()
+				.getAllForRoleplay(getSessionInfoBean().getRoleplayId());
 
 		for (Phase act : thePhases) {
-			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:      " + act.getPhaseName());
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:      "
+					+ act.getPhaseName());
 		}
 		model.addAttribute("phases", thePhases);
 
@@ -427,39 +534,68 @@ public class AuthorController extends BaseController {
 		return "/authoring/phase/createPhaseSuccess.jsp";
 	}
 
+	/**
+	 * 
+	 * @param phase
+	 * @param bindingResult
+	 * @param phaseImage
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "phase/edit/{id}" }, method = RequestMethod.POST)
-	public String editPhasePost(@Valid Phase phase, BindingResult bindingResult,
-			@RequestParam(value = "phaseImage", required = false) MultipartFile phaseImage, Model model) {
+	public String editPhasePost(
+			@Valid Phase phase,
+			BindingResult bindingResult,
+			@RequestParam(value = "phaseImage", required = false) MultipartFile phaseImage,
+			Model model) {
 
 		return "authoring/phase/createPhase.jsp";
 	}
 
+	/**
+	 * 
+	 * @param rpId
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "rpId/{rpId}/pluginPlacement" }, method = RequestMethod.GET)
-	public String placePluginGetUniversal(@PathVariable("rpId") Long rpId, Model model) {
+	public String placePluginGetUniversal(@PathVariable("rpId") Long rpId,
+			Model model) {
 
 		System.out.println("id was " + rpId);
 
-		//addModelObjectsOnPlacePluginsPage(model, rpId);
+		// addModelObjectsOnPlacePluginsPage(model, rpId);
 
 		return "redirect:/authoring/rpId/" + rpId + "/a/0/ph/0/pluginPlacement";
 	}
 
+	/**
+	 * 
+	 * @param rpId
+	 * @param aId
+	 * @param phId
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "rpId/{rpId}/a/{aId}/ph/{phId}/pluginPlacement" }, method = RequestMethod.GET)
-	public String placePluginSpecificGet(@PathVariable("rpId") Long rpId, @PathVariable("aId") Long aId,
-			@PathVariable("phId") Long phId, Model model) {
+	public String placePluginSpecificGet(@PathVariable("rpId") Long rpId,
+			@PathVariable("aId") Long aId, @PathVariable("phId") Long phId,
+			Model model) {
 
 		System.out.println("id was " + rpId);
 
-		
-
-		// Setting id to 0 to indicate that this is for all actors, likewise for phase
+		// Setting id to 0 to indicate that this is for all actors, likewise for
+		// phase
 		Actor actor = new Actor().getModelObject(Actor.class, aId);
 		Phase phase = new Phase().getModelObject(Phase.class, phId);
 
 		model.addAttribute("actor", actor);
 		model.addAttribute("actorId", actor.getId());
 		model.addAttribute("phase", phase);
-		
+
 		addModelObjectsOnPlacePluginsPage(model);
 
 		return "authoring/pluginPlacement/placePlugin.jsp";
@@ -470,78 +606,86 @@ public class AuthorController extends BaseController {
 	 * 
 	 * @param authorAddPluginFormBean
 	 * @param model
-	 * @return
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { "pluginPlacement/addPlugin" }, method = RequestMethod.POST)
-	public String addPlugin(AuthorAddPluginFormBean authorAddPluginFormBean, Model model) {
+	public String addPlugin(AuthorAddPluginFormBean authorAddPluginFormBean,
+			Model model) {
 
 		Long rpId = getSessionInfoBean().getRoleplayId();
 		Long aId = getSessionInfoBean().getActorId();
 		Long phId = getSessionInfoBean().getPhaseId();
-		
-		Plugin plugin = Plugin.getPluginCopyForRoleplay(rpId, authorAddPluginFormBean.getRawPluginId());
+
+		Plugin plugin = Plugin.getPluginCopyForRoleplay(rpId,
+				authorAddPluginFormBean.getRawPluginId());
 
 		// If Actor Id was 0, we want this applied to all actors
 		if ((new Long(0).compareTo(aId)) == 0) {
-			List <Actor> allActors = new Actor().getAllForRoleplay(rpId);
+			List<Actor> allActors = new Actor().getAllForRoleplay(rpId);
 			for (Actor actor : allActors) {
 				PluginPointer pp = new PluginPointer(rpId, actor.getId(), phId,
-						authorAddPluginFormBean.getPluginHeading(), plugin.getId());
-				
+						authorAddPluginFormBean.getPluginHeading(),
+						plugin.getId());
+
 				pp.setAddedAsUniversal(true);
 				pp.save();
-				
+
 			}
-			
+
 			// Create a pointer to indicate this was added as universal
-			PluginPointer pp = new PluginPointer(rpId, phId, authorAddPluginFormBean.getPluginHeading(),
-					plugin.getId(), true);
+			@SuppressWarnings("unused")
+			PluginPointer pluginPointer = new PluginPointer(rpId, phId,
+					authorAddPluginFormBean.getPluginHeading(), plugin.getId(),
+					true);
 		} else {
 			// Create pluginPointer for the specifc actor on hand.
-			PluginPointer pp = new PluginPointer(rpId, aId, phId, authorAddPluginFormBean.getPluginHeading(),
-					plugin.getId());
+			@SuppressWarnings("unused")
+			PluginPointer pluginPointer = new PluginPointer(rpId, aId, phId,
+					authorAddPluginFormBean.getPluginHeading(), plugin.getId());
 		}
 
 		return "redirect:/authoring/rpId/" + rpId + "/pluginPlacement";
 	}
 
-	/*
+	/**
 	 * A centralized place to add model objects to the complex plugin placement
 	 * page.
-	 */
-	/**
 	 * 
 	 * @param model
-	 * @param rpId
+	 *            Model to hold objects for the view. Model to hold objects for
+	 *            the view.
 	 */
 	public void addModelObjectsOnPlacePluginsPage(Model model) {
 
 		Long rpId = getSessionInfoBean().getRoleplayId();
 		Long aId = getSessionInfoBean().getActorId();
 		Long phId = getSessionInfoBean().getPhaseId();
-		
-		
+
 		System.out.println(getSessionInfoBean().toString());
-		
-		if(rpId == null){
+
+		if (rpId == null) {
 			rpId = new Long(0);
 			System.out.println("rpids null");
 		}
-		if(aId == null){
+		if (aId == null) {
 			aId = new Long(0);
 			System.out.println("a ids null");
 		}
-		if(phId == null){
+		if (phId == null) {
 			phId = new Long(0);
 			System.out.println("phids null");
 		}
 
-		model.addAttribute("pluginPointers", new PluginPointer().getCurrentSet(rpId, aId, phId));
+		model.addAttribute("pluginPointers",
+				new PluginPointer().getCurrentSet(rpId, aId, phId));
 		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(rpId));
-		
-		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(rpId));
-		model.addAttribute("authorAddPluginFormBean", new AuthorAddPluginFormBean());
-		
+
+		model.addAttribute("phasesForThisRoleplay",
+				new Phase().getAllForRoleplay(rpId));
+		model.addAttribute("authorAddPluginFormBean",
+				new AuthorAddPluginFormBean());
+
 		List<Plugin> thePlugins = new Plugin().getAllUncustomized();
 		model.addAttribute("plugins", thePlugins);
 	}
@@ -550,72 +694,100 @@ public class AuthorController extends BaseController {
 	 * Changes the actor on the scratch pad, and returns user to the same page.
 	 * 
 	 * @param request
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_PP_CHANGE_ACTOR }, method = RequestMethod.GET)
-	public String placePluginChangeActor(HttpServletRequest request, Model model, @PathVariable("aId") Long aId ) {
-		
+	public String placePluginChangeActor(HttpServletRequest request,
+			Model model, @PathVariable("aId") Long aId) {
+
 		getSessionInfoBean().setActorId(aId);
-		
+
 		addModelObjectsOnPlacePluginsPage(model);
 
-		return "redirect:/authoring/rpId/" + getSessionInfoBean().getRoleplayId() + "/a/" + 
-			aId + "/ph/" + getSessionInfoBean().getPhaseId() + "/pluginPlacement";
+		return "redirect:/authoring/rpId/"
+				+ getSessionInfoBean().getRoleplayId() + "/a/" + aId + "/ph/"
+				+ getSessionInfoBean().getPhaseId() + "/pluginPlacement";
 	}
 
 	/**
 	 * Changes the phase on the scratch pad, and returns user to the same page.
 	 * 
 	 * @param request
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_PP_CHANGE_PHASE }, method = RequestMethod.GET)
-	public String placePluginChangePhase(HttpServletRequest request, Model model,
-			@PathVariable("pId") Long pId ) {
+	public String placePluginChangePhase(HttpServletRequest request,
+			Model model, @PathVariable("pId") Long pId) {
 
 		getSessionInfoBean().setPhaseId(pId);
 
 		addModelObjectsOnPlacePluginsPage(model);
 
-		return "redirect:/authoring/rpId/" + getSessionInfoBean().getRoleplayId() + "/a/" + getSessionInfoBean().getActorId() + "/ph/" + pId + "/pluginPlacement";
+		return "redirect:/authoring/rpId/"
+				+ getSessionInfoBean().getRoleplayId() + "/a/"
+				+ getSessionInfoBean().getActorId() + "/ph/" + pId
+				+ "/pluginPlacement";
 	}
 
+	/**
+	 * 
+	 * @param pluginId
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET }, method = RequestMethod.GET)
-	public String showCustomizePluginPage(@PathVariable("pId") Long pId, Model model) {
+	public String showCustomizePluginPage(
+			@PathVariable("pluginId") Long pluginId, Model model) {
 
-		System.out.println("pId was " + pId);
-
-		Plugin plugin = new Plugin().getById(pId);
+		Plugin plugin = new Plugin().getById(pluginId);
 
 		model.addAttribute("plugin", plugin);
-		
+
 		// Check to see if it has any documents associated with it.
-		List <PluginObjectDocument> pluginObjectDocuments = new PluginObjectDocument().getAllForPlugin(plugin.getId());
-		
+		List<PluginObjectDocument> pluginObjectDocuments = new PluginObjectDocument()
+				.getAllForPlugin(plugin.getId());
+
 		model.addAttribute("pluginObjectDocuments", pluginObjectDocuments);
-		
-		for (PluginObjectDocument pod : pluginObjectDocuments){
+
+		for (PluginObjectDocument pod : pluginObjectDocuments) {
 			model.addAttribute("pod_" + pod.getId(), pod);
-			AuthCustomizePluginDocumentFormBean acpdfb = new AuthCustomizePluginDocumentFormBean(pod);
+			AuthCustomizePluginDocumentFormBean acpdfb = new AuthCustomizePluginDocumentFormBean(
+					pod);
 			model.addAttribute("acpdfb_" + pod.getId(), pod);
 		}
-		
-		model.addAttribute("allDocumentsForThisRoleplay", new PluginObjectDocument().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
-		
+
+		model.addAttribute(
+				"allDocumentsForThisRoleplay",
+				new PluginObjectDocument()
+						.getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
+
 		return "/authoring/pluginPlacement/customizePlugin.jsp";
 	}
-	
+
+	/**
+	 * 
+	 * @param pluginId
+	 * @param podId
+	 * @param authCustomizePluginDocumentFormBean
+	 * @param model
+	 *            Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "plugin/{pId}/customizePluginDocument/{podId}" }, method = RequestMethod.POST)
-	public String modifyDocumentPost(@PathVariable("pId") Long pId, @PathVariable("podId") Long podId, 
+	public String modifyDocumentPost(
+			@PathVariable("pluginId") Long pluginId,
+			@PathVariable("podId") Long podId,
 			AuthCustomizePluginDocumentFormBean authCustomizePluginDocumentFormBean,
 			Model model) {
 		PluginObjectDocument pod = new PluginObjectDocument().getById(podId);
 
 		BeanUtils.copyProperties(authCustomizePluginDocumentFormBean, pod);
-		
+
 		pod.save();
-		
-		return "redirect:/authoring/pluginPlacement/customizePlugin/plugin/" + pId;
+
+		return "redirect:/authoring/pluginPlacement/customizePlugin/plugin/"
+				+ pluginId;
 	}
 
 }
