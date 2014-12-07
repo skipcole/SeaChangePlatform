@@ -284,7 +284,7 @@ public class Plugin extends BaseSCPlatformObject implements MayHaveSubObjects{
 	 * Returns a copy of the plugin passed in, and all objects associated with
 	 * it.
 	 * 
-	 * @param rawPluginId
+	 * @param originalPluginId
 	 * @return
 	 */
 	public static Plugin getPluginCopyForRoleplay(Long rpId, Long originalPluginId) {

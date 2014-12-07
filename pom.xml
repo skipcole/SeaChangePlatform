@@ -180,6 +180,12 @@
 			<version>${jackson.databind-version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 	<build>
@@ -220,7 +226,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!--  plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<executions>
@@ -231,7 +237,19 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin  -->
 		</plugins>
 	</build>
+	<!--  reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
+				<configuration>
+					<show>public</show>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting -->
 </project>

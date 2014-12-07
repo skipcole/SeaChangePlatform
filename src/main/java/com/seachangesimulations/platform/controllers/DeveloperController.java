@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,12 +26,12 @@ import com.seachangesimulations.platform.mvc.formbeans.developer.DevModifyPlugin
 import com.seachangesimulations.platform.mvc.formbeans.developer.DevUploadPluginFilesFormBean;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
+import com.seachangesimulations.platform.service.PluginProvider;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 
 
 /**
  * This controller handles developer operations.
- * 
  * 
  */
 @Controller
@@ -201,6 +202,10 @@ public class DeveloperController extends BaseController {
 		return "/developing/uploadPluginFiles.jsp";
 
 	}
+	
+	/** Provides functionality around plugins. */
+	@Autowired
+	protected PluginProvider pluginProvider;
 
 	/**
 	 * This REST method uploads the developer's files to the plugin's

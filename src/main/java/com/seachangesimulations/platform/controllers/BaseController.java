@@ -27,6 +27,7 @@ public class BaseController implements ApplicationContextAware {
 		
 	}
 	
+	/** Returns the bean that holds session info for the user. */
 	protected SessionInfoBean getSessionInfoBean(){
 		SessionInfoBean sib = (SessionInfoBean) thisApplicationContext.getBean("sessionInfoBean");
 		return sib;
@@ -39,10 +40,8 @@ public class BaseController implements ApplicationContextAware {
 		model.addAttribute("observerValue", PersonRoleplayAssignment.OBSERVER_ROLE);
 		
 	}
-
-	@Autowired
-	protected PluginProvider pluginProvider;
 	
+	/** Used for debugging purposes to determine where a user is in the game. */
 	protected void printMyCoordinates() {
 		System.out.println("Roleplay" + getSessionInfoBean().getRoleplayName());
 		System.out.println("Actor" + getSessionInfoBean().getActorName());

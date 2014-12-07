@@ -18,8 +18,6 @@ public class PluginProvider {
 	
 	private static Hashtable pluginTexts = new Hashtable();
 	
-
-
 	/**
 	 * Saves the plugin to a file on the system.
 	 * 
