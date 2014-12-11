@@ -56,18 +56,7 @@ public class DeveloperController extends BaseController {
 		model.addAttribute("pluginAction", "1");
 		return "developing/index.jsp";
 	}
-	
-	@RequestMapping(value = {"index/setZone" }, method = RequestMethod.GET)
-	public String setDeveloperZone(Map<String, Object> model) {
 
-		getSessionInfoBean().setPlatformZone(SessionInfoBean.DEVELOPER_ZONE);
-		return "redirect:/developing/index";
-	}
-
-	/*
-	 * ********************************* Choose Action
-	 * *********************************
-	 */
 
 	/**
 	 * Gets the page to selection action

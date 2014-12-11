@@ -24,8 +24,8 @@ public class HomeController extends BaseController {
 	/**
 	 * Shows the Home page.
 	 * 
-	 * @param model
-	 * @return
+	 * @param model Model to hold objects for the view.
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String showHomePage(Map<String, Object> model) {
@@ -33,6 +33,11 @@ public class HomeController extends BaseController {
 		return "redirect:/welcome";
 	}
 	
+	/**
+	 * 
+	 * @param model Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "/welcome" }, method = RequestMethod.GET)
 	public String showWelcomePage(Map<String, Object> model) {
 		return "welcome.jsp";
@@ -41,7 +46,7 @@ public class HomeController extends BaseController {
 	/**
 	 * Shows the login page.
 	 * 
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String showLoginForm() {
@@ -49,7 +54,14 @@ public class HomeController extends BaseController {
 		return "login.jsp";
 	}
 	
-	/** Loads info from the user (such as the last role play they edited) to the session info. */
+	/** 
+	 * Loads info from the user (such as the last role play they edited) to the session info.
+	 * 
+	 * @param model Model to hold objects for the view.
+	 * @param principal
+	 * @param session
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "/loadLoginInfo" }, method = RequestMethod.GET)
 	public String loadLoginInfo(Map<String, Object> model, Principal principal, HttpSession session) {
 		LOGGER.debug("In the /loadLoginInfo Request Mapping");
@@ -62,12 +74,21 @@ public class HomeController extends BaseController {
 		return "redirect:/loginLanding";
 	}
 	
+	/**
+	 * 
+	 * @param model Model to hold objects for the view.
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "/loginLanding" }, method = RequestMethod.GET)
 	public String showLoginLanding(Map<String, Object> model) {
 		LOGGER.debug("In the /loginLanding Request Mapping");
 		return "loginLanding.jsp";
 	}
 
+	/**
+	 * 
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "/accessDenied" })
 	public String accessDenied() {
 		LOGGER.debug("In the /accessDenied Request Mapping");
@@ -79,7 +100,7 @@ public class HomeController extends BaseController {
 	
 	/**
 	 * Returns the logout page to confirm to the user that they have logged oout.
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { "/logout" }, method = RequestMethod.GET)
 	public String showLogoutGet() {
@@ -87,6 +108,10 @@ public class HomeController extends BaseController {
 		return "logout.jsp";
 	}
 	
+	/**
+	 * 
+	 * @return path to JSP.
+	 */
 	@RequestMapping(value = { "/profile" }, method = RequestMethod.GET)
 	public String showProfilePage() {
 		return "userprofile/index.jsp";

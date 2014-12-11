@@ -53,18 +53,6 @@ public class FacilitatorController extends BaseController {
 
 	/**
 	 * 
-	 * @param model	Model to hold objects for the view.
-	 * @return path to JSP.
-	 */
-	@RequestMapping(value = { "index/setZone" }, method = RequestMethod.GET)
-	public String setFacilitatorZone(Model model) {
-
-		getSessionInfoBean().setPlatformZone(SessionInfoBean.FACILITATOR_ZONE);
-		return "redirect:/facilitating/index";
-	}
-
-	/**
-	 * 
 	 * @param roleplayId Roleplay Id.
 	 * @param rpimId Roleplay in Motion Id.
 	 * @param model	Model to hold objects for the view.

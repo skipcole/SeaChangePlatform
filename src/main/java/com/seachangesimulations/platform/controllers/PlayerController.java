@@ -48,7 +48,7 @@ public class PlayerController extends BaseController {
 	 */
 	@RequestMapping(value = {CMC.INDEX}, method = RequestMethod.GET) // NO_UCD (unused code)
 	public String showPlayerEntryPage(Principal principal, Model model) {
-
+		
 		getSessionInfoBean().setPlatformZone(SessionInfoBean.PLAYER_ZONE);
 		
 		Person person = new Person().getByUsername(principal.getName());
@@ -56,13 +56,6 @@ public class PlayerController extends BaseController {
 				new PersonRoleplayAssignment().getAllRoleplaysForPerson(person.getId()));
 		
 		return "playing/index.jsp";
-	}
-	
-	@RequestMapping(value = { "index/setZone" }, method = RequestMethod.GET)
-	public String setPlayerZone(Model model) {
-
-		getSessionInfoBean().setPlatformZone(SessionInfoBean.PLAYER_ZONE);
-		return "redirect:/playing/index";
 	}
 	
 	/**
@@ -94,7 +87,7 @@ public class PlayerController extends BaseController {
 		
 		model.addAttribute("personRoleplayAssignments", pra);
 		
-		List playersTabs = new PluginPointer().getCurrentSet(pra.getRoleplayId(), pra.getActorId(), phase.getId());
+		List<PluginPointer> playersTabs = new PluginPointer().getCurrentSet(pra.getRoleplayId(), pra.getActorId(), phase.getId());
 		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
 		
 		addControlFeatures(playersTabs, model);
@@ -115,7 +108,7 @@ public class PlayerController extends BaseController {
 		
 		getSessionInfoBean().setPluginIndex(new Long(0));
 		
-		List playersTabs = new PluginPointer().getCurrentSet(getSessionInfoBean().getRoleplayId(), getSessionInfoBean().getActorId(), getSessionInfoBean().getPhaseId());
+		List<PluginPointer> playersTabs = new PluginPointer().getCurrentSet(getSessionInfoBean().getRoleplayId(), getSessionInfoBean().getActorId(), getSessionInfoBean().getPhaseId());
 		model.addAttribute("phasesForThisRoleplay", new Phase().getAllForRoleplay(getSessionInfoBean().getRoleplayId()));
 		
 		addControlFeatures(playersTabs, model);
@@ -131,7 +124,7 @@ public class PlayerController extends BaseController {
 	 * @param playersTabs
 	 * @param model Model to hold objects for the view.
 	 */
-	public void addControlFeatures(List playersTabs, Model model){
+	public void addControlFeatures(List<PluginPointer> playersTabs, Model model){
 
 		if (getSessionInfoBean().isControl()) {
 			playersTabs.add(new PluginPointer().getControlPluginByHandle(PluginPointer.SYSTEM_CONTROL));

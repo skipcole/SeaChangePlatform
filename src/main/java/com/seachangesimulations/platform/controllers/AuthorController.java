@@ -56,18 +56,6 @@ public class AuthorController extends BaseController {
 		return "authoring/index.jsp";
 	}
 
-	/**
-	 * 
-	 * @param model
-	 *            Model to hold objects for the view.
-	 * @return path to JSP.
-	 */
-	@RequestMapping(value = { "index/setZone" }, method = RequestMethod.GET)
-	public String setAuthorZone(Map<String, Object> model) {
-
-		getSessionInfoBean().setPlatformZone(SessionInfoBean.AUTHOR_ZONE);
-		return "redirect:/authoring/index";
-	}
 
 	/**
 	 * Gets the create page.
