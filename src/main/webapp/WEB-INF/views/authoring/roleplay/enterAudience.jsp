@@ -43,7 +43,7 @@
 			</p>
 
 			<sf:form id="roleplay" modelAttribute="roleplay" METHOD="POST" 
-				action="${pageContext.request.contextPath}/authoring/rolePlay/enterAudience/${sessionScope.sessionInfoBean.roleplayId}" label="Roleplay Audience">
+				action="${pageContext.request.contextPath}/authoring/roleplay/enterAudience/${sessionScope.sessionInfoBean.roleplayId}" label="Roleplay Audience">
 				
 				<sf:input type="hidden" path="roleplayName" />
 				<sf:textarea path="audience" />

@@ -53,7 +53,7 @@ $( document ).ready(function() {
 			</p>
 
 			<sf:form id="roleplay" modelAttribute="roleplay" METHOD="POST" 
-				action="${pageContext.request.contextPath}/authoring/rolePlay/enterObjectives/${sessionScope.sessionInfoBean.roleplayId}" label="Roleplay Objectives">
+				action="${pageContext.request.contextPath}/authoring/roleplay/enterObjectives/${sessionScope.sessionInfoBean.roleplayId}" label="Roleplay Objectives">
 				
 				<sf:input type="hidden" path="roleplayName" />
 				<sf:textarea class="editor" name="objectives" id="objectives" path="objectives" height="100%" />
@@ -67,7 +67,7 @@ $( document ).ready(function() {
 			<p>&nbsp;</p>
 			<p align="right"> 
 				Next Step: 
-				<a href="${pageContext.request.contextPath}/authoring/rolePlay/enterAudience/${sessionScope.sessionInfoBean.roleplayId}">Enter Your Audience </a>
+				<a href="${pageContext.request.contextPath}/authoring/roleplay/enterAudience/${sessionScope.sessionInfoBean.roleplayId}">Enter Your Audience </a>
 			</p>
 			<p>&nbsp;</p>
 			<!-- InstanceEndEditable -->

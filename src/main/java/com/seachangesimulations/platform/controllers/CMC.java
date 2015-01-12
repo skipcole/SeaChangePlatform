@@ -13,6 +13,7 @@ public class CMC {
 	public static final String INSTALL = "/install";
 	public static final String I_INSTALLFORM = "installForm";
 	public static final String I_INSTALLFORM_POST = "installForm";
+	public static final String I_CMC_INSTALLFORM_POST = "/install/installForm";
 	public static final String I_INSTALL_SUCCESS = "installSuccess";
 
 	/* Admin */
@@ -34,16 +35,17 @@ public class CMC {
 	
 	/* Authoring */
 	public static final String AUTHORING_BASE = "/authoring";
-	public static final String A_ROLEPLAY_CREATE = "roleplay/create/{id}";
+	public static final String A_ROLEPLAY_CREATE = "roleplay/create/{roleplayId}";
 	public static final String A_ROLEPLAY_SELECT_GET = "selectRoleplay";
-	public static final String A_ROLEPLAY_CHANGE = "changeRoleplay/{id}";
-	public static final String A_ROLEPLAY_OBJECTIVES_GET = "rolePlay/enterObjectives/{id}";
-	public static final String A_ROLEPLAY_OBJECTIVES_POST = "rolePlay/enterObjectives/{id}";
-	public static final String A_ROLEPLAY_AUDIENCE_GET = "rolePlay/enterAudience/{id}";
-	public static final String A_ROLEPLAY_AUDIENCE_POST = "rolePlay/enterAudience/{id}";
-	public static final String A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET = "pluginPlacement/customizePlugin/plugin/{pId}";
-	public static final String A_ROLEPLAY_PP_CHANGE_ACTOR = "pluginPlacement/changeActor/{aId}";
-	public static final String A_ROLEPLAY_PP_CHANGE_PHASE = "pluginPlacement/changePhase/{pId}";
+	public static final String A_ROLEPLAY_CHANGE = "changeRoleplay/{roleplayId}";
+	public static final String A_ROLEPLAY_OBJECTIVES_GET = "roleplay/enterObjectives/{roleplayId}";
+	public static final String A_ROLEPLAY_OBJECTIVES_POST = "roleplay/enterObjectives/{roleplayId}";
+	public static final String A_ROLEPLAY_AUDIENCE_GET = "roleplay/enterAudience/{roleplayId}";
+	public static final String A_ROLEPLAY_AUDIENCE_POST = "roleplay/enterAudience/{roleplayId}";
+	public static final String A_ROLEPLAY_CREATE_ACTOR = "roleplay/{roleplayId}/actor/create/{actorId}";
+	public static final String A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET = "pluginPlacement/customizePlugin/plugin/{phaseId}";
+	public static final String A_ROLEPLAY_PP_CHANGE_ACTOR = "pluginPlacement/changeActor/{actorId}";
+	public static final String A_ROLEPLAY_PP_CHANGE_PHASE = "pluginPlacement/changePhase/{phaseId}";
 	
 	public static final String A_ROLEPLAY_PUBLISH = "roleplay/publish/{id}";
 	
@@ -76,7 +78,15 @@ public class CMC {
 	public static final String PO_DOC = "{pId}/getDocument/objectIndex/{objectIndex}.xml";
 
 	
-
+	public static String getURI(String code){
+		
+		if (code.equalsIgnoreCase("I_CMC_INSTALLFORM_POST")){ 
+			return I_CMC_INSTALLFORM_POST;
+		} else {
+			System.out.println("This is bad");
+			return null;
+		}
+	}
 
 	
 

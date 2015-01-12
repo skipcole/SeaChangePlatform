@@ -41,7 +41,7 @@
 	test
 	<p>&nbsp;</p>
 	<p>Create Phase	</p>
-	<sf:form method="POST" action="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/phase/create/${phase.id}"
+	<sf:form method="POST" action="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/phase/create/${phase.id}"
 		modelAttribute="authorCreatePhaseFormBean" >
 		<table width="100%" border="1" cellspacing="0" cellpadding="2">
 			<tr>

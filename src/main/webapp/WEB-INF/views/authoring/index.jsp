@@ -42,13 +42,13 @@
 <h2>Authoring Steps</h2>
 <ol>
   <li><a href="${pageContext.request.contextPath}/authoring/roleplay/create/${sessionScope.sessionInfoBean.roleplayId}" id="authorCreateRoleplay" >Edit Roleplay Basic Data </a>(?)</li>
-  <li><a href="${pageContext.request.contextPath}/authoring/rolePlay/enterObjectives/${sessionScope.sessionInfoBean.roleplayId}" id="authorEnterRoleplayObjectives">Enter Learning Objectives </a>(?)</li>
-  <li><a href="${pageContext.request.contextPath}/authoring/rolePlay/enterAudience/${sessionScope.sessionInfoBean.roleplayId}"id="authorEnterRoleplayAudience">Enter Your Audience </a>(?)</li>
+  <li><a href="${pageContext.request.contextPath}/authoring/roleplay/enterObjectives/${sessionScope.sessionInfoBean.roleplayId}" id="authorEnterRoleplayObjectives">Enter Learning Objectives </a>(?)</li>
+  <li><a href="${pageContext.request.contextPath}/authoring/roleplay/enterAudience/${sessionScope.sessionInfoBean.roleplayId}"id="authorEnterRoleplayAudience">Enter Your Audience </a>(?)</li>
   <li><a href="${pageContext.request.contextPath}/authoring/enterRoleplayPlannedPlayIdeas" id="authorEnterPlannedPlayIdeas">Enter Planned Play Ideas </a>(?)</li>
-  <li><a href="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/actor/create/${sessionScope.sessionInfoBean.actorId}" id="authorCreateActors">Create/Edit Actors </a>(?)</li>
+  <li><a href="${pageContext.request.contextPath}/authoring/roleplay/${sessionScope.sessionInfoBean.roleplayId}/actor/create/${sessionScope.sessionInfoBean.actorId}" id="authorCreateActors">Create/Edit Actors </a>(?)</li>
   <li><a href="${pageContext.request.contextPath}/authoring/actor/manage"  id="authorManageActors">Manage Actors </a>(?)</li>
-  <li><a href="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/phase/create/${sessionScope.sessionInfoBean.phaseId}"  id="authorCreatePhases">Create/Edit Phases </a>(?)</li>
-  <li><a href="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/" id="authorPlacePlugins">Place Plugins </a>(?)</li>
+  <li><a href="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/phase/create/${sessionScope.sessionInfoBean.phaseId}"  id="authorCreatePhases">Create/Edit Phases </a>(?)</li>
+  <li><a href="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/" id="authorPlacePlugins">Place Plugins </a>(?)</li>
   <li><a href="<%= request.getContextPath() %>/authoring/review"  id="authorReviewRoleplay">Review Roleplay </a>(?)</li>
   <li><a href="${pageContext.request.contextPath}/authoring/roleplay/publish/${sessionScope.sessionInfoBean.roleplayId}" id="authorPublishRoleplay">Publish Roleplay</a></li>
 </ol>

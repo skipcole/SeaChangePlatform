@@ -20,7 +20,7 @@ import com.seachangesimulations.platform.domain.PluginPointer;
 @Controller
 public class PluginPointerController extends BaseController{
 	
-	public List pluginPointers = new ArrayList<PluginPointer>();
+	public List<PluginPointer> pluginPointers = new ArrayList<PluginPointer>();
 	
 	
 
@@ -32,7 +32,7 @@ public class PluginPointerController extends BaseController{
 	 * @param bindingResult
 	 * @param pluginPointerImage
 	 * @param mav
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { "/developing/pluginPointer/create" }, method = RequestMethod.POST)
 	public String createPluginPointerPost( @Valid PluginPointer pluginPointer, BindingResult bindingResult,
@@ -56,9 +56,6 @@ public class PluginPointerController extends BaseController{
 		return "/developing/pluginPointer/createPluginPointerSuccess.jsp";
 	}
 			
-	
-	/* ********************************* Read ********************************* */
-	
 	
 	@RequestMapping(value = { "/developing/pluginPointer/edit/{id}" }, method = RequestMethod.POST)
 	public String editPluginPointerPost( @Valid PluginPointer pluginPointer, BindingResult bindingResult,

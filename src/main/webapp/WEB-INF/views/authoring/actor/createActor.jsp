@@ -39,7 +39,7 @@
 	<!-- InstanceBeginEditable name="BodyRegion" -->
 	<p>Create Actor</p>
 	<sf:form method="post"
-		action="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/actor/create/${actor.id}"
+		action="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/actor/create/${actor.id}"
 		modelAttribute="authorCreateActorFormBean"
 		enctype="multipart/form-data">
 		<table width="100%" border="1" cellspacing="0" cellpadding="2">
@@ -73,11 +73,11 @@
 			</tr>
 		</table>
 	</sf:form>
-	<p><a href="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/actor/create/0" id="authorCreateActorsClear">Clear </a></p>
+	<p><a href="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/actor/create/0" id="authorCreateActorsClear">Clear </a></p>
 	<p>&nbsp;</p>
 	<H3>Current Actors in this Roleplay</H3>
 	<c:forEach var="actor" items="${actorsForThisRoleplay}">
-		<li><a href="${pageContext.request.contextPath}/authoring/rpId/${sessionScope.sessionInfoBean.roleplayId}/actor/create/${actor.id}" id="authorCreateActor${actor.id}"><c:out value="${actor.actorName}" /></a></li>
+		<li><a href="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/actor/create/${actor.id}" id="authorCreateActor${actor.id}"><c:out value="${actor.actorName}" /></a></li>
 	</c:forEach>
 	<p>&nbsp;</p>
 	<!-- InstanceEndEditable -->

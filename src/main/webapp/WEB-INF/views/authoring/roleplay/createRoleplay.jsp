@@ -48,7 +48,7 @@
 			</tr>
 			<tr>
 				<td>Role Play Name</td>
-				<td><sf:input type="text" name="roleplayName" id="roleplayName" path="roleplayName" /></td>
+				<td><sf:input type="text"  id="roleplayName" path="roleplayName" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>

@@ -1,5 +1,6 @@
 package com.seachangesimulations.platform.service;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -18,8 +19,14 @@ import com.seachangesimulations.platform.domain.Roleplay;
 @Service("sessionInfoBean")
 @Scope("globalSession")
 @XmlAccessorType (XmlAccessType.NONE)   // This means that if you want a field mapped, it has to be annotated.
-public class SessionInfoBean {
+public class SessionInfoBean{
 
+	/**
+	 * 
+	 */
+	//private static final long serialVersionUID = 1L;
+	
+	
 	public static final String ADMIN_ZONE = "admin";
 	public static final String DEVELOPER_ZONE = "developer";
 	public static final String AUTHOR_ZONE = "author";

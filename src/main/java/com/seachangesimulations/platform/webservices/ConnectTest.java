@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @WebService
-
 public class ConnectTest implements ConnectTestSEI {
 
 	@WebMethod

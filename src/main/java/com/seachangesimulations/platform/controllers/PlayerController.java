@@ -44,7 +44,7 @@ public class PlayerController extends BaseController {
 	 * 
 	 * @param principal The principal object, containing the person's name and login info.
 	 * @param model Model to hold objects for the view.
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = {CMC.INDEX}, method = RequestMethod.GET) // NO_UCD (unused code)
 	public String showPlayerEntryPage(Principal principal, Model model) {
@@ -61,9 +61,9 @@ public class PlayerController extends BaseController {
 	/**
 	 * Creates the roleplay page with it tab headings.
 	 * 
-	 * @param praId
+	 * @param praId PersonRoleplayAssignment Id.
 	 * @param model Model to hold objects for the view.
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = {CMC.P_PERSONROLEPLAYASSIGNMENT}, method = RequestMethod.GET)
 	public String showTheRoleplayPage(@PathVariable Long praId, Model model) {
@@ -101,7 +101,7 @@ public class PlayerController extends BaseController {
 	 * Called when the phase is changed to a new phase.
 	 * 
 	 * @param model Model to hold objects for the view.
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = {CMC.P_REFRESH}, method = RequestMethod.GET)
 	public String refreshTheRoleplayPage(Model model) {
@@ -137,7 +137,7 @@ public class PlayerController extends BaseController {
 	 * 
 	 * @param pluginPointerId
 	 * @param model Model to hold objects for the view.
-	 * @return
+	 * @return path to JSP.
 	 */
 	@RequestMapping(value = {CMC.P_SHOWPLUGINPOINTER}, method = RequestMethod.GET)
 	public String showPlugin(@PathVariable Long pluginPointerId, Model model) {
@@ -175,7 +175,12 @@ public class PlayerController extends BaseController {
 	}
 
 
-
+	/**
+	 * Used for debugging purposes.
+	 * 
+	 * @return The session info bean for the player.
+	 * 
+	 */
 	@RequestMapping(value = { CMC.P_GETSESSIONINFO }, method = RequestMethod.GET)
 	public  @ResponseBody SessionInfoBean getSessionInfoGetRequest() {
 		

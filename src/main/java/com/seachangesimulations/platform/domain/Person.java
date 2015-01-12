@@ -97,6 +97,10 @@ public class Person extends BaseSCPlatformObject implements UserDetails{
 	public Person() {
 	}
 
+	/**
+	 * Saves this person to the database.
+	 * 
+	 */
 	public void save(){
 		PersonDao personDao = (PersonDao) getApplicationContext().getBean("personDao", PersonDao.class);
 		personDao.save(this);

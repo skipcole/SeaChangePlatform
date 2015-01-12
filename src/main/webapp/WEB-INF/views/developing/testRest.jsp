@@ -23,7 +23,7 @@ $(document).ready(function(){
 		function getActor(actorId, divId) {
 		
 		$.ajax({
-			url: "/SeaChangePlatform/xml/scauthtoken/1/actor/" + actorId + "/optMod/1",
+			url: "/SeaChangePlatform/xml/scauthtoken/1/actor/" + actorId,
 			cache: false,
 			dataType: "xml",
 			success:  function(xml){

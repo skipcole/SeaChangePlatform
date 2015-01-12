@@ -34,18 +34,16 @@ public class PluginObjectController extends BaseController{
 	 * to obtain it. The amount of information passed back can be modulated by
 	 * the optMod token.
 	 * 
-	 * @param scAuthToken
-	 * @param actorId
-	 * @param mod
-	 * @return
+	 * @param scAuthToken Authorization Token.
+	 * @param actorId Id of the Actor being queried.
+	 * @return an xml representation of an actor.
 	 */
-	@RequestMapping(value = { "/xml/scauthtoken/{scAuthToken}/actor/{actorId}/optMod/{mod}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/xml/scauthtoken/{scAuthToken}/actor/{actorId}" }, method = RequestMethod.GET)
 	@ResponseBody
-	public String getXmlActor(@PathVariable String scAuthToken, @PathVariable Long actorId, @PathVariable String mod) {
+	public String getXmlActor(@PathVariable String scAuthToken, @PathVariable Long actorId) {
 
 		System.out.println("scauth was: " + scAuthToken);
 		System.out.println("actor id was: " + actorId);
-		System.out.println("mod was: " + mod);
 		Actor a = new Actor();
 		a.setActorName("Richard");
 
