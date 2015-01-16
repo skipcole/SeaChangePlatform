@@ -90,7 +90,7 @@
 	<hr />
 	<p>
 		<a
-			href="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/"
+			href="${pageContext.request.contextPath}/authoring/roleplay/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/"
 			id="authorPlacePlugins"
 		>Back </a>
 	</p>

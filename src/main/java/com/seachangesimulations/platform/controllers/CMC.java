@@ -42,10 +42,25 @@ public class CMC {
 	public static final String A_ROLEPLAY_OBJECTIVES_POST = "roleplay/enterObjectives/{roleplayId}";
 	public static final String A_ROLEPLAY_AUDIENCE_GET = "roleplay/enterAudience/{roleplayId}";
 	public static final String A_ROLEPLAY_AUDIENCE_POST = "roleplay/enterAudience/{roleplayId}";
-	public static final String A_ROLEPLAY_CREATE_ACTOR = "roleplay/{roleplayId}/actor/create/{actorId}";
-	public static final String A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET = "pluginPlacement/customizePlugin/plugin/{phaseId}";
+	
+	public static final String A_ROLEPLAY_ACTOR_CREATE = "roleplay/{roleplayId}/actor/create/{actorId}";
+	public static final String A_ROLEPLAY_ACTOR_EDIT = "actor/edit/{id}";
+	
+	public static final String A_ROLEPLAY_PHASE_CREATE = "roleplay/{roleplayId}/phase/create/{id}";
+	public static final String A_ROLEPLAY_PHASE_CREATE_SUCCESS = "phase/createPhaseSuccess/{id}";
+	public static final String A_ROLEPLAY_PHASE_EDIT = "phase/edit/{id}";
+	
+	public static final String A_ROLEPLAY_PLUGIN_CREATE = "plugin/create";
+	public static final String A_ROLEPLAY_PLUGIN_CUST_DOC = "plugin/{pluginId}/customizePluginDocument/{podId}";
+	
+	// PP stands for plugin placement
+	public static final String A_ROLEPLAY_PP_UNIVERSAL = "roleplay/{roleplayId}/pluginPlacement";
+	public static final String A_ROLEPLAY_PP_SPECIFIC = "roleplay/{roleplayId}/actor/{actorId}/phase/{phaseId}/pluginPlacement";
+	
 	public static final String A_ROLEPLAY_PP_CHANGE_ACTOR = "pluginPlacement/changeActor/{actorId}";
 	public static final String A_ROLEPLAY_PP_CHANGE_PHASE = "pluginPlacement/changePhase/{phaseId}";
+	
+	public static final String A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET = "pluginPlacement/customizePlugin/plugin/{phaseId}";
 	
 	public static final String A_ROLEPLAY_PUBLISH = "roleplay/publish/{id}";
 	

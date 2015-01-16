@@ -100,7 +100,7 @@
 		</table>
 	</sf:form>
 	<p>&nbsp;</p>
-	<p><a href="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/" id="authorPlacePlugins">Back to Place Plugins </a></p>
+	<p><a href="${pageContext.request.contextPath}/authoring/roleplay/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/" id="authorPlacePlugins">Back to Place Plugins </a></p>
   
 	<!-- InstanceEndEditable -->
 </body>

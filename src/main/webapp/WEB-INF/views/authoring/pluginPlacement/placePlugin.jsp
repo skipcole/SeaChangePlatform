@@ -71,7 +71,7 @@
 	</ol>
 	<hr />
 	<p>Raw Plugins</p>
-	<sf:form name="addPlugin" action="${pageContext.request.contextPath}/authoring/pluginPlacement/addPlugin"
+	<sf:form name="addPlugin" action="${pageContext.request.contextPath}/authoring/plugin/create"
 		modelAttribute="authorAddPluginFormBean" method="POST"
 	>
 

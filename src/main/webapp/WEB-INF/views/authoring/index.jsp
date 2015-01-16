@@ -47,8 +47,8 @@
   <li><a href="${pageContext.request.contextPath}/authoring/enterRoleplayPlannedPlayIdeas" id="authorEnterPlannedPlayIdeas">Enter Planned Play Ideas </a>(?)</li>
   <li><a href="${pageContext.request.contextPath}/authoring/roleplay/${sessionScope.sessionInfoBean.roleplayId}/actor/create/${sessionScope.sessionInfoBean.actorId}" id="authorCreateActors">Create/Edit Actors </a>(?)</li>
   <li><a href="${pageContext.request.contextPath}/authoring/actor/manage"  id="authorManageActors">Manage Actors </a>(?)</li>
-  <li><a href="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/phase/create/${sessionScope.sessionInfoBean.phaseId}"  id="authorCreatePhases">Create/Edit Phases </a>(?)</li>
-  <li><a href="${pageContext.request.contextPath}/authoring/roleplayId/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/" id="authorPlacePlugins">Place Plugins </a>(?)</li>
+  <li><a href="${pageContext.request.contextPath}/authoring/roleplay/${sessionScope.sessionInfoBean.roleplayId}/phase/create/${sessionScope.sessionInfoBean.phaseId}"  id="authorCreatePhases">Create/Edit Phases </a>(?)</li>
+  <li><a href="${pageContext.request.contextPath}/authoring/roleplay/${sessionScope.sessionInfoBean.roleplayId}/pluginPlacement/" id="authorPlacePlugins">Place Plugins </a>(?)</li>
   <li><a href="<%= request.getContextPath() %>/authoring/review"  id="authorReviewRoleplay">Review Roleplay </a>(?)</li>
   <li><a href="${pageContext.request.contextPath}/authoring/roleplay/publish/${sessionScope.sessionInfoBean.roleplayId}" id="authorPublishRoleplay">Publish Roleplay</a></li>
 </ol>

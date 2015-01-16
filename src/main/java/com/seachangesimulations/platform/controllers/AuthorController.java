@@ -342,11 +342,11 @@ public class AuthorController extends BaseController {
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { CMC.A_ROLEPLAY_CREATE_ACTOR }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_ACTOR_CREATE }, method = RequestMethod.GET)
 	public String createActorGet(@PathVariable Long roleplayId,
-			@PathVariable Long id, Model model) {
+			@PathVariable Long actorId, Model model) {
 
-		Actor actor = new Actor().getModelObject(Actor.class, id);
+		Actor actor = new Actor().getModelObject(Actor.class, actorId);
 
 		model.addAttribute("actor", actor);
 		model.addAttribute("authorCreateActorFormBean",
@@ -379,7 +379,7 @@ public class AuthorController extends BaseController {
 	 * @param actorImage
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { CMC.A_ROLEPLAY_CREATE_ACTOR }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_ACTOR_CREATE }, method = RequestMethod.POST)
 	public String createActorPost(
 			@PathVariable Long roleplayId,
 			@PathVariable Long actorId,
@@ -422,7 +422,7 @@ public class AuthorController extends BaseController {
 		model.addAttribute("actorsForThisRoleplay", getActorsForRolePlay(roleplayId));
 		assignRoleTypeConstants(model);
 
-		return "redirect:/authoring/roleplayId/" + roleplayId + "/actor/create/"
+		return "redirect:/authoring/roleplay/" + roleplayId + "/actor/create/"
 				+ actor.getId();
 
 	}
@@ -436,7 +436,7 @@ public class AuthorController extends BaseController {
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { "actor/edit/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_ACTOR_EDIT }, method = RequestMethod.POST)
 	public String editActorPost(
 			@Valid Actor actor,
 			BindingResult bindingResult,
@@ -453,7 +453,7 @@ public class AuthorController extends BaseController {
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { "roleplayId/{roleplayId}/phase/create/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PHASE_CREATE }, method = RequestMethod.GET)
 	public String createPhaseGet(@PathVariable Long roleplayId,
 			@PathVariable Long id, Model model) {
 
@@ -477,7 +477,7 @@ public class AuthorController extends BaseController {
 	 * @param mav
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { "roleplayId/{roleplayId}/phase/create/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PHASE_CREATE }, method = RequestMethod.POST)
 	public String createPhasePost(
 			@PathVariable Long roleplayId,
 			@PathVariable Long id,
@@ -506,7 +506,7 @@ public class AuthorController extends BaseController {
 
 		// Return them to the clean page (no phase selected) in case they want
 		// to create a new phase.
-		return "redirect:/authoring/roleplayId/" + roleplayId + "/phase/create/0";
+		return "redirect:/authoring/roleplay/" + roleplayId + "/phase/create/0";
 
 	}
 
@@ -517,7 +517,7 @@ public class AuthorController extends BaseController {
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { "phase/createPhaseSuccess/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PHASE_CREATE_SUCCESS }, method = RequestMethod.GET)
 	public String createPhaseSuccess(@PathVariable Long id, Model model) {
 
 		List<Phase> thePhases = new Phase()
@@ -545,7 +545,7 @@ public class AuthorController extends BaseController {
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { "phase/edit/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PHASE_EDIT }, method = RequestMethod.POST)
 	public String editPhasePost(
 			@Valid Phase phase,
 			BindingResult bindingResult,
@@ -562,7 +562,7 @@ public class AuthorController extends BaseController {
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { "roleplayId/{roleplayId}/pluginPlacement" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PP_UNIVERSAL }, method = RequestMethod.GET)
 	public String placePluginGetUniversal(@PathVariable("roleplayId") Long roleplayId,
 			Model model) {
 
@@ -570,7 +570,7 @@ public class AuthorController extends BaseController {
 
 		// addModelObjectsOnPlacePluginsPage(model, roleplayId);
 
-		return "redirect:/authoring/roleplayId/" + roleplayId + "/a/0/ph/0/pluginPlacement";
+		return "redirect:/authoring/roleplay/" + roleplayId + "/a/0/ph/0/pluginPlacement";
 	}
 
 	/**
@@ -582,17 +582,17 @@ public class AuthorController extends BaseController {
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { "roleplayId/{roleplayId}/a/{aId}/ph/{phId}/pluginPlacement" }, method = RequestMethod.GET)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PP_SPECIFIC }, method = RequestMethod.GET)
 	public String placePluginSpecificGet(@PathVariable("roleplayId") Long roleplayId,
-			@PathVariable("aId") Long aId, @PathVariable("phId") Long phId,
+			@PathVariable("actorId") Long actorId, @PathVariable("phaseId") Long phaseId,
 			Model model) {
 
 		System.out.println("id was " + roleplayId);
 
 		// Setting id to 0 to indicate that this is for all actors, likewise for
 		// phase
-		Actor actor = new Actor().getModelObject(Actor.class, aId);
-		Phase phase = new Phase().getModelObject(Phase.class, phId);
+		Actor actor = new Actor().getModelObject(Actor.class, actorId);
+		Phase phase = new Phase().getModelObject(Phase.class, phaseId);
 
 		model.addAttribute("actor", actor);
 		model.addAttribute("actorId", actor.getId());
@@ -611,7 +611,7 @@ public class AuthorController extends BaseController {
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { "pluginPlacement/addPlugin" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PLUGIN_CREATE }, method = RequestMethod.POST)
 	public String addPlugin(AuthorAddPluginFormBean authorAddPluginFormBean,
 			Model model) {
 
@@ -647,7 +647,7 @@ public class AuthorController extends BaseController {
 					authorAddPluginFormBean.getPluginHeading(), plugin.getId());
 		}
 
-		return "redirect:/authoring/roleplayId/" + roleplayId + "/pluginPlacement";
+		return "redirect:/authoring/roleplay/" + roleplayId + "/pluginPlacement";
 	}
 
 	/**
@@ -706,7 +706,7 @@ public class AuthorController extends BaseController {
 
 		addModelObjectsOnPlacePluginsPage(model);
 
-		return "redirect:/authoring/roleplayId/"
+		return "redirect:/authoring/roleplay/"
 				+ getSessionInfoBean().getRoleplayId() + "/a/" + aId + "/ph/"
 				+ getSessionInfoBean().getPhaseId() + "/pluginPlacement";
 	}
@@ -725,7 +725,7 @@ public class AuthorController extends BaseController {
 
 		addModelObjectsOnPlacePluginsPage(model);
 
-		return "redirect:/authoring/roleplayId/"
+		return "redirect:/authoring/roleplay/"
 				+ getSessionInfoBean().getRoleplayId() + "/a/"
 				+ getSessionInfoBean().getActorId() + "/ph/" + pId
 				+ "/pluginPlacement";
@@ -776,7 +776,7 @@ public class AuthorController extends BaseController {
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
-	@RequestMapping(value = { "plugin/{pId}/customizePluginDocument/{podId}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { CMC.A_ROLEPLAY_PLUGIN_CUST_DOC }, method = RequestMethod.POST)
 	public String modifyDocumentPost(
 			@PathVariable("pluginId") Long pluginId,
 			@PathVariable("podId") Long podId,
