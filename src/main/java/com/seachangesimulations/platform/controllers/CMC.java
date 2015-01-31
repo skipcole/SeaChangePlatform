@@ -44,11 +44,11 @@ public class CMC {
 	public static final String A_ROLEPLAY_AUDIENCE_POST = "roleplay/enterAudience/{roleplayId}";
 	
 	public static final String A_ROLEPLAY_ACTOR_CREATE = "roleplay/{roleplayId}/actor/create/{actorId}";
-	public static final String A_ROLEPLAY_ACTOR_EDIT = "actor/edit/{id}";
+	public static final String A_ROLEPLAY_ACTOR_EDIT = "actor/edit/{actorId}";
 	
-	public static final String A_ROLEPLAY_PHASE_CREATE = "roleplay/{roleplayId}/phase/create/{id}";
-	public static final String A_ROLEPLAY_PHASE_CREATE_SUCCESS = "phase/createPhaseSuccess/{id}";
-	public static final String A_ROLEPLAY_PHASE_EDIT = "phase/edit/{id}";
+	public static final String A_ROLEPLAY_PHASE_CREATE = "roleplay/{roleplayId}/phase/create/{phaseId}";
+	public static final String A_ROLEPLAY_PHASE_CREATE_SUCCESS = "phase/createPhaseSuccess/{phaseId}";
+	public static final String A_ROLEPLAY_PHASE_EDIT = "phase/edit/{phaseId}";
 	
 	public static final String A_ROLEPLAY_PLUGIN_CREATE = "plugin/create";
 	public static final String A_ROLEPLAY_PLUGIN_CUST_DOC = "plugin/{pluginId}/customizePluginDocument/{podId}";
@@ -60,15 +60,16 @@ public class CMC {
 	public static final String A_ROLEPLAY_PP_CHANGE_ACTOR = "pluginPlacement/changeActor/{actorId}";
 	public static final String A_ROLEPLAY_PP_CHANGE_PHASE = "pluginPlacement/changePhase/{phaseId}";
 	
-	public static final String A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET = "pluginPlacement/customizePlugin/plugin/{phaseId}";
+	public static final String A_ROLEPLAY_CUSTOMIZE_PLUGIN_GET = "pluginPlacement/customizePlugin/plugin/{pluginId}";
 	
 	public static final String A_ROLEPLAY_PUBLISH = "roleplay/publish/{id}";
 	
 	/* Facilitating */
 	public static final String FACILITATING_BASE = "/facilitating";
-	public static final String F_ASSIGNPLAYER_RP_A_PRA = "assignPlayers/{rpimId}/actorId/{aId}/praId/{praId}";
-	public static final String F_CREATE_RPIM_GET = "createRPIM/{rId}/{rpimId}";
-	public static final String F_CREATE_RPIM_POST = "createRPIM/{rId}/{rpimId}" ;
+	
+	public static final String F_ASSIGNPLAYER_RP_A_PRA = "assignPlayers/{rpimId}/actorId/{actorId}/praId/{praId}";
+	public static final String F_CREATE_RPIM_GET = "createRPIM/{roleplayId}/{rpimId}";
+	public static final String F_CREATE_RPIM_POST = "createRPIM/{roleplayId}/{rpimId}" ;
 	public static final String F_ASSIGN_PLAYER_GET = "assignPlayers/{rpimId}";
 	public static final String F_LAUNCH_RPIM_GET = "launchRPIM/{rpimId}";
 	public static final String F_LAUNCH_RPIM_POST = "launchRPIM/{rpimId}";

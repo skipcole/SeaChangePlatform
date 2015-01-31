@@ -95,8 +95,6 @@ public class AuthorController extends BaseController {
 
 		Long roleplayId = new Long(0);
 		
-		System.out
-				.println("************************************************************8");
 		System.out.println("******777777777777777*****8");
 		Roleplay roleplay = new Roleplay();
 
@@ -455,9 +453,9 @@ public class AuthorController extends BaseController {
 	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_PHASE_CREATE }, method = RequestMethod.GET)
 	public String createPhaseGet(@PathVariable Long roleplayId,
-			@PathVariable Long id, Model model) {
+			@PathVariable Long phaseId, Model model) {
 
-		Phase phase = new Phase().getModelObject(Phase.class, id);
+		Phase phase = new Phase().getModelObject(Phase.class, phaseId);
 
 		model.addAttribute("phase", phase);
 		model.addAttribute("authorCreatePhaseFormBean",
@@ -480,7 +478,7 @@ public class AuthorController extends BaseController {
 	@RequestMapping(value = { CMC.A_ROLEPLAY_PHASE_CREATE }, method = RequestMethod.POST)
 	public String createPhasePost(
 			@PathVariable Long roleplayId,
-			@PathVariable Long id,
+			@PathVariable Long phaseId,
 			Model model,
 			@ModelAttribute("authorCreatePhaseFormBean") @Valid AuthorCreatePhaseFormBean authorCreatePhaseFormBean,
 			BindingResult bindingResult) {
@@ -491,8 +489,8 @@ public class AuthorController extends BaseController {
 
 		Phase phase = new Phase();
 
-		if (!((id == null) || (id.intValue() == 0))) {
-			phase = phase.getById(id);
+		if (!((phaseId == null) || (phaseId.intValue() == 0))) {
+			phase = phase.getById(phaseId);
 		}
 
 		authorCreatePhaseFormBean.setRoleplayId(roleplayId);
@@ -512,13 +510,13 @@ public class AuthorController extends BaseController {
 
 	/**
 	 * 
-	 * @param id
+	 * @param phaseId
 	 * @param model
 	 *            Model to hold objects for the view.
 	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_PHASE_CREATE_SUCCESS }, method = RequestMethod.GET)
-	public String createPhaseSuccess(@PathVariable Long id, Model model) {
+	public String createPhaseSuccess(@PathVariable Long phaseId, Model model) {
 
 		List<Phase> thePhases = new Phase()
 				.getAllForRoleplay(getSessionInfoBean().getRoleplayId());
@@ -563,14 +561,11 @@ public class AuthorController extends BaseController {
 	 * @return path to JSP.
 	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_PP_UNIVERSAL }, method = RequestMethod.GET)
-	public String placePluginGetUniversal(@PathVariable("roleplayId") Long roleplayId,
-			Model model) {
+	public String placePluginGetUniversal(@PathVariable("roleplayId") Long roleplayId) {
 
-		System.out.println("id was " + roleplayId);
+		System.out.println("Redirection to Specific. Roleplay id was " + roleplayId);
 
-		// addModelObjectsOnPlacePluginsPage(model, roleplayId);
-
-		return "redirect:/authoring/roleplay/" + roleplayId + "/a/0/ph/0/pluginPlacement";
+		return "redirect:/authoring/roleplay/" + roleplayId + "/actor/0/phase/0/pluginPlacement";
 	}
 
 	/**
@@ -700,14 +695,14 @@ public class AuthorController extends BaseController {
 	 */
 	@RequestMapping(value = { CMC.A_ROLEPLAY_PP_CHANGE_ACTOR }, method = RequestMethod.GET)
 	public String placePluginChangeActor(HttpServletRequest request,
-			Model model, @PathVariable("aId") Long aId) {
+			Model model, @PathVariable("actorId") Long actorId) {
 
-		getSessionInfoBean().setActorId(aId);
+		getSessionInfoBean().setActorId(actorId);
 
 		addModelObjectsOnPlacePluginsPage(model);
 
 		return "redirect:/authoring/roleplay/"
-				+ getSessionInfoBean().getRoleplayId() + "/a/" + aId + "/ph/"
+				+ getSessionInfoBean().getRoleplayId() + "/actor/" + actorId + "/phase/"
 				+ getSessionInfoBean().getPhaseId() + "/pluginPlacement";
 	}
 
@@ -726,8 +721,8 @@ public class AuthorController extends BaseController {
 		addModelObjectsOnPlacePluginsPage(model);
 
 		return "redirect:/authoring/roleplay/"
-				+ getSessionInfoBean().getRoleplayId() + "/a/"
-				+ getSessionInfoBean().getActorId() + "/ph/" + pId
+				+ getSessionInfoBean().getRoleplayId() + "/actor/"
+				+ getSessionInfoBean().getActorId() + "/phase/" + pId
 				+ "/pluginPlacement";
 	}
 
