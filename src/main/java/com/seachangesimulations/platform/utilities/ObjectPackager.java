@@ -184,9 +184,17 @@ public class ObjectPackager {
 		        			// Save plugin to get its id
 		        			plugin.save();
 		        			
+		        			// ON some systems running into write permissions to create directory. So creating it explicitly.
+		        			String saveDirectory = PlatformProperties.getValue("pluginFileDirectory") 
+		        					+ File.separator + plugin.generatePluginDirectory();
+		        			
+		        			File newDir = new File(saveDirectory);
+		        			newDir.mkdirs();
+		        			
 		        			// Save plugin definition file (just for reference, future reads will be from the database.)
 		        			String savingToFileName = PlatformProperties.getValue("pluginFileDirectory") 
 		        					+ File.separator + plugin.generatePluginDirectory() + File.separator + PLUGIN_DEF_FILE;
+		        			
 		        			FileUtils.copyFile(pluginDefinitionFile, new File(savingToFileName));
 		        			
 		        			plugin.saveSubObjects();

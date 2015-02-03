@@ -7,7 +7,9 @@
 <title>Plugin Directory</title>
 </head>
 <body>
-In this directory the plugins will be placed.
+In this directory the plugins files will be copied in when the system loads plugins.
+<br />
+If this directory is not being populated with current plugin files, there is something wrong. Possibly a permissions issue.
 
 </body>
 </html>
