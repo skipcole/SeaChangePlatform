@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.PhaseDao;
-import com.seachangesimulations.platform.rpimobjects.Alert;
+import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
+import com.seachangesimulations.platform.rpimobjects.Message;
 import com.seachangesimulations.platform.rpimobjects.Event;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 
@@ -207,8 +208,38 @@ public class Phase extends BaseSCPlatformObject implements MayHaveSubObjects{
 		
 		event.save();
 		
-		Alert.createAlertsForPhaseChange(event);
+		createMessagesForPhaseChange(event);
 		
+	}
+	
+	/**
+	 * Creates the messages to notify players of phase change.
+	 * 
+	 * @param event
+	 */
+	public static void createMessagesForPhaseChange(Event event) {
+
+		List<PersonRoleplayAssignment> allPeopleInThisRoleplay = new PersonRoleplayAssignment()
+				.getAllPlayers(event.getRpimId());
+
+		for (PersonRoleplayAssignment thisPra : allPeopleInThisRoleplay) {
+
+			if (thisPra.getPersonId() != null) {
+
+				Message message = new Message();
+				message.setMessageType(Message.MESSAGE_TYPE_PHASE_CHANGE);
+				message.setMessageText(event.getEventDescription());
+				message.setRoleplayId(event.getRoleplayId());
+				message.setRpimId(event.getRpimId());
+				
+				//TODO - keeps it real
+
+				// End of keeps it real
+
+				message.save();
+			}
+		}
+
 	}
 
 }

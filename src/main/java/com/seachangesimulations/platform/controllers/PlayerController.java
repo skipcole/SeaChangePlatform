@@ -29,7 +29,7 @@ import com.seachangesimulations.platform.mvc.formbeans.facilitator.FacLaunchRole
 import com.seachangesimulations.platform.mvc.formbeans.player.RoleplayAlertBean;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectAssociation;
 import com.seachangesimulations.platform.pluginobjects.PluginObjectDocument;
-import com.seachangesimulations.platform.rpimobjects.Alert;
+import com.seachangesimulations.platform.rpimobjects.Message;
 import com.seachangesimulations.platform.rpimobjects.AlertJSON;
 import com.seachangesimulations.platform.rpimobjects.Event;
 import com.seachangesimulations.platform.service.SessionInfoBean;

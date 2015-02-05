@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.PersonDao;
 import com.seachangesimulations.platform.domain.assignment.PersonOrganizationAssignment;
-import com.seachangesimulations.platform.rpimobjects.Alert;
+import com.seachangesimulations.platform.rpimobjects.Message;
 import com.seachangesimulations.platform.rpimobjects.AlertJSON;
 import com.seachangesimulations.platform.service.SessionInfoBean;
 
@@ -295,15 +295,15 @@ public class Person extends BaseSCPlatformObject implements UserDetails{
 	public static AlertJSON getNextAlert(SessionInfoBean sessionInfoBean,
 			Long lastAlertIGot) {
 		
-		List <Alert> myAlerts = 
-				new Alert().getPlayersAlerts(sessionInfoBean.getPersonId(), sessionInfoBean.getActorId(), 
+		List <Message> myAlerts = 
+				new Message().getPlayersRoleMessages(sessionInfoBean.getActorId(), 
 						sessionInfoBean.getRolePlayInMotionId(), lastAlertIGot);
 		
 		
 		AlertJSON alertJSON = new AlertJSON();
 		alertJSON.setAlertId(new Long(2));
 		alertJSON.setAlertText("boom");
-		alertJSON.setAlertType(Alert.ALERT_TYPE_PHASE_CHANGE);
+		alertJSON.setAlertType(Message.MESSAGE_TYPE_PHASE_CHANGE);
 		
 		return alertJSON;
 		
