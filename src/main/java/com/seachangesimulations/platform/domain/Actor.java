@@ -4,9 +4,6 @@ package com.seachangesimulations.platform.domain;
 import java.util.List;
 
 // MJS First comment and commit. FDDF
-ff
-
-
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -18,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import com.seachangesimulations.platform.dao.ActorDao;
 import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignment;
-
 
 @Entity
 @Component
@@ -33,7 +29,7 @@ public class Actor extends BaseSCPlatformObject implements MayHaveSubObjects{
 
 
 	public Actor() {
-
+		System.out.println("Actor Constructor");
 	}
 
 	/** Id of the role play that this object is associated with. */
