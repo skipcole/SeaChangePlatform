@@ -58,12 +58,10 @@ public class InstallController extends BaseController{
 			o.setId(orgId);
 			o.save();
 			
-			new Person().create(aifb.getUsername(), aifb.getPassword(), PersonOrganizationAssignment.ADMIN_LEVEL);
-			
+			new Person().create(aifb.getUsername(), aifb.getPassword(), PersonOrganizationAssignment.ADMIN_LEVEL);			
 			Person p = new Person().getByUsername(aifb.getUsername());
 			p.setFirstName(aifb.getFirstName());
 			p.setInitialOrgId(orgId);
-
 			p.save();
 			
 			readLoadedPlugins();

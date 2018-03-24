@@ -17,10 +17,12 @@
 </head>
 <body>
 
-<table><tr><td><h2>Welcome Admin!</h2></td><td></td></tr></table>
-Create Success
+<table><tr><td><h2>Success!</h2></td><td></td></tr></table>
+New User Created Successfully
 
 <p>&nbsp;</p>
+
+<a href="userAdmin"> <button value="Return to User Administration"> Return to User Administration</button></a>
 
 </body>
 </html>

@@ -3,7 +3,7 @@ package com.seachangesimulations.platform.mvc.formbeans.admin;
 
 /**
  * A utility object to hold all the various pieces of data used when installing
- * a platform.
+ * a platform.  This is for both a new administrator account and a new organization.
  * 
  * 
  */
@@ -13,7 +13,7 @@ public class AdminInstallationFormBean {
 
 	private String firstName;
 
-	private String middleName;
+	private String middleName;  // unused as of 3.18
 
 	private String lastName;
 

@@ -1,6 +1,10 @@
 
 package com.seachangesimulations.platform.dao.hibernate;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -60,7 +64,24 @@ public class PersonDaoHibernateImpl extends BaseDaoHibernateImpl<Person> impleme
 		this.save(p);
 
 		return true;
-	}
+	} // end updateCore
+	
+	/**
+	 * Search for users whose name starts with the given string.
+	 * 
+	 */
+	public List<Person> searchByName(String nameStarts) {
+		List<Person> result = new ArrayList<>();
+		
+		Session session = getSessionFactory().openSession();
+		session.beginTransaction();
+		// can return resultSet but must name all "instance fields" (likely not column names) - definitely cant do select *
+		Query query = session.createQuery("from Person");
+		result = query.list(); 
+		System.out.println("People found total " + result.size());
+		session.close();
+		return result;
+	} // end searchByName
 
 	@Override
 	public Person getByUsername(String userName) {

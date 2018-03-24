@@ -2,6 +2,9 @@
 package com.seachangesimulations.platform.dao;
 
 
+import java.util.List;
+import java.util.Map;
+
 import com.seachangesimulations.platform.domain.Organization;
 
 /**
@@ -14,5 +17,5 @@ public interface OrganizationDao extends BaseDao<Organization> {
 	public Long create(String name);
 
 	public Organization getByName(String name);
-
+	
 }

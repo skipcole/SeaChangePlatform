@@ -3,7 +3,7 @@ package com.seachangesimulations.platform.mvc.formbeans.admin;
 
 /**
  * Binds to the form used by the system adminstrator to create users. 
- * Values entered here are copied into the Person and Organization tables. 
+ * Values entered here are copied into the Person table. 
  * (This is for security purposes, since the other way of preventing possible
  * malicious activity is to use InitBinding.)
  * 
@@ -16,7 +16,7 @@ public class AdminCreatePersonFormBean {
 	
 	private String firstName;
 	
-	private String middleName;
+	private String middleName;  // currently unused - not on the form. MJS 3.18
 	
 	private String lastName;
 	

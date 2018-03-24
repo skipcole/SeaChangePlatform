@@ -21,7 +21,8 @@ import com.seachangesimulations.platform.domain.assignment.PersonRoleplayAssignm
 @Scope("prototype")
 @XmlRootElement
 public class Actor extends BaseSCPlatformObject implements MayHaveSubObjects{
-
+    // If a compile error is inserted here, it will show up with Highlight the Project 
+	// in package explorer, right click "Run As", select Maven Buiid.
 	/**
 	 * 
 	 */

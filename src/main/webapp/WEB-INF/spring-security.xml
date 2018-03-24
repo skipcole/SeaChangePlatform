@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.2.xsd
-        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop 
     	http://www.springframework.org/schema/aop/spring-aop-3.2.3.xsd
         http://www.springframework.org/schema/security 
         http://www.springframework.org/schema/security/spring-security-3.2.xsd">
@@ -18,15 +18,20 @@
 		<form-login login-processing-url="/static/j_spring_security_check" 
 			login-page="/login"
 			default-target-url="/loadLoginInfo"
-			authentication-failure-url="/login?login_error=t" />
+			authentication-failure-url="/login?login_error=t" /> 
+		<!-- login-page="/login"
+			default-target-url="/loginPassed"
+			default-target-url="/loadLoginInfo"
+			authentication-failure-url="/login?login_error=t" /> -->
 		
 		<!-- The intercept rules are interpreted top to bottom. So they should go most specific to least specific. -->
 		<intercept-url pattern="/" access="permitAll"/>
 		<intercept-url pattern="/login" access="permitAll"/>
+		<intercept-url pattern="/loginFailed" access="permitAll"/>
 		<intercept-url pattern="/logout" access="permitAll"/>
 		<intercept-url pattern="/home" access="permitAll"/>
 		<intercept-url pattern="/install/**" access="permitAll"/>
-		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />		
 		<intercept-url pattern="/developing/**" access="hasRole('ROLE_DEV')" />
 		<intercept-url pattern="/authoring/**" access="hasRole('ROLE_AUTHOR')" />
 		<intercept-url pattern="/facilitating/**" access="hasRole('ROLE_FACILITATOR')" />
@@ -44,9 +49,14 @@
 
 	</http>
 
-	<!-- http> <intercept-url pattern="/login.do" filters="none" /> <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" 
-		/> <form-login login-page="/login.do" authentication-failure-url="/login.do?error=failed" login-processing-url="/login-please.do" 
-		/> <logout logout-url="/logoff-please.do" logout-success-url="/logoff.html" /> </http -->
+	<!--
+	     http> <intercept-url pattern="/login.do" filters="none" />
+	           <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+	           
+	           <form-login login-page="/login.do" authentication-failure-url="/login.do?error=failed" 
+	                       login-processing-url="/login-please.do" /> 
+	           <logout logout-url="/logoff-please.do" logout-success-url="/logoff.html" /> </http 
+	-->
 
 	<beans:bean id="userDetailsService" class="com.seachangesimulations.platform.service.UserDetailsServiceImpl">
 	</beans:bean>

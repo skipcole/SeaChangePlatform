@@ -19,6 +19,7 @@ public class OrganizationDaoHibernateImpl extends BaseDaoHibernateImpl<Organizat
 
 		Organization org = new Organization();
 		org.setName(name);
+		
 		this.save(org);
 		return org.getId();
 	}
@@ -26,7 +27,7 @@ public class OrganizationDaoHibernateImpl extends BaseDaoHibernateImpl<Organizat
 	public Organization getByName(String name) {
 
 		Session session = getSessionFactory().openSession();
-		Query query = session.createQuery("from Organization where name =: name").setString("name", name);
+		Query query = session.createQuery("from Organization where name = :name").setString("name", name);
 
 		return (Organization) query.uniqueResult();
 

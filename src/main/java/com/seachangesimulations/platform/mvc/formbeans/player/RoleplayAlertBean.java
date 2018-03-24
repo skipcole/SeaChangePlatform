@@ -2,7 +2,7 @@ package com.seachangesimulations.platform.mvc.formbeans.player;
 
 public class RoleplayAlertBean {
 
-	private String alertText = "";
+	private String alertText = "MJS RoleplayAlertBean in mvc.formbeans.player";
 
 	public String getAlertText() {
 		return alertText;

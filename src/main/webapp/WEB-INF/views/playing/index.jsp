@@ -46,7 +46,7 @@
  
 	<div id="header">
     
-    	<div class="welcome_msg">Welcome Player!</div>
+    	<div class="welcome_msg">Welcome Player from MJS!</div>
     
     </div>
  <p>Below are listed all of the active roleplays that you are enrolled in.</p>

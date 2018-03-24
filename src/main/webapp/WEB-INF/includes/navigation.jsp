@@ -29,7 +29,7 @@
 			</div></td>
 		<td align="right"><div align="right">
 				<security:authorize access="isAnonymous()">
-					<a href="/SeaChangePlatform/login">Login</a>
+					<a href="/SeaChangePlatform/login">LoginMJS</a>
 				</security:authorize>
 				<security:authorize access="isAuthenticated()">
 					<span class="nowrap"> <c:if test="${sessionInfoBean.platformZone == 'admin'}">

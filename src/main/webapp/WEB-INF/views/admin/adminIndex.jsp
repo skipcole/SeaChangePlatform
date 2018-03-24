@@ -7,14 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Admininstration</h1>
+	<h1>Admininstration views/admin/adminIndex.jsp</h1>
 	<h2>Core Activities</h2>
 <ol>
       <li><a href="<%= request.getContextPath() %>/admin/userAdmin" id="linkToUserAdmin">User Administration</a></li>
 </ol>
 <h2>Occasional Activities</h2>
 <ol>
-  <li>Create Organization</li>
+  <li><a href="<%= request.getContextPath() %>/admin/orgAdmin" id="linkToOrgAdmin">Organization Administration</a></li>
 </ol>
 <h2>Rare Activities</h2>
 	<p><br />

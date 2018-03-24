@@ -3,10 +3,13 @@ package com.seachangesimulations.platform.domain;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -24,8 +27,8 @@ import com.seachangesimulations.platform.service.SessionInfoBean;
 
 @Entity
 @Component
-@Scope("prototype")
-public class Person extends BaseSCPlatformObject implements UserDetails{
+@Scope("prototype") 
+public class Person extends BaseSCPlatformObject implements UserDetails {
 
 	/**
 	 * 
@@ -51,16 +54,23 @@ public class Person extends BaseSCPlatformObject implements UserDetails{
 	public Long create(String username, String password, int initialAuthLevel) {
 
 		Long newPersonId = null;
+		System.out.println("MJS - domain/person.java Creating New Person with parameters.");
+		JFrame frame = new JFrame("person.create(3 params)");
+		String msg = "Beginning Person.create(params) in platform.domain.Person.java";
+		// JOptionPane.showMessageDialog(frame,  msg + " Username param = " + username);
+		frame.dispose();
 		
-		/* Encrypt password. */
+		
+		/* Encrypt password. Stopped MJS 3.9.18 */
 		PasswordEncoder pp = new Md5PasswordEncoder();
 		password = pp.encodePassword(password, null);
 		
 		PersonDao dao = (PersonDao) getApplicationContext().getBean("personDao", PersonDao.class);
-
+		// call 4 parameter version of Person.create - 3rd parameter is organizationID
 		newPersonId = create(username, password, new Long(1), initialAuthLevel);
 		
 		PersonOrganizationAssignment poa = new PersonOrganizationAssignment();
+		// really doubt this should always be a 1! MJS 3.18
 		poa.create(newPersonId, new Long(1), initialAuthLevel);
 		
 		return newPersonId;
@@ -77,6 +87,12 @@ public class Person extends BaseSCPlatformObject implements UserDetails{
 	 */
 	public Long create(String username, String password, Long orgId, int initialAuthLevel) {
 
+		System.out.println("MJS - domain/person.java Creating New Person with 4 parameters.");
+		JFrame frame = new JFrame("person.create(4 params)");
+		String msg = "Beginning Person.create(4 params) in platform.domain.Person.java ... calling person.save()";
+		// JOptionPane.showMessageDialog(frame,  msg + " Username param = " + username);
+		frame.dispose();
+		
 		Person p = new Person();
 		p.setUsername(username);
 		p.setPassword(password);
@@ -93,6 +109,24 @@ public class Person extends BaseSCPlatformObject implements UserDetails{
 		PersonDao personDao = (PersonDao) getApplicationContext().getBean("personDao", PersonDao.class);
 		return personDao.getByUsername(userName);
 	}
+	
+	public List<Object[]> searchFor(Map<String, String> params) {
+		// since getApplicationContext is non-static, method must be as well.
+		PersonDao personDao = (PersonDao) getApplicationContext().getBean("personDao", PersonDao.class);
+		return personDao.searchFor(params);
+	}  // end searchFor
+	
+	public List<String> getDBColumnNames() {
+		// since getApplicationContext is non-static, method must be as well.
+		PersonDao personDao = (PersonDao) getApplicationContext().getBean("personDao", PersonDao.class);
+		return personDao.getDBColumnNames( );
+	}  // end getDBColumnNames
+	
+	public List<Person> searchByName(String name){
+		// since getApplicationContext is non-static, method must be as well.
+		PersonDao personDao = (PersonDao) getApplicationContext().getBean("personDao", PersonDao.class);
+		return personDao.searchByName(name);
+	}  // end searchByName
 
 	public Person() {
 	}
@@ -101,8 +135,13 @@ public class Person extends BaseSCPlatformObject implements UserDetails{
 	 * Saves this person to the database.
 	 * 
 	 */
-	public void save(){
+	public void save() {
+		System.out.println("MJS - platform/domain/person.java.  Save() called..");
+		JFrame frame = new JFrame("person.save ");
+		String msg = "Beginning Person.save() in platform.domain.Person.java";
+		// JOptionPane.showMessageDialog(frame,  msg + " .... calling getBean (PersonDAO)");
 		PersonDao personDao = (PersonDao) getApplicationContext().getBean("personDao", PersonDao.class);
+		frame.dispose();
 		personDao.save(this);
 	}
 

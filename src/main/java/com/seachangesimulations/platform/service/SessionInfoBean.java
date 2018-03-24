@@ -321,6 +321,7 @@ public class SessionInfoBean{
 		this.platformZone = platformZone;
 	}
 	
+	// this old Hashtable class is a candidate for updating. MJS 3.23
 	static Hashtable actorsNames = new Hashtable();
 	
 	public String getActorName(){

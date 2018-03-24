@@ -333,6 +333,7 @@ public class AuthorController extends BaseController {
 		return "authoring/roleplay/enterAudience.jsp";
 	}
 
+
 	/**
 	 * Gets the create/edit Actor page.
 	 * 
@@ -343,7 +344,7 @@ public class AuthorController extends BaseController {
 	@RequestMapping(value = { CMC.A_ROLEPLAY_ACTOR_CREATE }, method = RequestMethod.GET)
 	public String createActorGet(@PathVariable Long roleplayId,
 			@PathVariable Long actorId, Model model) {
-
+		// public static final String A_ROLEPLAY_ACTOR_CREATE = "roleplay/{roleplayId}/actor/create/{actorId}"
 		Actor actor = new Actor().getModelObject(Actor.class, actorId);
 
 		model.addAttribute("actor", actor);

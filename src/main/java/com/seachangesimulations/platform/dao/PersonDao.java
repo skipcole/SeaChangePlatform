@@ -1,6 +1,9 @@
 
 package com.seachangesimulations.platform.dao;
 
+import java.sql.ResultSet;
+import java.util.List;
+
 import com.seachangesimulations.platform.domain.Person;
 
 /**
@@ -15,6 +18,8 @@ public interface PersonDao extends BaseDao<Person> {
 	/** Returns true if user existed, otherwise returns false. */
 	public boolean updateCore(String username, String password, Long id);
 	
+	public List<Person> searchByName(String nameStarts);
+
 	public Person getByUsername(String userName);
 
 }

@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Create Actor</title>
+<title>Create Actor in a scenario - MJS authoring/actor/createActor.jsp </title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->

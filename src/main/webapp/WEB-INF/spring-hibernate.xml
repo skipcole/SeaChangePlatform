@@ -21,7 +21,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/scplatform" />
 		<property name="username" value="root" />
-		<property name="password" value="hankanddean" />
+		<property name="password" value="" />
 	</bean>
 
 	<!-- Session Factory to dole out the sessions. One of the properties of it is the 
@@ -35,7 +35,7 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
 			</props>
 		</property>
 		

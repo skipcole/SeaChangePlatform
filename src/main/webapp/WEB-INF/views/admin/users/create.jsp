@@ -8,7 +8,7 @@
 <title>Create User</title>
 </head>
 <body>
-	<p>Create User.</p>
+	<p>Create a New User </p>
 	<p>&nbsp;</p>
 	<sf:form method="POST" modelAttribute="adminCreatePersonFormBean">
 		<table width="100%" border="1" cellspacing="0" cellpadding="2">

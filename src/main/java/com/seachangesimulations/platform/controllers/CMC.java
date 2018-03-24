@@ -18,6 +18,7 @@ public class CMC {
 
 	/* Admin */
 	public static final String ADMIN_BASE = "/admin";
+	public static final String ADMIN_INDEX = "adminIndex";
 	
 	/* Developing */
 	public static final String DEVELOPING_BASE = "/developing";
